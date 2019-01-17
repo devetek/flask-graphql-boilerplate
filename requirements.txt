@@ -1,0 +1,10 @@
+urllib
+validators
+pyyaml
+fabric
+fire
+requests
+
+# linting tools
+pylint<2.0.0
+autopep8
