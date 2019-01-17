@@ -1,18 +1,6 @@
-import time
-import validators
 import json
 import requests
-import sys
-from pprint import pprint
 from urlparse import urlparse
-
-"""
-Rjson Class
-descriptions:
-Read json and return data as dictionary
-"""
-
-import sys
 
 
 class Rjson:
@@ -71,19 +59,18 @@ class Rjson:
 
 
 if __name__ == '__main__':
-    """
-    START: DEVELOPMENT environment
-    test mode only
-    """
+    pass
+    # PATH_TEST = "./../roles/node/main.json"
+    # URL_TEST = "https://jsonplaceholder.typicode.com/users"
 
-    Rjson = Rjson()
+    # Rjson = Rjson()
 
-    Rjson.set_path("./../roles/node/main.json")
-    dictPATH = Rjson.read()
+    # Rjson.set_path(PATH_TEST)
+    # dictPATH = Rjson.read()
 
-    print "Data JSON From File %s" % dictPATH
+    # print "Data JSON From File %s" % dictPATH
 
-    Rjson.set_path("https://jsonplaceholder.typicode.com/users")
-    dictURL = Rjson.read()
+    # Rjson.set_path(URL_TEST)
+    # dictURL = Rjson.read()
 
-    print "Data JSON From URL %s" % dictURL
+    # print "Data JSON From URL %s" % dictURL
