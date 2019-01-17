@@ -13,8 +13,6 @@ class Rjson:
     def set_path(self, path):
         dataURL = urlparse(path)
 
-        print dataURL.scheme
-
         if dataURL.scheme == "" and dataURL.netloc == "":
             self.IS_PATH = False
         else:
@@ -48,7 +46,6 @@ class Rjson:
             else:
                 return {}
         except:
-            print "URL: except condition"
             return {}
 
     def read(self):
