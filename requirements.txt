@@ -1,9 +1,15 @@
-urllib
+Flask
 validators
 pyyaml
 fabric
 fire
 requests
+gevent
+gevent-websocket
+gevent-socketio
+eventlet
+flask-socketio
+autopep8
 
 # linting tools
 pylint<2.0.0
