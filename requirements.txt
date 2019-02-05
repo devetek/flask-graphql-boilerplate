@@ -1,5 +1,9 @@
 Flask
+Flask-SQLAlchemy
+Werkzeug
 validators
+uwsgi
+redis
 pyyaml
 fabric
 fire

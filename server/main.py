@@ -6,7 +6,7 @@ from routes.socket.main import routes as socketIOroutes
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
+socketio = SocketIO(app, message_queue='redis://')
 
 """[routes handler for http, sw, polling]
 Descriptions: define your routes method, using Flask Blueprint or traditional routes

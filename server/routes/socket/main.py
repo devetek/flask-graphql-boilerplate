@@ -58,6 +58,10 @@ def routes(socketio):
     def ping_pong():
         emit('my_pong')
 
+    @socketio.on_error()
+    def error_handler_chat(e):
+        pass
+
     @socketio.on('connect', namespace='/test')
     def test_connect():
         emit('my_response', {'data': 'Connected', 'count': 0})
