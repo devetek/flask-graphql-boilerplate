@@ -1,0 +1,11 @@
+{
+  "name": "Debug Flask",
+  "type": "python",
+  "request": "launch",
+  "console": "integratedTerminal",
+  "pythonPath": "${config:python.pythonPath}",
+  "program": "path_to_run.py",
+  "gevent": true,
+  "cwd": "${workspaceFolder}",
+  "args": []
+}
