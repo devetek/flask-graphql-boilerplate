@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_socketio import SocketIO
-# from routes.http.main import routes as httpRoutes
 from web.route.socket.main import routes as socketIOroutes
 
 # ===== Modular Routes =====
@@ -20,11 +19,10 @@ def bootstrap_web():
     Descriptions: define your routes method, using Flask Blueprint or traditional routes
     Author: Prakasa <prakasa@devetek.com>
     """
-    # httpRoutes(app)
-    app.register_blueprint(members_bp, url_prefix='/member')
-    app.register_blueprint(members_bp, url_prefix='/package')
-    app.register_blueprint(members_bp, url_prefix='/book')
-    app.register_blueprint(members_bp, url_prefix='/payment')
+    #app.register_blueprint(members_bp, url_prefix='/member')
+    #app.register_blueprint(members_bp, url_prefix='/package')
+    #app.register_blueprint(members_bp, url_prefix='/book')
+    #app.register_blueprint(members_bp, url_prefix='/payment')
     app.register_blueprint(errors_bp)
     socketIOroutes(socketio)
 
