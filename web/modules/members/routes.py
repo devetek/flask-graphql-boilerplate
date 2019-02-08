@@ -6,13 +6,13 @@ def index():
     return 'Members Dashboard API'
 
 
-@app.route('/users/')
+@bp.route('/users/')
 def users_query():
     keyQuery = request.args.get('key', '')
     return "Query: %s" % keyQuery
 
 
-@app.route('/users/<regional>', methods=['GET', 'POST'])
+@bp.route('/users/<regional>', methods=['GET', 'POST'])
 def users_regional(regional):
     if request.method == 'POST':
         pass
@@ -20,6 +20,6 @@ def users_regional(regional):
         pass
 
 
-@app.route('/user/id/<id>')
+@bp.route('/user/id/<id>')
 def user_id(id):
     return 'User ID: %s' % id

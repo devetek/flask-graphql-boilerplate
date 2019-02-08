@@ -1,3 +1,4 @@
 {
-  "python.pythonPath": "python_modules/bin/python"
+  "python.pythonPath": "python_modules/bin/python",
+  "eslint.autoFixOnSave": false
 }

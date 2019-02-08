@@ -1,4 +1,3 @@
 from flask import Blueprint
-import web.modules.errors.handlers
 
-errors_bp = Blueprint('errors', __name__)
+bp = Blueprint('errors', __name__)
