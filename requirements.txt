@@ -1,5 +1,8 @@
 Flask
+Flask-Bootstrap
 Flask-SQLAlchemy
+Flask-Migrate
+SQLAlchemy
 Werkzeug
 validators
 uwsgi
@@ -14,6 +17,7 @@ gevent-socketio
 eventlet
 flask-socketio
 autopep8
+python-dotenv
 
 # linting tools
 pylint<2.0.0
