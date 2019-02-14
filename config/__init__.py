@@ -6,6 +6,8 @@ load_dotenv(os.path.join(basedir, '.env'))
 
 
 class Config(object):
+    TESTING = os.environ.get('TESTING') or True
+    FLASK_ENV = os.environ.get('FLASK_ENV') or 'development'
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
     SQLALCHEMY_TRACK_MODIFICATIONS = os.environ.get(

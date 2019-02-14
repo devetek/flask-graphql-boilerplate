@@ -1,7 +1,11 @@
 Flask
+pymysql
 Flask-Bootstrap
 Flask-SQLAlchemy
 Flask-Migrate
+flask-login
+Flask-Babel
+Flask-Moment
 SQLAlchemy
 Werkzeug
 validators
