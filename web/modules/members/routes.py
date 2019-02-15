@@ -15,8 +15,14 @@ def index():
 
 @bp.route('/users/')
 def users_query():
-    keyQuery = request.args.get('key', '')
-    return "Query: %s" % keyQuery
+    userData = {}
+    usernameQuery = request.args.get('username', '')
+    user = User.query.filter_by(username=usernameQuery).first()
+
+    if user != None:
+        userData = user.to_dict()
+
+    return jsonify(userData)
 
 
 @bp.route('/users/<regional>', methods=['GET', 'POST'])
@@ -27,6 +33,12 @@ def users_regional(regional):
         pass
 
 
-@bp.route('/user/id/<id>')
+@bp.route('/user/id/<int:id>')
 def user_id(id):
-    return 'User ID: %s' % id
+    userData = {}
+    user = User.query.filter_by(user_id=id).first()
+
+    if user != None:
+        userData = user.to_dict()
+
+    return jsonify(userData)
