@@ -1,5 +1,6 @@
 Flask
-pymysql
+PyMySQL
+mysqlclient
 Flask-Bootstrap
 Flask-SQLAlchemy
 Flask-Migrate

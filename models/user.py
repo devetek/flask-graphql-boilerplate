@@ -3,8 +3,12 @@ from flask_login import UserMixin
 from datetime import datetime, timedelta
 
 
-class User(db.Model):
-    user_id = db.Column(db.BigInteger, primary_key=True)
+class User(UserMixin, db.Model):
+    # as is the name of the model
+    __tablename__ = 'user'
+
+    user_id = db.Column(db.BigInteger, unique=True,
+                        nullable=False, primary_key=True)
     username = db.Column(db.VARCHAR(255), index=True)
     fullname = db.Column(db.VARCHAR(255))
     place_of_birth = db.Column(db.Text)
@@ -28,14 +32,14 @@ class User(db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
-    def add(self):
-        pass
+    def to_dict(self):
+        data = {
+            'user_id': self.user_id,
+            'username': self.username,
+            'fullname': self.fullname,
+            'email': self.email,
+            'place_of_birth': self.place_of_birth,
+            'birthday': self.birthday,
+        }
 
-    def update(self):
-        pass
-
-    def get(self, id):
-        pass
-
-    def lists(self):
-        pass
+        return data

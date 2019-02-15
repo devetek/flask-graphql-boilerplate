@@ -1,9 +1,16 @@
+from flask import jsonify, request, url_for
 from web.modules.members import bp
+from models.user import User
 
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
-    return 'Members Dashboard API'
+    userData = []
+    users = User.query.all()
+
+    [userData.append(user.to_dict()) for user in users]
+
+    return jsonify(userData)
 
 
 @bp.route('/users/')
