@@ -8,7 +8,8 @@ def index():
     userData = []
     users = User.query.all()
 
-    [userData.append(user.to_dict()) for user in users]
+    if users != None:
+        [userData.append(user.to_dict()) for user in users]
 
     return jsonify(userData)
 
