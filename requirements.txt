@@ -1,6 +1,7 @@
 Flask
 PyMySQL
 mysqlclient
+flask-restful
 Flask-Bootstrap
 Flask-SQLAlchemy
 Flask-Migrate
@@ -9,6 +10,10 @@ Flask-Babel
 Flask-Moment
 SQLAlchemy
 Werkzeug
+google
+protobuf
+grpcio
+#grpcio-tools  
 validators
 uwsgi
 redis

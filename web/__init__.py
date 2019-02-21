@@ -7,7 +7,8 @@ from flask_babel import Babel, lazy_gettext as _l
 
 
 # ===== Modular Routes =====
-from web.modules.members import bp as members_bp, routes
+from web.modules.member import bp as member_bp, routes
+from web.modules.book import bp as book_bp, routes
 from web.modules.errors import bp as errors_bp, handlers
 
 
@@ -33,7 +34,8 @@ def bootstrap_web(config_class):
     Descriptions: define your routes method, using Flask Blueprint or traditional routes
     Author: Prakasa <prakasa@devetek.com>
     """
-    app.register_blueprint(members_bp, url_prefix='/member')
+    app.register_blueprint(member_bp, url_prefix='/member')
+    app.register_blueprint(book_bp, url_prefix='/book')
     app.register_blueprint(errors_bp)
     app.run()
 
