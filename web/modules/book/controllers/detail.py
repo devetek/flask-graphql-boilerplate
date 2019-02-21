@@ -14,7 +14,7 @@ class Detail(Resource):
           [object] -- [How To Test: curl http://localhost:5000/book/id/book2]
         """
 
-        self.abort_if_todo_doesnt_exist(book_id)
+        self.abort_if_book_doesnt_exist(book_id)
         return BOOKS[book_id]
 
     def delete(self, book_id):
@@ -27,7 +27,7 @@ class Detail(Resource):
           [string] -- [How To Test: curl http://localhost:5000/book/id/book2 -X DELETE -v]
         """
 
-        self.abort_if_todo_doesnt_exist(book_id)
+        self.abort_if_book_doesnt_exist(book_id)
         del BOOKS[book_id]
         return '', 204
 
@@ -46,7 +46,7 @@ class Detail(Resource):
         BOOKS[book_id] = author
         return author, 201
 
-    def abort_if_todo_doesnt_exist(self, book_id):
+    def abort_if_book_doesnt_exist(self, book_id):
         """[default error response]
 
         Arguments:
@@ -54,4 +54,4 @@ class Detail(Resource):
         """
 
         if book_id not in BOOKS:
-            abort(404, message="Todo {} doesn't exist".format(book_id))
+            abort(404, message="Book {} doesn't exist".format(book_id))
