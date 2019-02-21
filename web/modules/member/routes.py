@@ -1,56 +1,9 @@
 from flask_restful import Resource, url_for
 from web.modules.member import bp, api
-from web.modules.member.controllers import main
+from web.modules.member.controllers import main, detail
 
 
 """[define routing under module book]
 """
 api.add_resource(main.Main, '', '/')
-# api.add_resource(detail.Detail, '/id/<int:user_id>')
-
-
-# from flask import jsonify, request, url_for
-# from web.modules.members import bp
-# from models.user import User
-
-
-# @bp.route('/', methods=['GET', 'POST'])
-# def index():
-#     userData = []
-#     users = User.query.all()
-
-#     if users != None:
-#         [userData.append(user.to_dict()) for user in users]
-
-#     return jsonify(userData)
-
-
-# @bp.route('/users/')
-# def users_query():
-#     userData = {}
-#     usernameQuery = request.args.get('username', '')
-#     user = User.query.filter_by(username=usernameQuery).first()
-
-#     if user != None:
-#         userData = user.to_dict()
-
-#     return jsonify(userData)
-
-
-# @bp.route('/users/<regional>', methods=['GET', 'POST'])
-# def users_regional(regional):
-#     if request.method == 'POST':
-#         pass
-#     else:
-#         pass
-
-
-# @bp.route('/user/id/<int:id>')
-# def user_id(id):
-#     userData = {}
-#     user = User.query.filter_by(user_id=id).first()
-
-#     if user != None:
-#         userData = user.to_dict()
-
-#     return jsonify(userData)
+api.add_resource(detail.Detail, '/id/<int:user_id>')

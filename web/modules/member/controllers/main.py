@@ -1,6 +1,6 @@
 from flask import jsonify
 from flask_restful import Resource
-from web.modules.book import parser
+from web.modules.member import parser
 from models.user import User
 
 
