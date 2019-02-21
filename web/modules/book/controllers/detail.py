@@ -11,7 +11,7 @@ class Detail(Resource):
           book_id {[string]} -- [book id]
 
         Returns:
-          [object] -- [How To Test: curl http://localhost:5000/book/book2]
+          [object] -- [How To Test: curl http://localhost:5000/book/id/book2]
         """
 
         self.abort_if_todo_doesnt_exist(book_id)
@@ -24,7 +24,7 @@ class Detail(Resource):
           book_id {[string]} -- [book id]
 
         Returns:
-          [string] -- [How To Test: curl http://localhost:5000/book/book2 -X DELETE -v]
+          [string] -- [How To Test: curl http://localhost:5000/book/id/book2 -X DELETE -v]
         """
 
         self.abort_if_todo_doesnt_exist(book_id)
@@ -38,7 +38,7 @@ class Detail(Resource):
           book_id {[string]} -- [book id]
 
         Returns:
-          [object] -- [How To Test: curl http://localhost:5000/book/book2 -d "author=Homepes" -X PUT -v]
+          [object] -- [How To Test: curl http://localhost:5000/book/id/book2 -d "author=Homepes" -X PUT -v]
         """
 
         args = parser.parse_args()
