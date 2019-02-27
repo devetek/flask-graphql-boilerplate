@@ -1,29 +1,27 @@
 import grpc
 from concurrent import futures
 import time
+import math
 
 # import the generated classes
-import rpc.modules.calculator.calculator_pb2 as calculator_pb2
 import rpc.modules.calculator.calculator_pb2_grpc as calculator_pb2_grpc
+import rpc.modules.calculator.calculator_pb2 as calculator_pb2
 
-from rpc.modules.calculator import square_root
+
+"""[TODO: Move this section to seperate each modules]
+[Description: Class Handler for all proto interface]
+"""
 
 
 class CalculatorServicer(calculator_pb2_grpc.CalculatorServicer):
-
-    """[Define your calculator handler]
-
-    Arguments:
-        calculator_pb2_grpc {[type]} -- [description]
-
-    Returns:
-        [type] -- [description]
-    """
-
     def SquareRoot(self, request, context):
         response = calculator_pb2.Number()
-        response.value = square_root(request.value)
+        response.value = math.sqrt(request.value)
         return response
+
+
+"""[TODO: Move this section to global rpc server]
+"""
 
 
 def bootstrap_server():
