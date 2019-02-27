@@ -12,8 +12,8 @@ SQLAlchemy
 Werkzeug
 google
 protobuf
-grpcio
-#grpcio-tools  
+grpcio==1.19.0
+grpcio-tools  
 validators
 uwsgi
 redis

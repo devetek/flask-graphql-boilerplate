@@ -6,11 +6,23 @@ setup:
 		pip install -r requirements.txt; \
 	)
 
-dev:
+# How To Generate Proto e.g:
+# make generate-proto OUTPUT=./grpc/modules/calculator/calculator.proto
+generate-proto:
+	@ python3 -m venv python_modules
 	( \
 		source python_modules/bin/activate; \
-		python main.py; \
+		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. $(OUTPUT); \
 	)
 
-dev-uwsgi:
-	@ uwsgi --http :5000 --gevent 1000 --http-websockets --master --wsgi-file ./main.py --callable app
+dev-web:
+	( \
+		source python_modules/bin/activate; \
+		python main.py http; \
+	)
+
+dev-rpc:
+	( \
+		source python_modules/bin/activate; \
+		python main.py rpc; \
+	)

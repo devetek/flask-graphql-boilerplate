@@ -1,5 +1,0 @@
-app:
-  - version: 10
-    cpu: 4
-    memory: 8
-    storage: 500
