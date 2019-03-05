@@ -7,12 +7,11 @@ setup:
 	)
 
 # How To Generate Proto e.g:
-# make generate-proto OUTPUT=./grpc/modules/calculator/calculator.proto
+# make generate-proto OUTPUT=module-name
 generate-proto:
-	@ python3 -m venv python_modules
 	( \
 		source python_modules/bin/activate; \
-		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. $(OUTPUT); \
+		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
 	)
 
 dev-web:
