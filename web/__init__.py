@@ -30,7 +30,7 @@ def bootstrap_web(config_class):
     babel.init_app(app)
     login.init_app(app)
 
-    """[routes handler for http, sw or polling]
+    """[routes handler for http, ws or polling]
     Descriptions: define your routes method, using Flask Blueprint or traditional routes
     Author: Prakasa <prakasa@devetek.com>
     """
