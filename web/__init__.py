@@ -17,7 +17,7 @@ login = LoginManager()
 moment = Moment()
 babel = Babel()
 login.login_view = 'auth.login'
-login.login_message = _l('Please log in to access this page.')
+login.login_message = _l('Please logIn to access this page.')
 
 
 def bootstrap_web(config_class):
