@@ -14,13 +14,13 @@ generate-proto:
 		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
 	)
 
-dev-web:
+dev-web: setup
 	( \
 		source python_modules/bin/activate; \
 		python main.py http; \
 	)
 
-dev-rpc:
+dev-rpc: setup
 	( \
 		source python_modules/bin/activate; \
 		python main.py rpc; \

@@ -1,9 +1,9 @@
 from flask import Flask
 from models import db, migrate
-from flask_moment import Moment
+# from flask_moment import Moment
 from flask_login import LoginManager
-from flask_bootstrap import Bootstrap
-from flask_babel import Babel, lazy_gettext as _l
+# from flask_bootstrap import Bootstrap
+# from flask_babel import Babel, lazy_gettext as _l
 
 
 # ===== Modular Routes =====
@@ -12,22 +12,20 @@ from web.modules.book import bp as book_bp, routes
 from web.modules.errors import bp as errors_bp, handlers
 
 
-bootstrap = Bootstrap()
+# bootstrap = Bootstrap()
 login = LoginManager()
-moment = Moment()
-babel = Babel()
-login.login_view = 'auth.login'
-login.login_message = _l('Please logIn to access this page.')
+# moment = Moment()
+# babel = Babel()
 
 
 def bootstrap_web(config_class):
     app = Flask(__name__)
     app.config.from_object(config_class)
-    bootstrap.init_app(app)
+    # bootstrap.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
-    moment.init_app(app)
-    babel.init_app(app)
+    # moment.init_app(app)
+    # babel.init_app(app)
     login.init_app(app)
 
     """[routes handler for http, ws or polling]

@@ -3,12 +3,12 @@ from flask_login import UserMixin
 from datetime import datetime, timedelta
 
 
-class User(UserMixin, db.Model):
+class User(db.Model):
     # as is the name of the model
     __tablename__ = 'user'
 
     user_id = db.Column(db.BigInteger, unique=True,
-                        nullable=False, primary_key=True)
+                        nullable=False, primary_key=True, index=True)
     username = db.Column(db.VARCHAR(255), index=True)
     fullname = db.Column(db.VARCHAR(255))
     place_of_birth = db.Column(db.Text)
@@ -23,7 +23,6 @@ class User(UserMixin, db.Model):
     email = db.Column(db.VARCHAR(50))
     gender = db.Column(db.VARCHAR(1))
     religi = db.Column(db.VARCHAR(10))
-    religi = db.Column(db.VARCHAR(10))
     aboutme = db.Column(db.Text)
     password = db.Column(db.VARCHAR(255))
     joindate = db.Column(db.DateTime, default=datetime.utcnow)
@@ -31,6 +30,22 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+    def is_active(self):
+        """True, as all users are active."""
+        return True
+
+    def get_id(self):
+        """Return the user_id to satisfy Flask-Login's requirements."""
+        return self.user_id
+
+    def is_authenticated(self):
+        """Return True if the user is authenticated."""
+        return False if self.user_id is None else True
+
+    def is_anonymous(self):
+        """False, as anonymous users aren't supported."""
+        return True if self.user_id is None else False
 
     def to_dict(self):
         data = {
@@ -40,6 +55,19 @@ class User(UserMixin, db.Model):
             'email': self.email,
             'place_of_birth': self.place_of_birth,
             'birthday': self.birthday,
+            'address': self.address,
+            'postal': self.postal,
+            'district_id': self.district_id,
+            'province_id': self.province_id,
+            'country_id': self.country_id,
+            'telp': self.telp,
+            'phone': self.phone,
+            'gender': self.gender,
+            'religi': self.religi,
+            'aboutme': self.aboutme,
+            'password': self.password,
+            'joindate': self.joindate,
+            'status': self.status
         }
 
         return data

@@ -1,9 +1,10 @@
-from flask_restful import Resource, url_for
-from web.modules.member import bp, api
-from web.modules.member.controllers import main, detail
+from flask_restful import Resource
+from web.modules.member import api
+from web.modules.member.controllers import MainController, LoginController, DetailController
 
 
 """[define routing under module member]
 """
-api.add_resource(main.Main, '', '/')
-api.add_resource(detail.Detail, '/id/<int:user_id>')
+api.add_resource(MainController, '', '/')
+api.add_resource(LoginController, '/login')
+api.add_resource(DetailController, '/get')

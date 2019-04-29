@@ -1,18 +1,21 @@
+
+import hashlib
 from flask import jsonify
 from flask_restful import Resource
+from flask_login import login_user, logout_user, login_required
 from models.user import User
 
 
-class Main(Resource):
+class MainController(Resource):
 
-    def get(self):
+    def get(self, offset=0, limit=5):
         """[get all users]
 
         Returns:
           [object] -- [How To Test: curl http://localhost:5000/member]
         """
         userData = []
-        users = User.query.all()
+        users = User.query[offset:limit]
 
         if users != None:
             [userData.append(user.to_dict()) for user in users]
