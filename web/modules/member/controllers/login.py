@@ -2,6 +2,7 @@ from flask import jsonify
 from flask_restful import Resource, reqparse, abort
 from models.user import User
 from libraries.hash import md5
+from flask_login import login_user
 
 """[define your parameters here, strict for security issue]
 """
@@ -24,5 +25,6 @@ class LoginController(Resource):
 
         if user != None:
             user_data = user.to_dict()
+            login_user(user, remember=True)
 
         return jsonify(user_data)

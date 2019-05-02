@@ -2,7 +2,6 @@
 import hashlib
 from flask import jsonify
 from flask_restful import Resource
-from flask_login import login_user, logout_user, login_required
 from models.user import User
 
 

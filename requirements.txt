@@ -2,6 +2,7 @@ Flask
 PyMySQL
 mysqlclient
 flask-restful
+Flask-Session
 Flask-Bootstrap
 Flask-SQLAlchemy
 Flask-Migrate
