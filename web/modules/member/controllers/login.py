@@ -1,8 +1,8 @@
-from flask import jsonify
+from flask import jsonify, redirect
 from flask_restful import Resource, reqparse, abort
 from models.user import User
 from libraries.hash import md5
-from flask_login import login_user
+from flask_login import login_user, current_user
 
 """[define your parameters here, strict for security issue]
 """
@@ -14,6 +14,9 @@ parser.add_argument('password')
 class LoginController(Resource):
 
     def get(self):
+        if hasattr(current_user, 'user_id'):
+            return redirect("/member/me", code=302)
+
         user_data = {}
         args = parser.parse_args(req=None, strict=False)
 
