@@ -1,5 +1,5 @@
 setup:
-	@ python3 -m venv python_modules
+	@ python -m venv python_modules
 	( \
 		source python_modules/bin/activate; \
 		pip install --upgrade pip; \
@@ -24,4 +24,11 @@ dev-rpc: setup
 	( \
 		source python_modules/bin/activate; \
 		python main.py rpc; \
+	)
+
+dev-web-docker:
+	( \
+		pip install --upgrade pip; \
+		pip install -r requirements.txt; \
+		python main.py http; \
 	)
