@@ -31,3 +31,21 @@ class LoginController(Resource):
             login_user(user, remember=True)
 
         return jsonify(user_data)
+
+    def post(self):
+        args = parser.parse_args()
+
+        user = User.query.filter_by(
+            email=args['email'], password=md5(args['password'])).first()
+
+        if user != None:
+            user_data = user.to_dict()
+            login_user(user, remember=True)
+
+        return jsonify(user_data)
+
+    def delete(self):
+        pass
+
+    def put(self):
+        pass

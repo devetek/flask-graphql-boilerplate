@@ -5,6 +5,9 @@ from config import Config
 #from cli import bootstrap_cli
 from web import bootstrap_web
 from rpc import bootstrap_rpc
+from dotenv import load_dotenv
+
+load_dotenv(verbose=True)
 
 if __name__ == '__main__':
     """[WIM - Common Interface Modules]
