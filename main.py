@@ -1,13 +1,13 @@
 import sys
-from config import Config
 #from models import bootstrap_models
 #from logger import bootstrap_logger
 #from cli import bootstrap_cli
 from web import bootstrap_web
 from rpc import bootstrap_rpc
-from dotenv import load_dotenv
 
-load_dotenv(verbose=True)
+from config import Config
+
+print (Config.TESTING)
 
 if __name__ == '__main__':
     """[WIM - Common Interface Modules]

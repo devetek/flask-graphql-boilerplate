@@ -1,4 +1,9 @@
+# local env folder
+/docker/database
+/docker/redis
 /python_modules
+
+# local tmp file
 *.pyc
 dump.rdb
 .env

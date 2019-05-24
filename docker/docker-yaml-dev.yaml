@@ -1,14 +1,40 @@
 version: "3"
 
 services:
-  backend:
-    image: python:3.7.3
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: terpusat
+      MYSQL_PASSWORD: terpusat
+
+  redis:
+    image: bitnami/redis:latest
+    restart: always
+    ports:
+      - 6380:6380
+    volumes:
+      - ./redis:/bitnami/redis/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_MASTER_PORT_NUMBER=6380
+
+  backend_http:
+    depends_on:
+      - db
+      - redis
+    image: prakasa1904/tps-py-api:latest
     working_dir: /code/
     volumes:
       - ../:/code
-    restart: always
+      - /code/python_modules/ # Generate volume `python_modules` empty
+    # restart: always
     command: make dev-web-docker
     env_file:
-      - ../.env
+      - ./.env
     ports:
       - 5000:5000

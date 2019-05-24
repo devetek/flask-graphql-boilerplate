@@ -14,23 +14,26 @@ generate-proto:
 		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
 	)
 
-dev-web: setup
+dev-web:
 	( \
 		source python_modules/bin/activate; \
 		python main.py http; \
 	)
 
-dev-rpc: setup
+dev-rpc:
 	( \
 		source python_modules/bin/activate; \
 		python main.py rpc; \
 	)
 
-run-docker:
+# Runner for docker environments
+run-dev:
 	@ docker-compose -f docker/docker-yaml-dev.yaml up  
 
-dev-web-docker:
+setup-docker:
 	( \
-		source python_modules/bin/activate; \
-		python main.py http; \
+		pip install -r requirements.txt; \
 	)
+
+dev-web-docker: setup-docker
+	@ python main.py http
