@@ -60,12 +60,11 @@ ENV ALPINE_VERSION=3.8 \
     "
 
 RUN set -ex ;\
-    echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/community" >> /etc/apk/repositories ;\
-    echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/main" >> /etc/apk/repositories ;\
+    echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/community" >> /etc/apk/repositories; \
+    echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/main" >> /etc/apk/repositories; \
     apk add --no-cache $PACKAGES; \
     apk add --no-cache --virtual .build-deps $PYTHON_BUILD_PACKAGES; \
     pip install --upgrade pip; \
     pip install -r requirements.txt; \
     apk del --no-cache --purge .build-deps; \
-    apk -q --no-cache add mariadb-client-libs; \
     rm -rf /var/cache/apk/*
