@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv(verbose=True)
 
+
 class Config(object):
     # App Common Configuration
     APP_NAME = os.getenv('APP_NAME')
@@ -28,8 +29,10 @@ class Config(object):
     AUTH_HEADER_NAME = os.getenv('AUTH_HEADER_NAME')
     SESSION_PROTECTION = os.getenv('SESSION_PROTECTION')
 
-    def get_app_env(self):
-        return self.FLASK_ENV
-
-    def get_app_name(self):
-        return self.APP_NAME
+    # Unicode Environment
+    REDIS_HOST_UNIQ_CODE = os.getenv('REDIS_HOST_UNIQ_CODE')
+    REDIS_PORT_UNIQ_CODE = int(os.getenv('REDIS_PORT_UNIQ_CODE'))
+    REDIS_DB_UNIQ_CODE = int(os.getenv('REDIS_DB_UNIQ_CODE'))
+    KEY_UNIQ_CODE = os.getenv('KEY_UNIQ_CODE')
+    MIN_UNIQ_CODE = int(os.getenv('MIN_UNIQ_CODE'))
+    MAX_UNIQ_CODE = int(os.getenv('MAX_UNIQ_CODE'))

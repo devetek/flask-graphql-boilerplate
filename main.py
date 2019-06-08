@@ -2,12 +2,7 @@ import sys
 #from models import bootstrap_models
 #from logger import bootstrap_logger
 #from cli import bootstrap_cli
-from web import bootstrap_web
-from rpc import bootstrap_rpc
-
 from config import Config
-
-print (Config.TESTING)
 
 if __name__ == '__main__':
     """[WIM - Common Interface Modules]
@@ -19,10 +14,14 @@ if __name__ == '__main__':
     """
 
     if sys.argv[1] == 'rpc':
+        from rpc import bootstrap_rpc
+
         """[WIM - RPC Interface Modules]
         """
         bootstrap_rpc()
     else:
+        from web import bootstrap_web
+
         """[WIM - WS Interface Modules]
         """
 

@@ -7,3 +7,4 @@
 *.pyc
 dump.rdb
 .env
+sess_*

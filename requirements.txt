@@ -14,7 +14,7 @@ SQLAlchemy
 Werkzeug
 google
 protobuf
-grpcio==1.20.1
+grpcio
 grpcio-tools  
 validators
 uwsgi
@@ -22,6 +22,7 @@ redis
 pyyaml
 fabric
 fire
+schedule
 requests
 gevent
 gevent-websocket
@@ -32,5 +33,5 @@ autopep8
 python-dotenv
 
 # linting tools
-pylint<2.0.0
+pylint
 autopep8

@@ -23,6 +23,7 @@ ENV ALPINE_VERSION=3.8 \
       build-base \
       bash \
       git \
+      curl \
       ca-certificates \
       libssl1.0 \
       libffi-dev \

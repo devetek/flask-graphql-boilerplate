@@ -7,7 +7,7 @@ from flask_login import logout_user, login_required
 class LogoutController(Resource):
     message = {
         "status": 200,
-        "message": "Thanks for using " + Config().get_app_name()
+        "message": "Thanks for using " + Config.APP_NAME
     }
 
     @login_required

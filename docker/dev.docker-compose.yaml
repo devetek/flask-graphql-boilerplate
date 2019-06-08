@@ -1,8 +1,9 @@
-version: "3"
+version: "3.3"
 
 services:
   db:
     image: mysql
+    container_name: earthshaker_mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
@@ -11,23 +12,42 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: terpusat
       MYSQL_PASSWORD: terpusat
+  
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    container_name: earthshaker_phpMyAdmin
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - ./phpMyAdmin:/sessions
+    environment:
+      PMA_HOSTS: db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+      # PMA_ARBITRARY: 1
 
   redis:
     image: bitnami/redis:latest
+    container_name: earthshaker_redis
     restart: always
     ports:
-      - 6380:6380
+      - 6380:6379
     volumes:
       - ./redis:/bitnami/redis/data
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_MASTER_PORT_NUMBER=6380
+      ALLOW_EMPTY_PASSWORD: yes
+      REDIS_MASTER_PORT_NUMBER: 6379
 
   backend_http:
     depends_on:
       - db
       - redis
     image: prakasa1904/tps-py-api:latest
+    container_name: earthshaker_backend_http
     working_dir: /code/
     volumes:
       - ../:/code

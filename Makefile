@@ -28,12 +28,7 @@ dev-rpc:
 
 # Runner for docker environments
 run-dev:
-	@ docker-compose -f docker/docker-yaml-dev.yaml up  
+	@ docker-compose -f docker/dev.docker-compose.yaml up  
 
-setup-docker:
-	( \
-		pip install -r requirements.txt; \
-	)
-
-dev-web-docker: setup-docker
+dev-web-docker:
 	@ python main.py http
