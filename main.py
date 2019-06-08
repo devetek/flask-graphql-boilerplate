@@ -4,7 +4,7 @@ import sys
 #from cli import bootstrap_cli
 from config import Config
 
-if __name__ == '__main__':
+if __name__ == '__main__' and len(sys.argv):
     """[WIM - Common Interface Modules]
     """
     # bootstrap_models()

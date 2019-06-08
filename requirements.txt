@@ -17,6 +17,7 @@ protobuf
 grpcio
 grpcio-tools  
 validators
+supervisor
 uwsgi
 redis
 pyyaml

@@ -1,6 +1,5 @@
 from flask import jsonify
 from config import Config
-from web.modules.payment.worker import UnicodeThreadWorker
 from flask_restful import Resource, reqparse
 from helpers.createRedis import Create, R_KEY
 
@@ -8,9 +7,6 @@ from helpers.createRedis import Create, R_KEY
 """
 parser = reqparse.RequestParser()
 parser.add_argument('my_code')
-
-# Init Worker:
-UnicodeThreadWorker()
 
 
 class UnicodeController(Resource):
@@ -26,6 +22,25 @@ class UnicodeController(Resource):
         rd_code = self.redis.zrange(R_KEY, 0, 0)
 
         if len(rd_code) > 0:
+            my_code = int(rd_code[0].decode("utf-8"))
+            rm_response = self.__remove(my_code)
+
+            if rm_response != 1:
+                self.__remove(my_code)
+
+            status = 200
+        else:
+            dic = {}
+            x_min = self.x_min
+            daily_tr = (self.x_max - self.x_min) + 1
+
+            for x in range(daily_tr):
+                dic[x_min] = x_min
+                x_min += 1
+
+            self.redis.zadd(R_KEY, dic)
+
+            rd_code = self.redis.zrange(R_KEY, 0, 0)
             my_code = int(rd_code[0].decode("utf-8"))
             rm_response = self.__remove(my_code)
 

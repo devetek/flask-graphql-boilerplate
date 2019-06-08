@@ -26,6 +26,30 @@ dev-rpc:
 		python main.py rpc; \
 	)
 
+dev-agent:
+	( \
+		source python_modules/bin/activate; \
+		python wisp.py; \
+	)
+
+prod-web:
+	( \
+		source python_modules/bin/activate; \
+		uwsgi --http 127.0.0.1:5000 --module earthshaker:app; \
+	)
+
+prod-rpc:
+	( \
+		source python_modules/bin/activate; \
+		python main.py rpc; \
+	)
+
+prod-agent:
+	( \
+		source python_modules/bin/activate; \
+		python wisp.py; \
+	)
+
 # Runner for docker environments
 run-dev:
 	@ docker-compose -f docker/dev.docker-compose.yaml up  

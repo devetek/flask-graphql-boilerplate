@@ -1,3 +1,4 @@
+from config import Config
 from flask import Flask, session
 from flask_session import Session
 # from models import db, migrate
@@ -49,6 +50,7 @@ def bootstrap_web(config_class):
     # app.register_blueprint(book_bp, url_prefix='/book')
     app.register_blueprint(payment_bp, url_prefix='/payment')
     app.register_blueprint(errors_bp)
-    app.run()
+    if Config.FLASK_ENV == 'development':
+        app.run()
 
     return app
