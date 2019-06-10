@@ -50,7 +50,7 @@ prod-agent:
 		python wisp.py; \
 	)
 
-# Runner for docker environments
+# Run services with docker
 run-dev:
 	@ cp ./docker/.env.example ./docker/.env
 	@ docker-compose -f docker/dev.docker-compose.yaml up  
