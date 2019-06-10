@@ -11,9 +11,6 @@ services:
       - mysql_data:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-      #MYSQL_DATABASE: terpusat_content
-      MYSQL_USER: terpusat
-      MYSQL_PASSWORD: development
 
   phpmyadmin:
     depends_on:
@@ -40,8 +37,8 @@ services:
     volumes:
       - ./redis:/bitnami/redis/data
     environment:
-      ALLOW_EMPTY_PASSWORD: "yes"
-      REDIS_MASTER_PORT_NUMBER: 6379
+      - ALLOW_EMPTY_PASSWORD=yes
+      - REDIS_MASTER_PORT_NUMBER=6379
 
   backend_http:
     depends_on:

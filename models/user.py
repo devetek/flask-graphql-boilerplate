@@ -4,7 +4,6 @@ from datetime import datetime, timedelta
 
 
 class User(db.Model):
-    # as is the name of the model
     __tablename__ = 'user'
 
     user_id = db.Column(db.BigInteger, unique=True,

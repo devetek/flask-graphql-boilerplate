@@ -3,12 +3,10 @@ PyMySQL
 mysqlclient
 flask-restful
 Flask-Session
-Flask-Bootstrap
 Flask-SQLAlchemy
 Flask-Migrate
 flask-login
 Flask-Babel
-Flask-Moment
 flask-restful-swagger
 SQLAlchemy
 Werkzeug

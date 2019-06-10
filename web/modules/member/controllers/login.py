@@ -1,7 +1,8 @@
 from flask import jsonify, redirect
-from flask_restful import Resource, reqparse, abort
+from flask_restful import Resource, reqparse
 from models.user import User
 from libraries.hash import md5
+from web.helpers.error_handler import error_401
 from flask_login import login_user, current_user
 
 """[define your parameters here, strict for security issue]
@@ -21,7 +22,7 @@ class LoginController(Resource):
         args = parser.parse_args(req=None, strict=False)
 
         if args['email'] is None or args['password'] is None:
-            abort(401, message="Invalid params")
+            error_401()
 
         user = User.query.filter_by(
             email=args['email'], password=md5(args['password'])).first()
@@ -43,9 +44,3 @@ class LoginController(Resource):
             login_user(user, remember=True)
 
         return jsonify(user_data)
-
-    def delete(self):
-        pass
-
-    def put(self):
-        pass
