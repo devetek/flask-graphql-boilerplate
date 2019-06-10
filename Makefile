@@ -52,6 +52,7 @@ prod-agent:
 
 # Runner for docker environments
 run-dev:
+	@ cp ./docker/.env.example ./docker/.env
 	@ docker-compose -f docker/dev.docker-compose.yaml up  
 
 dev-web-docker:
