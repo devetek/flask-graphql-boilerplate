@@ -1,13 +1,14 @@
-from flask import render_template
+from config import Config
 from web.modules.errors import bp
+from web.helpers.error_handler import error_http_code
 
 
 @bp.app_errorhandler(404)
 def not_found_error(error):
-    return render_template('errors/404.html'), 404
+    return error_http_code(404, {}, True)
 
 
 @bp.app_errorhandler(500)
 def internal_error(error):
     db.session.rollback()
-    return render_template('errors/500.html'), 500
+    return error_http_code(500, {}, True)

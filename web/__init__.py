@@ -10,7 +10,7 @@ from flask_babel import Babel, lazy_gettext as _l
 
 # ===== Modular Routes =====
 from web.modules.member import bp as member_bp, routes
-from web.modules.book import bp as book_bp, routes
+from web.modules.content import bp as content_bp, routes
 from web.modules.payment import bp as payment_bp, routes
 from web.modules.errors import bp as errors_bp, handlers
 
@@ -39,7 +39,7 @@ def bootstrap_web(config_class):
     Author: Prakasa <prakasa@devetek.com>
     """
     app.register_blueprint(member_bp, url_prefix='/member')
-    app.register_blueprint(book_bp, url_prefix='/book')
+    app.register_blueprint(content_bp, url_prefix='/content')
     app.register_blueprint(payment_bp, url_prefix='/payment')
     app.register_blueprint(errors_bp)
     if Config.FLASK_ENV == 'development':

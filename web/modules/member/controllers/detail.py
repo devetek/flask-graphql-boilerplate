@@ -1,6 +1,6 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
-from web.helpers.error_handler import error_404
+from web.helpers.error_handler import error_http_code
 from models.user import User
 from libraries.hash import md5
 
@@ -50,6 +50,6 @@ class DetailController(Resource):
         user = User.query.filter_by(**args).first()
 
         if user is None:
-            error_404({message: "User doesn't exist"})
+            error_http_code(404, {message: "User doesn't exist"})
 
         return jsonify(user.to_dict())

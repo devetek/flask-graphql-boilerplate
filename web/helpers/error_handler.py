@@ -1,57 +1,25 @@
 from config import Config
+from flask import jsonify
 from flask_restful import abort
 
 
-def error_400(opts={}):
+"""[Function helper for generate JSON response on error HTTP STATUS CODE or non 200]
+
+Returns:
+    [void] -- [when `@for_common` is disable will default response http body]
+    [dictionary] -- [when `@for_common` is enable will return dict of default error data combine with custom error from user defined]
+"""
+
+
+def error_http_code(code=404, opts={}, for_common=False):
     default_opt = {
-        "message": Config.ERROR_CODE_MESSAGE['http_status'][400],
-        "status": 400,
+        "message": Config.ERROR_CODE_MESSAGE['http_status'][code],
+        "status": code,
     }
 
     default_opt.update(opts)
+
+    if for_common:
+        return jsonify(default_opt)
 
     return abort(400, **default_opt)
-
-
-def error_401(opts={}):
-    default_opt = {
-        "message": Config.ERROR_CODE_MESSAGE['http_status'][401],
-        "status": 401,
-    }
-
-    default_opt.update(opts)
-
-    return abort(401, **default_opt)
-
-
-def error_404(opts={}):
-    default_opt = {
-        "message": Config.ERROR_CODE_MESSAGE['http_status'][404],
-        "status": 404,
-    }
-
-    default_opt.update(opts)
-
-    return abort(404, **default_opt)
-
-
-def error_405(opts={}):
-    default_opt = {
-        "message": Config.ERROR_CODE_MESSAGE['http_status'][405],
-        "status": 405,
-    }
-
-    default_opt.update(opts)
-
-    return abort(405, **default_opt)
-
-
-def error_500(opts={}):
-    default_opt = {
-        "message": Config.ERROR_CODE_MESSAGE['http_status'][500],
-        "status": 500,
-    }
-
-    default_opt.update(opts)
-
-    return abort(500, **default_opt)
