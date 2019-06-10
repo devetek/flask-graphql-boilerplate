@@ -31,7 +31,7 @@ def validate_session_header(request):
             return user
 
     # Basic Auth session support
-    api_key = request.headers.get('Devetek-Authorization')
+    api_key = request.headers.get(Config.AUTH_HEADER_NAME)
 
     if api_key:
         api_key = api_key.replace('Basic ', '', 1)

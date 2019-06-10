@@ -51,6 +51,6 @@ def bootstrap_web(config_class):
     app.register_blueprint(payment_bp, url_prefix='/payment')
     app.register_blueprint(errors_bp)
     if Config.FLASK_ENV == 'development':
-        app.run()
+        app.run(host= '0.0.0.0')
 
     return app
