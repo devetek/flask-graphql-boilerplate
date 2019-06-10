@@ -2,17 +2,12 @@ import base64
 from flask import jsonify
 from config import Config
 from models.user import User
+from web.helpers.error_handler import error_http_code
 
 """[Init Process For Session Management]
 
-Define session flow management here, to init on platform init file.
-This configuration base on Flask-Login requirement
+Session handler, configuration base on Flask-Login requirements
 """
-
-unauthorized_message = {
-    "status": 401,
-    "message": "You don't have access for this page."
-}
 
 
 def validate_session(user_id):
@@ -52,4 +47,4 @@ def validate_session_header(request):
 
 
 def unauthorized_session():
-    return jsonify(unauthorized_message)
+    return error_http_code(401, {}, True)
