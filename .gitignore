@@ -1,5 +1,5 @@
 # local env folder
-/docker/mysql
+/docker/mysql/volume
 /docker/redis
 /docker/phpMyAdmin
 /python_modules

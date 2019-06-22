@@ -52,6 +52,9 @@ prod-agent:
 
 # Run services with docker
 run-dev:
+	@ test -f docker/redis || mkdir -p docker/redis
+	@ test -f docker/phpMyAdmin || mkdir -p docker/phpMyAdmin
+	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
 	@ cp ./docker/.env.example ./docker/.env
 	@ docker-compose -f docker/dev.docker-compose.yaml up  
 

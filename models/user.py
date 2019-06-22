@@ -45,6 +45,14 @@ class User(db.Model):
     def is_anonymous(self):
         """False, as anonymous users aren't supported."""
         return True if self.user_id is None else False
+    
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    @classmethod
+    def find_by_username(cls, username):
+        return cls.query.filter_by(username = username).first()
 
     def to_dict(self):
         data = {

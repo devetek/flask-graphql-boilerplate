@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+"""DevKit Demo"""
+
+import fire
+
+from init.main import Init
+from config.main import Config
+
+
+class DevKit(object):
+  """A DevKit."""
+  
+  def __init__(self):
+    self.init = Init()
+    self.config = Config()
+
+
+
+def main():
+  fire.Fire(DevKit)
+
+if __name__ == '__main__':
+  main()

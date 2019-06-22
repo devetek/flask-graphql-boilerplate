@@ -1,51 +1,53 @@
 version: "3.3"
 
 services:
-  db:
+  butterfly_mysql:
     image: mysql
-    container_name: earthshaker_mysql
+    container_name: butterfly_mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
-      - mysql_backup:/docker-entrypoint-initdb.d
-      - mysql_data:/var/lib/mysql
+      - butterfly_mysql_backup:/docker-entrypoint-initdb.d
+      - butterfly_mysql_data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=init
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
-  phpmyadmin:
+  butterfly_phpmyadmin:
     depends_on:
-      - db
+      - butterfly_mysql
     image: phpmyadmin/phpmyadmin
-    container_name: earthshaker_phpMyAdmin
+    container_name: butterfly_phpMyAdmin
     restart: always
     ports:
       - 8080:80
     volumes:
       - ./phpMyAdmin:/sessions
     environment:
-      PMA_HOSTS: db
+      PMA_HOSTS: butterfly_mysql
       PMA_PORT: 3306
       PMA_USER: root
       PMA_PASSWORD: root
 
-  redis:
-    image: bitnami/redis:latest
-    container_name: earthshaker_redis
+  butterfly_redis:
+    image: redis:alpine
+    container_name: butterfly_redis
+    command: ["redis-server", "--appendonly", "yes"]
     restart: always
-    ports:
-      - 6380:6379
     volumes:
-      - ./redis:/bitnami/redis/data
+      - ./redis:/data
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
       - REDIS_MASTER_PORT_NUMBER=6379
+      - REDIS_PASSWORD=redis_password
 
-  backend_http:
+  butterfly_backend_http:
     depends_on:
-      - db
-      - redis
+      - butterfly_mysql
+      - butterfly_redis
     image: prakasa1904/tps-py-api:latest
-    container_name: earthshaker_backend_http
+    container_name: butterfly_backend_http
     working_dir: /code/
     volumes:
       - ../:/code
@@ -58,13 +60,13 @@ services:
       - 5000:5000
 
 volumes:
-  mysql_backup:
+  butterfly_mysql_backup:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/docker/mysql
+      device: $PWD/docker/mysql/restore
       o: bind
-  mysql_data:
+  butterfly_mysql_data:
     driver: local
     driver_opts:
       type: none

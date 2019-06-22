@@ -1,4 +1,5 @@
 # __all__ = ["init", "config", "create-app", "deploy"]
+__all__ = ["init"]
 
 """[Available syntax for this devTek CLI]
     init              - Usage for the first time initialize this tools
