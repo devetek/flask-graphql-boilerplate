@@ -1,4 +1,10 @@
+# ========================================
+# Setup non docker environment
+# Author: Prakasa <prakasa@devetek.com>
+# ========================================
 setup:
+	@ which pip3 || exit 1
+	@ pip3 install virtualenv
 	@ python3 -m venv python_modules
 	( \
 		source python_modules/bin/activate; \
@@ -14,19 +20,19 @@ generate-proto:
 		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
 	)
 
-dev-web:
+dev-web: setup
 	( \
 		source python_modules/bin/activate; \
 		python main.py http; \
 	)
 
-dev-rpc:
+dev-rpc: setup
 	( \
 		source python_modules/bin/activate; \
 		python main.py rpc; \
 	)
 
-dev-agent:
+dev-agent: setup
 	( \
 		source python_modules/bin/activate; \
 		python wisp.py; \
@@ -50,7 +56,10 @@ prod-agent:
 		python wisp.py; \
 	)
 
-# Run services with docker
+# ========================================
+# Running using docker environment
+# Author: Prakasa <prakasa@devetek.com>
+# ========================================
 run-dev:
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ test -f docker/phpMyAdmin || mkdir -p docker/phpMyAdmin
@@ -60,3 +69,15 @@ run-dev:
 
 dev-web-docker:
 	@ python main.py http
+
+
+# ==================================================
+# Test runner - [pain, code coverage, automation]
+# Author: Prakasa <prakasa@devetek.com>
+# TODO: Adding modular test and all test
+# ==================================================
+test-pain:
+	( \
+		source python_modules/bin/activate; \
+		python web/modules/oauth/controllers/__test__/registration.py; \
+	)
