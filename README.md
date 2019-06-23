@@ -10,6 +10,13 @@ Butterfly is python framework for [Devetek Team](http://devetek.com). This is bo
 
 Target: Easy, Lite, Secure and Reliable
 
+## Available Services
+
+### REST API:
+
+    - oauth
+    - payment
+
 ## requirements
 
 - Docker
