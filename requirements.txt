@@ -8,13 +8,14 @@ Flask-Migrate
 flask-login
 Flask-Babel
 flask-restful-swagger
+flask-jwt-extended
 SQLAlchemy
-Werkzeug
 google
 protobuf
 grpcio
 grpcio-tools  
 validators
+passlib
 supervisor
 uwsgi
 redis
@@ -23,12 +24,7 @@ fabric
 fire
 schedule
 requests
-gevent
-gevent-websocket
-gevent-socketio
-eventlet
 flask-socketio
-autopep8
 python-dotenv
 
 # linting tools

@@ -4,6 +4,7 @@ from flask_session import Session
 from models import db, migrate
 from models.user import User
 from flask_login import LoginManager
+from flask_jwt_extended import JWTManager
 from .helpers.session_handler import validate_session, validate_session_header, unauthorized_session
 from flask_babel import Babel, lazy_gettext as _l
 
@@ -29,6 +30,7 @@ def bootstrap_web(config_class):
     sess.init_app(app)
     db.init_app(app)
     migrate.init_app(app, db)
+    JWTManager(app)
     login.init_app(app)
     login.unauthorized_handler(unauthorized_session)
     login.user_loader(validate_session)
@@ -45,6 +47,6 @@ def bootstrap_web(config_class):
     app.register_blueprint(payment_bp, url_prefix='/payment')
     app.register_blueprint(errors_bp)
     if Config.FLASK_ENV == 'development':
-        app.run(host='0.0.0.0')
+        app.run(host='0.0.0.0', debug=True)
 
     return app

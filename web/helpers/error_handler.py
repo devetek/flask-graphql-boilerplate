@@ -15,6 +15,7 @@ def error_http_code(code=404, opts={}, for_common=False):
     default_opt = {
         "message": Config.ERROR_CODE_MESSAGE['http_status'][code],
         "status": code,
+        "success": False
     }
 
     default_opt.update(opts)

@@ -1,9 +1,12 @@
 import time
 import schedule
-from helpers.createRedis import Create, R_KEY
+from helpers.createRedis import Create
 from config import Config
 
-r = Create().instance()
+R_KEY = Config.KEY_UNIQ_CODE
+
+r = Create(host=Config.REDIS_HOST_UNIQ_CODE,
+           port=Config.REDIS_PORT_UNIQ_CODE, db=Config.REDIS_DB_UNIQ_CODE).instance()
 
 
 def job():

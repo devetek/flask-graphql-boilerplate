@@ -1,7 +1,9 @@
 from flask import jsonify
 from config import Config
 from flask_restful import Resource, reqparse
-from helpers.createRedis import Create, R_KEY
+from helpers.createRedis import Create
+
+R_KEY = Config.KEY_UNIQ_CODE
 
 """[define your parameters here, strict for security issue]
 """
@@ -14,7 +16,8 @@ class UnicodeController(Resource):
     x_max = Config.MAX_UNIQ_CODE
 
     def __init__(self):
-        self.redis = Create().instance()
+        self.redis = Create(host=Config.REDIS_HOST_UNIQ_CODE,
+                            port=Config.REDIS_PORT_UNIQ_CODE, db=Config.REDIS_DB_UNIQ_CODE).instance()
 
     def get(self, **kwargs):
         my_code = 0

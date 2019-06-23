@@ -20,19 +20,19 @@ generate-proto:
 		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
 	)
 
-dev-web: setup
+dev-web:
 	( \
 		source python_modules/bin/activate; \
 		python main.py http; \
 	)
 
-dev-rpc: setup
+dev-rpc:
 	( \
 		source python_modules/bin/activate; \
 		python main.py rpc; \
 	)
 
-dev-agent: setup
+dev-agent:
 	( \
 		source python_modules/bin/activate; \
 		python wisp.py; \

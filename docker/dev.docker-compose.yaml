@@ -6,6 +6,8 @@ services:
     container_name: butterfly_mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
+    ports:
+      - 3306:3306
     volumes:
       - butterfly_mysql_backup:/docker-entrypoint-initdb.d
       - butterfly_mysql_data:/var/lib/mysql
@@ -35,6 +37,8 @@ services:
     container_name: butterfly_redis
     command: ["redis-server", "--appendonly", "yes"]
     restart: always
+    ports:
+      - 6379:6379
     volumes:
       - ./redis:/data
     environment:
@@ -42,12 +46,12 @@ services:
       - REDIS_MASTER_PORT_NUMBER=6379
       - REDIS_PASSWORD=redis_password
 
-  butterfly_backend_http:
+  butterfly_app:
     depends_on:
       - butterfly_mysql
       - butterfly_redis
     image: prakasa1904/tps-py-api:latest
-    container_name: butterfly_backend_http
+    container_name: butterfly_app
     working_dir: /code/
     volumes:
       - ../:/code
