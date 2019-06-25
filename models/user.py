@@ -1,5 +1,6 @@
 from web import db
 from flask_login import UserMixin
+from sqlalchemy import inspect
 from datetime import datetime
 from libraries.hash import md5, generate_hash256
 
@@ -69,37 +70,22 @@ class User(db.Model):
         """False, as anonymous users aren't supported."""
         return True if self.user_id is None else False
 
-    def save_to_db(self):
+    def save(self):
         db.session.add(self)
         db.session.commit()
 
         return self.user_id
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+        return self.to_dict()
 
     @classmethod
     def find_by_username(cls, username):
         return cls.query.filter_by(username=username).first()
 
     def to_dict(self):
-        data = {
-            'user_id': self.user_id,
-            'username': self.username,
-            'fullname': self.fullname,
-            'email': self.email,
-            'place_of_birth': self.place_of_birth,
-            'birthday': self.birthday,
-            'address': self.address,
-            'postal': self.postal,
-            'district_id': self.district_id,
-            'province_id': self.province_id,
-            'country_id': self.country_id,
-            'telp': self.telp,
-            'phone': self.phone,
-            'gender': self.gender,
-            'religi': self.religi,
-            'aboutme': self.aboutme,
-            'password': self.password,
-            'joindate': self.joindate,
-            'status': self.status
-        }
-
-        return data
+        return {c.key: getattr(self, c.key)
+                for c in inspect(self).mapper.column_attrs}

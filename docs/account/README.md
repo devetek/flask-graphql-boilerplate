@@ -22,10 +22,9 @@ account_member
 - member_password
 - member_join_date
 
-account_relation (one to many)
+member_client (many to many)
 
-- relation_id
-- relation_member_id
-- relation_client_id
+- client_id
+- member_id
 
 Sebagai gambaran besar, service account ini hanya mengatur rules utama dari banyak aplikasi. Untuk kebutuhan secara spesifik, aplikasi masing-masing akan bertanggung jawab menyediakan kebutuhan mereka. Namun jangka panjangnya, untuk dapat menghandle kebutuhan bisnis yang bergerak begitu cepat, diharapkan struktur data yang dibuat mampu mengikuti pergerakan bisnis yang begitu cepat. Pilahan utama untuk ini adalah no sql database. Mari kita lihat di upgrade versi selanjutnya.

@@ -10,8 +10,8 @@ from flask_babel import Babel, lazy_gettext as _l
 
 
 # ===== Modular Routes =====
+from web.modules.account import bp as account_bp, routes
 from web.modules.oauth import bp as oauth_bp, routes
-from web.modules.member import bp as member_bp, routes
 from web.modules.content import bp as content_bp, routes
 from web.modules.payment import bp as payment_bp, routes
 from web.modules.errors import bp as errors_bp, handlers
@@ -41,12 +41,9 @@ def bootstrap_web(config_class):
     Descriptions: define your routes method, using Flask Blueprint or traditional routes
     Author: Prakasa <prakasa@devetek.com>
     """
+    app.register_blueprint(account_bp, url_prefix='/account')
     app.register_blueprint(oauth_bp, url_prefix='/oauth')
-    app.register_blueprint(member_bp, url_prefix='/member')
-    app.register_blueprint(content_bp, url_prefix='/content')
     app.register_blueprint(payment_bp, url_prefix='/payment')
     app.register_blueprint(errors_bp)
-    if Config.FLASK_ENV == 'development':
-        app.run(host='0.0.0.0', debug=True)
 
     return app

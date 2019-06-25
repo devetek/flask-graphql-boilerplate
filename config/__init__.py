@@ -14,6 +14,7 @@ class Config(object):
     SECRET_KEY = os.getenv('SECRET_KEY')
 
     # SQL-Alchemy Environment
+    SQLALCHEMY_CONNECTION = os.getenv('SQLALCHEMY_CONNECTION')
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_BINDS = json.loads(os.getenv('SQLALCHEMY_BINDS'))
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv(

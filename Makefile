@@ -1,3 +1,5 @@
+export FLASK_APP=cli/flask
+
 # ========================================
 # Setup non docker environment
 # Author: Prakasa <prakasa@devetek.com>
@@ -10,6 +12,12 @@ setup:
 		source python_modules/bin/activate; \
 		pip install --upgrade pip; \
 		pip install -r requirements.txt; \
+	)
+
+createdb:
+	( \
+		source python_modules/bin/activate; \
+		flask initdb; \
 	)
 
 # How To Generate Proto e.g:

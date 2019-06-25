@@ -27,4 +27,7 @@ if __name__ == '__main__' and len(sys.argv):
 
         """[WIM - Web Interface Modules]
         """
-        bootstrap_web(Config)
+        app = bootstrap_web(Config)
+
+        if Config.FLASK_ENV == 'development':
+            app.run(host='0.0.0.0', debug=True)

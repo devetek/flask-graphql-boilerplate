@@ -35,3 +35,7 @@ docker only available for `http` protocol. For gRPC will join ASAP.
 ## Contributors
 
 [prakasa1904](https://github.com/prakasa1904)
+
+## References
+
+[Flask-sqlAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/)
