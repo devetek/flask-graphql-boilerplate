@@ -14,6 +14,7 @@ Target: Easy, Lite, Secure and Reliable
 
 ### REST API:
 
+    - account
     - oauth
     - payment
 
