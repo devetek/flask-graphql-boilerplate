@@ -12,7 +12,7 @@ from sqlalchemy.dialects.mysql import INTEGER, BIGINT, TIMESTAMP
 from models.account.client import AccountClient
 from models.account.email import AccountEmail
 from models.account.phone import AccountPhone
-from libraries.hash import generate_hash256
+from libraries.hash import generate_hash256, verify_hash256
 
 
 def member_data_input_serializer(data):
@@ -26,9 +26,6 @@ def member_data_input_serializer(data):
         "member_password": generate_hash256(data['member_password']) if "member_password" in data else generate_hash256("123456"),
         "member_aboutme": data['member_aboutme'] if "member_aboutme" in data else "",
         "member_status": data['member_status'] if "member_status" in data else 0,
-        # "member_email": data['member_email'] if "member_email" in data else None,
-        # "member_phone": data['member_phone'] if "member_phone" in data else None,
-        # "member_apps_ids": data['member_apps_ids'] if "member_apps_ids" in data else None,
         "member_create_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "member_update_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
@@ -96,8 +93,15 @@ class AccountMember(db.Model):
         db.session.commit()
 
     @classmethod
-    def find_by_username(cls, username):
-        return cls.query.filter_by(member_username=username).first()
+    def login_username_password(cls, member_username, member_password):
+        member = cls.query.filter_by(member_username=member_username).first()
+
+        if member is None:
+            return member
+
+        is_valid = verify_hash256(member_password, member.member_password)
+
+        return member if is_valid else None
 
     def to_dict(self):
         return {c.key: getattr(self, c.key)

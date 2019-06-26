@@ -1,10 +1,8 @@
-import json
 from flask_restful import Resource, reqparse
 from models.account.member import AccountMember, member_data_input_serializer
 from models.account.client import AccountClient
 from models.account.email import AccountEmail
 from models.account.phone import AccountPhone
-from libraries.hash import generate_hash256
 from web.helpers import cleaning_dict, success_http_response
 from web.helpers.error_handler import error_http_code
 
