@@ -28,6 +28,9 @@ generate-proto:
 		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
 	)
 
+# ========================================
+# Running development mode without docker, one by one
+# ========================================
 dev-web:
 	( \
 		source python_modules/bin/activate; \
@@ -46,21 +49,22 @@ dev-agent:
 		python wisp.py; \
 	)
 
+# ========================================
+# Running production mode without docker, one by one
+# ========================================
 prod-web:
 	( \
-		source python_modules/bin/activate; \
 		uwsgi --http 127.0.0.1:5000 --module earthshaker:app; \
 	)
 
+# TODO: In progress
 prod-rpc:
 	( \
-		source python_modules/bin/activate; \
 		python main.py rpc; \
 	)
 
 prod-agent:
 	( \
-		source python_modules/bin/activate; \
 		python wisp.py; \
 	)
 
@@ -88,7 +92,8 @@ run-prod:
 
 prod-web-docker:
 	( \
-		uwsgi --http 127.0.0.1:5000 --module earthshaker:app; \
+		uwsgi --http :5000 --module earthshaker:app; \
+		supervisord -c process/background.conf; \
 	)
 
 
