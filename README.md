@@ -22,6 +22,14 @@ Target: Easy, Lite, Secure and Reliable
 - Docker
 - python >= 3.7.2
 
+## Init DB
+
+Init database using CLI, after mysql engine up follow command below:
+
+```sh
+make createdb
+```
+
 ## Running Development
 
 Bootstrap development using docker is easier than others. How to do that ? follow command below:
