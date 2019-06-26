@@ -92,6 +92,7 @@ run-prod:
 
 prod-web-docker:
 	( \
+		flask initdb; \
 		uwsgi --http :5000 --module earthshaker:app; \
 		supervisord -c process/background.conf; \
 	)
