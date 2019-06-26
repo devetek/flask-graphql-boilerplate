@@ -69,14 +69,27 @@ prod-agent:
 # Author: Prakasa <prakasa@devetek.com>
 # ========================================
 run-dev:
-	@ test -f docker/redis || mkdir -p docker/redis
-	@ test -f docker/phpMyAdmin || mkdir -p docker/phpMyAdmin
 	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
+	@ test -f docker/redis || mkdir -p docker/redis
+	@ test -f docker/phpMyAdmin/config || mkdir -p docker/phpMyAdmin/config
+	@ test -f docker/phpMyAdmin/sessions || mkdir -p docker/phpMyAdmin/sessions
 	@ cp ./docker/.env.example ./docker/.env
-	@ docker-compose -f docker/dev.docker-compose.yaml up  
+	@ docker-compose -f docker/dev.docker-compose.yml up  
 
 dev-web-docker:
 	@ python main.py http
+
+
+run-prod:
+	@ test -f docker/redis || mkdir -p docker/redis
+	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
+	# @ cp ./docker/.env.example ./docker/.env // TODO: replace with key value remote config
+	@ docker-compose -f docker/prod.docker-compose.yml up
+
+prod-web-docker:
+	( \
+		uwsgi --http 127.0.0.1:5000 --module earthshaker:app; \
+	)
 
 
 # ==================================================

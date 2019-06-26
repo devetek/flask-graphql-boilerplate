@@ -12,6 +12,7 @@ class Config(object):
     TESTING = os.getenv('TESTING')
     FLASK_ENV = os.getenv('FLASK_ENV')
     SECRET_KEY = os.getenv('SECRET_KEY')
+    APPLICATION_ROOT = os.getenv('APPLICATION_ROOT') or '/'
 
     # SQL-Alchemy Environment
     SQLALCHEMY_CONNECTION = os.getenv('SQLALCHEMY_CONNECTION')

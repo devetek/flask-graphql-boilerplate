@@ -10,23 +10,23 @@ Flask-Babel
 flask-restful-swagger
 flask-jwt-extended
 SQLAlchemy
-google
+# google
 protobuf
-grpcio
-grpcio-tools  
+# grpcio
+# grpcio-tools  
 validators
 passlib
 supervisor
 uwsgi
 redis
-pyyaml
-fabric
-fire
+# pyyaml
+# fabric
+# fire
 schedule
 requests
-flask-socketio
+# flask-socketio
 python-dotenv
 
 # linting tools
-pylint
-autopep8
+# pylint
+# autopep8

@@ -10,7 +10,10 @@ class AccountEmail(db.Model):
     email_id = db.Column(BIGINT(unsigned=True), unique=True,
                          nullable=False, primary_key=True, index=True)
     email_text = db.Column(db.Text)
-    email_status = db.Column(db.Boolean, comment="Email primary or not")
+    email_primary = db.Column(
+        db.Boolean, comment="Email primary or not", default=False)
+    email_verified = db.Column(
+        db.Boolean, comment="Email verified", default=False)
     email_member_id = db.Column(BIGINT(unsigned=True),
                                 db.ForeignKey('account_member.member_id'))
     email_create_date = db.Column(

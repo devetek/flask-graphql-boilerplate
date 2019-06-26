@@ -10,7 +10,10 @@ class AccountPhone(db.Model):
     phone_id = db.Column(BIGINT(unsigned=True), unique=True,
                          nullable=False, primary_key=True, index=True)
     phone_text = db.Column(db.Text)
-    phone_status = db.Column(db.Boolean, comment="Phone primary or not")
+    phone_primary = db.Column(
+        db.Boolean, comment="Phone primary or not", default=False)
+    phone_verified = db.Column(
+        db.Boolean, comment="Phone verified", default=False)
     phone_member_id = db.Column(BIGINT(unsigned=True),
                                 db.ForeignKey('account_member.member_id'))
     phone_create_date = db.Column(

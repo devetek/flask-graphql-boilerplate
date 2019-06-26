@@ -43,10 +43,10 @@ class RegisterMemberController(Resource):
 
                 for email in self.queries['member_email']:
                     if has_primary == True:
-                        email["email_status"] = False
+                        email["email_primary"] = False
 
                     if "email_text" in email and email["email_text"] is not None:
-                        if email["email_status"] == True:
+                        if email["email_primary"] == True:
                             has_primary = True
 
                     if AccountEmail.query.filter_by(email_text=email["email_text"]).first():
@@ -59,10 +59,10 @@ class RegisterMemberController(Resource):
 
                 for phone in self.queries['member_phone']:
                     if has_primary == True:
-                        phone["phone_status"] = False
+                        phone["phone_primary"] = False
 
                     if "phone_text" in phone and phone["phone_text"] is not None:
-                        if phone["phone_status"] == True:
+                        if phone["phone_primary"] == True:
                             has_primary = True
 
                     if AccountPhone.query.filter_by(phone_text=phone["phone_text"]).first():

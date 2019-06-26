@@ -30,14 +30,14 @@ account_phone (many to one)
 
 - phone_id
 - phone_text
-- phone_status
+- phone_primary
 - phone_member_id (Foreign Key member_id)
 
 account_email (many to one)
 
 - email_id
 - email_text
-- email_status
+- email_primary
 - email_member_id (Foreign Key member_id)
 
 member_client (many to many)
@@ -81,25 +81,25 @@ curl --request POST \
 	"member_email": [
 		{
 			"email_text": "prakasa@devetek.com",
-			"email_status": true
+			"email_primary": true
 		},
 		{
 			"email_text": "nedya.prakasa@gmail.com",
-			"email_status": false
+			"email_primary": false
 		},
 		{
 			"email_text": "na.raka45@gmail.com",
-			"email_status": false
+			"email_primary": false
 		}
 	],
 	"member_phone": [
 		{
 			"phone_text": "082113468822",
-			"phone_status": true
+			"phone_primary": true
 		},
 		{
 			"phone_text": "081328169646",
-			"phone_status": false
+			"phone_primary": false
 		}
 	],
 	"member_apps_ids": [
