@@ -88,7 +88,7 @@ run-prod:
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
 	# @ cp ./docker/.env.example ./docker/.env // TODO: replace with key value remote config
-	@ docker-compose -f docker/prod.docker-compose.yml up
+	@ docker-compose -f docker/prod.docker-compose.yml up -d
 
 prod-web-docker:
 	( \
