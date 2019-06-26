@@ -23,4 +23,4 @@ def error_http_code(code=404, opts={}, for_common=False):
     if for_common:
         return jsonify(default_opt)
 
-    return abort(400, **default_opt)
+    return abort(code, **default_opt)
