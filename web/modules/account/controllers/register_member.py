@@ -30,25 +30,57 @@ class RegisterMemberController(Resource):
         if AccountMember.query.filter_by(member_username=self.data['member_username']).first():
             return success_http_response('Client {} already exists'. format(self.data['member_username']), False)
 
-        # try:
-        member = AccountMember(**self.data)
+        try:
+            member = AccountMember(**self.data)
 
-        print(self.queries)
+            if "member_apps_ids" in self.queries and len(self.queries['member_apps_ids']):
+                for app in self.queries['member_apps_ids']:
+                    if "client_id" in app and app["client_id"] is not None:
+                        client = AccountClient.query.filter_by(
+                            client_id=app["client_id"]).first()
+                        member.member_apps_ids.append(client)
 
-        if "member_apps_ids" in self.queries and len(self.queries['member_apps_ids']):
-            print("Executed!")
+            if "member_email" in self.queries and len(self.queries['member_email']):
+                has_primary = False
 
-            for app in self.queries['member_apps_ids']:
-                if "client_id" in app and app["client_id"] is not None:
-                    member.member_apps_ids.append(AccountClient(**app))
+                for email in self.queries['member_email']:
+                    if has_primary == True:
+                        email["email_status"] = False
 
-        # if member_id is not None:
-        #     return success_http_response(
-        #         'Member {} was created'.format(
-        #             self.data['member_username']),
-        #         True,
-        #         {"member_id": member_id})
+                    if "email_text" in email and email["email_text"] is not None:
+                        if email["email_status"] == True:
+                            has_primary = True
 
-        return success_http_response('Failed to insert data member, please try again or contact developers', False)
-        # except:
-        #     return error_http_code(500, {'message': 'Something went wrong'})
+                    if AccountEmail.query.filter_by(email_text=email["email_text"]).first():
+                        return success_http_response('Email {} already exists'. format(email["email_text"]), False)
+
+                    member.member_email.append(AccountEmail(**email))
+
+            if "member_phone" in self.queries and len(self.queries['member_phone']):
+                has_primary = False
+
+                for phone in self.queries['member_phone']:
+                    if has_primary == True:
+                        phone["phone_status"] = False
+
+                    if "phone_text" in phone and phone["phone_text"] is not None:
+                        if phone["phone_status"] == True:
+                            has_primary = True
+
+                    if AccountPhone.query.filter_by(phone_text=phone["phone_text"]).first():
+                        return success_http_response('Phone {} already exists'. format(phone["phone_text"]), False)
+
+                    member.member_phone.append(AccountPhone(**phone))
+
+            member_id = member.save()
+
+            if (member_id):
+                return success_http_response(
+                    'Member {} was created'.format(
+                        member_id),
+                    True,
+                    {"member_id": member_id})
+
+            return success_http_response('Failed to insert data member, please try again or contact developers', False)
+        except:
+            return error_http_code(500, {'message': 'Something went wrong'})

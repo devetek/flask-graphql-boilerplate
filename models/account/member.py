@@ -1,6 +1,7 @@
 """[references]
 https://stackoverflow.com/questions/16433338/inserting-new-records-with-one-to-many-relationship-in-sqlalchemy
 https://stackoverflow.com/questions/25668092/flask-sqlalchemy-many-to-many-insert-data
+https://www.youtube.com/watch?v=OvhoYbjtiKc
 """
 
 
@@ -85,10 +86,8 @@ class AccountMember(db.Model):
         return True if self.member_id is None else False
 
     def save(self):
-        # AccountClient()
-        # self.member_apps_ids.append(s)
-        # db.session.add(self)
-        # db.session.commit()
+        db.session.add(self)
+        db.session.commit()
 
         return self.member_id
 
