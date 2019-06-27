@@ -81,6 +81,7 @@ run-dev:
 	@ docker-compose -f docker/dev.docker-compose.yml up  
 
 dev-web-docker:
+	@ make createdb
 	@ python main.py http
 
 
