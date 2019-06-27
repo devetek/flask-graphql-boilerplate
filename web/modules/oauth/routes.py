@@ -5,6 +5,6 @@ from web.modules.oauth.controllers import RegistrationController, RefreshControl
 
 """[define routing under module payment]
 """
-api.add_resource(RegistrationController, '', '/registration')
+api.add_resource(RegistrationController, '', '/authorization')
 api.add_resource(RefreshController, '', '/refresh')
-api.add_resource(PrivateController, '', '/private')
+# api.add_resource(PrivateController, '', '/private')

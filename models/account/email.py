@@ -24,6 +24,16 @@ class AccountEmail(db.Model):
     def __repr__(self):
         return '<Email {}>'.format(self.email_id)
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+        return self.email_member_id
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def to_dict(self):
         return {c.key: getattr(self, c.key)
                 for c in inspect(self).mapper.column_attrs}

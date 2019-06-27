@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 
 load_dotenv(verbose=True)
 
+binds = os.getenv('SQLALCHEMY_BINDS')
+
 
 class Config(object):
     # App Common Configuration
@@ -17,7 +19,7 @@ class Config(object):
     # SQL-Alchemy Environment
     SQLALCHEMY_CONNECTION = os.getenv('SQLALCHEMY_CONNECTION')
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
-    SQLALCHEMY_BINDS = json.loads(os.getenv('SQLALCHEMY_BINDS'))
+    SQLALCHEMY_BINDS = json.loads(binds)
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv(
         'SQLALCHEMY_TRACK_MODIFICATIONS')
 
