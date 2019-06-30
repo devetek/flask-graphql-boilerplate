@@ -14,7 +14,20 @@ Di fase pertama, token dapat digunakan disemua aplikasi devetek. Yang selanjutny
 
 Earthshaker adalah service utama yang melayani request HTTP, RPC dari client/application yang telah terdaftar. List API yang telah tersedia dapat dilihat di [Butterfly](https://butterfly.devetek.com/docs).
 
-- Standard register/login request:
+- Standard register request:
+
+```sh
+curl --request POST \
+  --url http://apidev.hompes.id/v2/oauth/registration \
+  --header 'content-type: application/json' \
+  --header 'x-devetek-app-id: 1' \
+  --data '{
+	"member_username": "prakasa1904",
+	"member_password": "admin"
+}'
+```
+
+- Standard login request:
 
 ```sh
 curl --request POST \

@@ -63,6 +63,56 @@ curl --request GET \
 --header 'content-type: application/json'
 ```
 
+- Standard add member request:
+
+```sh
+curl --request POST \
+  --url http://apidev.hompes.id/v2/account/add \
+  --header 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjE4Nzk3MjcsIm5iZiI6MTU2MTg3OTcyNywianRpIjoiZmNkY2Q2NGItZDBlYi00NTA2LThmYWUtN2UyZmRmNTRmOTVmIiwiZXhwIjoxNTYxOTY2MTI3LCJpZGVudGl0eSI6MSwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiY3NyZiI6ImE4NWQ3Yjg3LWJhZjEtNDZiZi1hYjRmLTY2NDMwMjgwNGRmZSJ9.LlaUNFUElXdTACZji68zQkeJa2gYg_NF7rCwVJrbnQ0' \
+  --header 'content-type: application/json' \
+  --data '{
+	"member_fullname": "Nedya Amrih Prakasa",
+	"member_religion": "Islam",
+	"member_email": [
+		{
+			"email_text": "prakasa@gmail.com",
+			"email_primary": true
+		}
+	],
+	"member_phone": [
+		{
+			"phone_text": "021344625813",
+			"phone_primary": true
+		}
+	],
+	"member_apps_ids": [
+		{
+			"client_id": 1
+		}
+	]
+
+}'
+```
+
+- Standard update member request:
+
+```sh
+curl --request PUT \
+  --url http://apidev.hompes.id/v2/account/update/2 \
+  --header 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjE5MTQ5MjgsIm5iZiI6MTU2MTkxNDkyOCwianRpIjoiN2E3MWFlZWMtOTcxMC00OTdkLWE1NjEtYzUyZDU4ZjQwNmU2IiwiZXhwIjoxNTYyMDAxMzI4LCJpZGVudGl0eSI6MiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiY3NyZiI6IjcxZmQ1OWYwLWM0Y2MtNDg3Yi04M2ZjLTY4Y2YyN2YzOTMxNyJ9.GI4CjRM5f1aWDTuQ6ZSMXnU2PdJ4TF4_owOPXH8DB38' \
+  --header 'content-type: application/json' \
+  --data '{
+	"member_username": "djona1",
+	"member_fullname": "Jangan Lama Lama",
+	"member_apps_ids": [
+		{
+			"client_id": 2
+		}
+	]
+
+}'
+```
+
 ### Wisp
 
 Wisp adalah worker yang bertugas melakukan pengumpulan data user dan melakukan eksekusi berdasarkan filter yang telah di atur di dashboard account. Sebagai contoh, jika ingin melakukan push notifikasi terhadap user yang belum melakukan verifikasi data selama 1 bulan atau lebih.
