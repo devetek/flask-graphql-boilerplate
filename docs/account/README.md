@@ -5,11 +5,11 @@ Account adalah service pengelolaan member yang terdaftar di seluruh aplikasi dev
 ## Rules of Data
 
     - Setiap member dapat terdaftar di semua aplikasi devetek:
-    	* Hompes
-    	* PDAM
-    	* Edutech
-    	* Devi
-      * Terpusat
+      - Hompes
+      - PDAM
+      - Edutech
+      - Devi
+      - Terpusat
     - Setiap member dapat memiliki lebih dari 1 email
     - Setiap member dapat memiliki lebih dari 1 no. telp
     - Setiap member wajib memiliki password (PHASE 1)
