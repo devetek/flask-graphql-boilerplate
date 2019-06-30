@@ -9,7 +9,7 @@ Account adalah service pengelolaan member yang terdaftar di seluruh aplikasi dev
     	* PDAM
     	* Edutech
     	* Devi
-        * Terpusat
+      * Terpusat
     - Setiap member dapat memiliki lebih dari 1 email
     - Setiap member dapat memiliki lebih dari 1 no. telp
     - Setiap member wajib memiliki password (PHASE 1)
