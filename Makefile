@@ -16,7 +16,6 @@ setup:
 
 createdb:
 	( \
-		source python_modules/bin/activate; \
 		flask initdb; \
 	)
 

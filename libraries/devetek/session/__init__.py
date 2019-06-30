@@ -1,45 +1,44 @@
+from config import Config
 from web import JWTManager
 from helpers.createRedis import Create
-from config import Config
 
 storage = Create().instance()
 
-PREFIX = "oauth:devetek:"
-POSTFIX = ":token"
+TOKEN_PREFIX = "jwt:token:revoked:devetek:"
 
 
-def token_key(name):
-    return "oauth:devetek:" + name + ":token"
+def revoke_token_key(name):
+    return TOKEN_PREFIX + name
 
 
-def refresh_token_key(name):
-    return "oauth:devetek:" + name + ":refreshtoken"
+def revoke_refresh_token_key(name):
+    return TOKEN_PREFIX + name
 
 
-def store_token(name, value=None, expired=Config.JWT_ACCESS_TOKEN_EXPIRES):
+def store_revoke_token(name, value=None, expired=Config.JWT_ACCESS_TOKEN_EXPIRES*2):
     try:
-        return storage.set(token_key(name), value, expired)
+        return storage.set(revoke_token_key(name), value, expired)
     except:
         return False
 
 
-def store_refresh_token(name, value=None, expired=Config.JWT_REFRESH_TOKEN_EXPIRES):
+def store_revoke_refresh_token(name, value=None, expired=Config.JWT_REFRESH_TOKEN_EXPIRES*2):
     try:
-        return storage.set(refresh_token_key(name), value, expired)
+        return storage.set(revoke_refresh_token_key(name), value, expired)
     except:
         return False
 
 
-def get_token(name):
+def get_revoke_token(name):
     try:
-        return storage.get(token_key(name))
+        return storage.get(revoke_token_key(name))
     except:
         return False
 
 
-def get_refresh_token(name):
+def get_revoke_refresh_token(name):
     try:
-        return storage.get(refresh_token_key(name))
+        return storage.get(revoke_refresh_token_key(name))
     except:
         return False
 

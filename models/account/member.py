@@ -22,12 +22,28 @@ def member_data_input_serializer(data):
         "member_gender": data['member_gender'] if "member_gender" in data else "",
         "member_place_of_birth": data['member_place_of_birth'] if "member_place_of_birth" in data else "",
         "member_birth_of_date": data['member_birth_of_date'] if "member_birth_of_date" in data else datetime.today().strftime('%Y-%m-%d'),
-        "member_religion": data['religi'] if "member_religion" in data else "",
+        "member_religion": data['member_religion'] if "member_religion" in data else "",
         "member_password": generate_hash256(data['member_password']) if "member_password" in data else generate_hash256("123456"),
         "member_aboutme": data['member_aboutme'] if "member_aboutme" in data else "",
         "member_status": data['member_status'] if "member_status" in data else 0,
         "member_create_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "member_update_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    }
+
+
+def member_return_data_serializer(data):
+    return {
+        "member_username": data['member_username'] if "member_username" in data else "",
+        "member_fullname": data['member_fullname'] if "member_fullname" in data else "",
+        "member_gender": data['member_gender'] if "member_gender" in data else "",
+        "member_place_of_birth": data['member_place_of_birth'] if "member_place_of_birth" in data else "",
+        "member_birth_of_date": data['member_birth_of_date'] if "member_birth_of_date" in data else datetime.today().strftime('%Y-%m-%d'),
+        "member_religion": data['member_religion'] if "member_religion" in data else "",
+        "member_aboutme": data['member_aboutme'] if "member_aboutme" in data else "",
+        "member_status": data['member_status'] if "member_status" in data else 0,
+        "member_email": data["member_email"] if "member_email" in data else [],
+        "member_phone": data["member_phone"] if "member_phone" in data else [],
+        "member_apps_ids": data["member_apps_ids"] if "member_apps_ids" in data else [],
     }
 
 

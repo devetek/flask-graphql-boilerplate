@@ -17,10 +17,10 @@ def error_http_code(code=404, opts={}, for_common=False):
         "status": code,
         "success": False
     }
-
-    default_opt.update(opts)
+    if opts is not None:
+        default_opt.update(opts)
 
     if for_common:
-        return jsonify(default_opt)
+        return jsonify(default_opt), code
 
     return abort(code, **default_opt)

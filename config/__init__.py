@@ -42,6 +42,8 @@ class Config(object):
         os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))  # 1 day
     JWT_REFRESH_TOKEN_EXPIRES = int(os.getenv(
         'JWT_REFRESH_TOKEN_EXPIRES'))  # 1 week
+    JWT_BLACKLIST_ENABLED = True
+    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
 
     # Unicode Environment
     REDIS_HOST_UNIQ_CODE = os.getenv('REDIS_HOST_UNIQ_CODE')

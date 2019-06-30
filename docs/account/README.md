@@ -1,123 +1,27 @@
-# Deskripsi arsitektur
+# Tentang Account
 
-Account adalah service datasource user, yang mengelola kebutuhan data user sesuai dengan yang dibutuhkan aplikasi yang terdaftar di service account. Sebagai gambaran besar, misal devetek memiliki 10 aplikasi yang berjalan dengan kebutuhan data user yang berbeda-beda. Account service akan memberikan struktur data yang diinginkan sesuai dengan requirement dari aplikasi.
+Account adalah service pengelolaan member yang terdaftar di seluruh aplikasi devetek. Account akan bertanggung jawab dalam mengelola semua data member meliputi memberikan struktur data, penambahan data, menipulasi data ataupun menghapus data.
 
-Arsitektur service account:
+## Rules of Data
 
-## Database
+    - Setiap member dapat terdaftar di semua aplikasi devetek:
+    	* Hompes
+    	* PDAM
+    	* Edutech
+    	* Devi
+    - Setiap member dapat memiliki lebih dari 1 email
+    - Setiap member dapat memiliki lebih dari 1 no. telp
+    - Setiap member wajib memiliki password (PHASE 1)
+    - Setiap member dapat memiliki 1 username
 
-account_client
+## Deskripsi arsitektur service account
 
-- client_id
-- client_name
-- client_description
-- client_code
+Service acccount berjalan di bawah JWT authentication. Beberapa resource hanya akan dapat diakses jika request yang masuk mmbawa token JWT yang valid. Beberapa service yang ada di dalam service account:
 
-account_member
+### Earthshaker
 
-- member_id
-- member_username
-- member_fullname
-- member_gender
-- member_place_of_birth
-- member_birth_of_date
-- member_religion
-- member_password
-- member_aboutme
-- member_status
+Earthshaker adalah service utama yang melayani request HTTP, RPC dari client/application yang telah terdaftar. List API yang telah tersedia dapat dilihat di [Butterfly](https://butterfly.devetek.com/docs).
 
-account_phone (many to one)
+### Wisp
 
-- phone_id
-- phone_text
-- phone_primary
-- phone_member_id (Foreign Key member_id)
-
-account_email (many to one)
-
-- email_id
-- email_text
-- email_primary
-- email_member_id (Foreign Key member_id)
-
-member_client (many to many)
-
-- client_id
-- member_id
-
-Sebagai gambaran besar, service account ini hanya mengatur rules utama dari banyak aplikasi. Untuk kebutuhan secara spesifik, aplikasi masing-masing akan bertanggung jawab menyediakan kebutuhan mereka. Namun jangka panjangnya, untuk dapat menghandle kebutuhan bisnis yang bergerak begitu cepat, diharapkan struktur data yang dibuat mampu mengikuti pergerakan bisnis yang begitu cepat. Pilahan utama untuk ini adalah no sql database. Mari kita lihat di upgrade versi selanjutnya.
-
-API tersedia:
-
-- Register app client
-
-```sh
-curl --request POST \
-  --url http://localhost:5000/account/client/register \
-  --header 'content-type: application/json' \
-  --data '{
-	"client_name": "Terpusat",
-	"client_description": "Terpusat pusat",
-	"client_code": "TPS"
-}'
-```
-
-- Get client by ID
-
-```sh
-curl --request GET \
-  --url http://localhost:5000/account/client/1
-```
-
-- Register member
-
-```sh
-curl --request POST \
-  --url http://localhost:5000/account/register \
-  --header 'content-type: application/json' \
-  --data '{
-	"member_username": "prakasa1904",
-	"member_password": "admin",
-	"member_email": [
-		{
-			"email_text": "prakasa@devetek.com",
-			"email_primary": true
-		},
-		{
-			"email_text": "nedya.prakasa@gmail.com",
-			"email_primary": false
-		},
-		{
-			"email_text": "na.raka45@gmail.com",
-			"email_primary": false
-		}
-	],
-	"member_phone": [
-		{
-			"phone_text": "082113468822",
-			"phone_primary": true
-		},
-		{
-			"phone_text": "081328169646",
-			"phone_primary": false
-		}
-	],
-	"member_apps_ids": [
-		{
-			"client_id": 1
-		},
-		{
-			"client_id": 3
-		}
-	]
-
-}'
-```
-
-- Get member by ID
-
-```sh
-curl --request GET \
- --url http://localhost:5000/account/1
-
-```
+Wisp adalah worker yang bertugas melakukan pengumpulan data user dan melakukan eksekusi berdasarkan filter yang telah di atur di dashboard account. Sebagai contoh, jika ingin melakukan push notifikasi terhadap user yang belum melakukan verifikasi data selama 1 bulan atau lebih.
