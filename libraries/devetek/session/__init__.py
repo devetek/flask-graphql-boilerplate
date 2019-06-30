@@ -2,7 +2,8 @@ from config import Config
 from web import JWTManager
 from helpers.createRedis import Create
 
-storage = Create().instance()
+storage = Create(host=Config.REDIS_HOST_JWT,
+                 port=Config.REDIS_PORT_JWT, db=Config.REDIS_DB_JWT).instance()
 
 TOKEN_PREFIX = "jwt:token:revoked:devetek:"
 

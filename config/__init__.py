@@ -36,6 +36,9 @@ class Config(object):
     SESSION_PROTECTION = os.getenv('SESSION_PROTECTION')
 
     # Flask-JWT Single Authentication
+    REDIS_HOST_JWT = os.getenv('REDIS_HOST_JWT')
+    REDIS_PORT_JWT = int(os.getenv('REDIS_PORT_JWT'))
+    REDIS_DB_JWT = int(os.getenv('REDIS_DB_JWT'))
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     JWT_TOKEN_LOCATION = ['headers', 'cookies', 'query_string', 'json']
     JWT_ACCESS_TOKEN_EXPIRES = int(
