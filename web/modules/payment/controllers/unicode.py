@@ -1,9 +1,7 @@
 from flask import jsonify, make_response, render_template, request
 from config import Config
 from flask_restful import Resource, reqparse
-from helpers.createRedis import Create
-
-R_KEY = Config.KEY_UNIQ_CODE
+from libraries.devetek.payment.unicode_identifier import R_KEY, storage, MIN_UNIQ_CODE, MAX_UNIQ_CODE
 
 """[define your parameters here, strict for security issue]
 """
@@ -12,12 +10,11 @@ parser.add_argument('my_code')
 
 
 class UnicodeController(Resource):
-    x_min = Config.MIN_UNIQ_CODE
-    x_max = Config.MAX_UNIQ_CODE
+    x_min = MIN_UNIQ_CODE
+    x_max = MAX_UNIQ_CODE
 
     def __init__(self):
-        self.redis = Create(host=Config.REDIS_HOST_UNIQ_CODE,
-                            port=Config.REDIS_PORT_UNIQ_CODE, db=Config.REDIS_DB_UNIQ_CODE).instance()
+        self.redis = storage
 
     def get(self, **kwargs):
         my_code = 0
