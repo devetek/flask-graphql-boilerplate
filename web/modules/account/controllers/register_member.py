@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
 from models.account.member import AccountMember, member_data_input_serializer
 from models.account.client import AccountClient
 from models.account.email import AccountEmail
@@ -24,6 +25,7 @@ class RegisterMemberController(Resource):
         self.queries = cleaning_dict(parser.parse_args())
         self.data = member_data_input_serializer(self.queries)
 
+    @jwt_required
     def post(self):
         if AccountMember.query.filter_by(member_username=self.data['member_username']).first():
             return success_http_response('Client {} already exists'. format(self.data['member_username']), False)

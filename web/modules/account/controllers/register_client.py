@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
 from models.account.client import AccountClient, client_data_input_serializer
 from web.helpers import cleaning_dict, success_http_response
 from web.helpers.error_handler import error_http_code
@@ -16,6 +17,7 @@ class RegisterClientController(Resource):
     def __init__(self):
         self.data = cleaning_dict(parser.parse_args())
 
+    @jwt_required
     def post(self):
         if AccountClient.query.filter_by(client_name=self.data['client_name']).first():
             return success_http_response('Client {} already exists'. format(self.data['client_name']), False)
