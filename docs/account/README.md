@@ -27,12 +27,13 @@ Earthshaker adalah service utama yang melayani request HTTP, RPC dari client/app
 
 ```sh
 curl --request POST \
---url http://apidev.hompes.id/v2/account/client/register \
---header 'content-type: application/json' \
---data '{
-    "client_name": "Hompes",
-    "client_description": "Home Pesantren - Belajar agama dari genggaman tangan",
-    "client_code": "HPS"
+  --url http://apidev.hompes.id/v2/account/client/register \
+  --header 'authoriaztion: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjE4NjY5NDIsIm5iZiI6MTU2MTg2Njk0MiwianRpIjoiYzE5NmUyMGEtYjE5Mi00NmI4LTg3YmUtOTY1ZWIzMGUzNmRiIiwiZXhwIjoxNTYxOTUzMzQyLCJpZGVudGl0eSI6MiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiY3NyZiI6IjY2NDQxMzYzLWNlNWMtNDk5Yi1hZjA2LWJjZTI0ZGQ5Njc1MiJ9.t7XIgmex1GhtO9ZtFTG1SWEND8A7KkwMAAU8t6WJUqk' \
+  --header 'content-type: application/json' \
+  --data '{
+	"client_name": "Hompes",
+	"client_description": "Home Pesantren - Belajar agama dari genggaman tangan",
+	"client_code": "HPS"
 }'
 ```
 
@@ -40,7 +41,8 @@ curl --request POST \
 
 ```sh
 curl --request GET \
---url http://apidev.hompes.id/v2/account/client/1
+  --url http://apidev.hompes.id/v2/account/client/1 \
+  --header 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjE4NjY5NDIsIm5iZiI6MTU2MTg2Njk0MiwianRpIjoiYzE5NmUyMGEtYjE5Mi00NmI4LTg3YmUtOTY1ZWIzMGUzNmRiIiwiZXhwIjoxNTYxOTUzMzQyLCJpZGVudGl0eSI6MiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiY3NyZiI6IjY2NDQxMzYzLWNlNWMtNDk5Yi1hZjA2LWJjZTI0ZGQ5Njc1MiJ9.t7XIgmex1GhtO9ZtFTG1SWEND8A7KkwMAAU8t6WJUqk'
 ```
 
 - Standard get me request:
