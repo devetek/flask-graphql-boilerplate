@@ -33,5 +33,6 @@ class RegisterClientController(Resource):
                     {"client_id": client_id})
 
             return success_http_response('Failed to insert data client, please try again or contact developers', False)
-        except:
-            return error_http_code(500, {'message': 'Something went wrong'})
+        except Exception as error:
+            # TODO: Log error to logger services
+            return error_http_code(500, {"message": "Something went wrong, please try again later."})

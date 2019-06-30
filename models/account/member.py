@@ -58,7 +58,7 @@ apps_ids = db.Table('member_client',
 class AccountMember(db.Model):
     __tablename__ = 'account_member'
 
-    member_id = db.Column(BIGINT(unsigned=True), unique=True,
+    member_id = db.Column(BIGINT(unsigned=True),
                           nullable=False, primary_key=True, index=True)
     member_username = db.Column(db.VARCHAR(255), index=True)
     member_fullname = db.Column(db.VARCHAR(255))
@@ -80,7 +80,7 @@ class AccountMember(db.Model):
         TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'), nullable=False)
 
     def __repr__(self):
-        return '<User {}>'.format(self.member_username)
+        return '<User {}>'.format(self.member_id)
 
     def is_active(self):
         """True, as all users are active."""
@@ -100,13 +100,26 @@ class AccountMember(db.Model):
 
     def save(self):
         db.session.add(self)
-        db.session.commit()
 
-        return self.member_id
+        return self.commit()
+
+    def update(self, **kwargs):
+        for key, value in kwargs.items():
+            if key != "member_email" and key != "member_phone" and key != "member_apps_ids":
+                if hasattr(self, key):
+                    setattr(self, key, value)
+
+        return self.commit()
 
     def delete(self):
         db.session.delete(self)
+
+        return self.commit()
+
+    def commit(self):
         db.session.commit()
+
+        return self.member_id
 
     @classmethod
     def login_username_password(cls, member_username, member_password):

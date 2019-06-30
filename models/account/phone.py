@@ -24,6 +24,19 @@ class AccountPhone(db.Model):
     def __repr__(self):
         return '<Phone {}>'.format(self.phone_id)
 
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+        return self.phone_member_id
+
+    def update(self):
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
     def to_dict(self):
         return {c.key: getattr(self, c.key)
                 for c in inspect(self).mapper.column_attrs}

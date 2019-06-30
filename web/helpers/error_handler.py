@@ -11,12 +11,13 @@ Returns:
 """
 
 
-def error_http_code(code=404, opts={}, for_common=False):
+def error_http_code(code=404, opts=None, for_common=False):
     default_opt = {
         "message": Config.ERROR_CODE_MESSAGE['http_status'][code],
         "status": code,
         "success": False
     }
+
     if opts is not None:
         default_opt.update(opts)
 

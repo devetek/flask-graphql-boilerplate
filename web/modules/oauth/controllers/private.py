@@ -13,7 +13,6 @@ class PrivateController(Resource):
         custom_data = get_jwt_claims()
 
         return success_http_response("Get your token data", True, {
-            'answer': 42,
             "jwt": raw_data,
             "identity": user_data,
             "custom": custom_data,

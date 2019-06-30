@@ -36,6 +36,9 @@ class AccountClient(db.Model):
 
         return self.client_id
 
+    def update(self):
+        db.session.commit()
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()

@@ -30,6 +30,9 @@ class AccountEmail(db.Model):
 
         return self.email_member_id
 
+    def update(self):
+        db.session.commit()
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()

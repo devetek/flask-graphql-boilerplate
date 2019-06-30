@@ -19,28 +19,36 @@ def revoke_refresh_token_key(name):
 def store_revoke_token(name, value=None, expired=Config.JWT_ACCESS_TOKEN_EXPIRES*2):
     try:
         return storage.set(revoke_token_key(name), value, expired)
-    except:
+    except Exception as error:
+        # TODO: Log error to logger services
+        # logger(error)
         return False
 
 
 def store_revoke_refresh_token(name, value=None, expired=Config.JWT_REFRESH_TOKEN_EXPIRES*2):
     try:
         return storage.set(revoke_refresh_token_key(name), value, expired)
-    except:
+    except Exception as error:
+        # TODO: Log error to logger services
+        # logger(error)
         return False
 
 
 def get_revoke_token(name):
     try:
         return storage.get(revoke_token_key(name))
-    except:
+    except Exception as error:
+        # TODO: Log error to logger services
+        # logger(error)
         return False
 
 
 def get_revoke_refresh_token(name):
     try:
         return storage.get(revoke_refresh_token_key(name))
-    except:
+    except Exception as error:
+        # TODO: Log error to logger services
+        # logger(error)
         return False
 
 

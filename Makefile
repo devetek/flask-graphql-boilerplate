@@ -16,6 +16,7 @@ setup:
 
 createdb:
 	( \
+		source python_modules/bin/activate; \
 		flask initdb; \
 	)
 
@@ -76,7 +77,6 @@ run-dev:
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ test -f docker/phpMyAdmin/config || mkdir -p docker/phpMyAdmin/config
 	@ test -f docker/phpMyAdmin/sessions || mkdir -p docker/phpMyAdmin/sessions
-	@ cp ./docker/.env.example ./docker/.env
 	@ docker-compose -f docker/dev.docker-compose.yml up  
 
 dev-web-docker:
@@ -87,7 +87,6 @@ dev-web-docker:
 run-prod:
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
-	# @ cp ./docker/.env.example ./docker/.env // TODO: replace with key value remote config
 	@ docker-compose -f docker/prod.docker-compose.yml up -d
 
 prod-web-docker:
