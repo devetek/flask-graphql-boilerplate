@@ -16,11 +16,12 @@ def jwt_revoked_token_response():
 def jwt_check_if_token_is_revoked(decrypted_token):
     jti = decrypted_token['jti']
     entry = get_revoke_token(jti)
+    is_revoke = entry.decode("utf8") if entry else None
 
-    if entry is None:
+    if is_revoke is None:
         return True
 
-    return entry == 'true'
+    return is_revoke == 'true'
 
 
 def generate_token(member_id):
