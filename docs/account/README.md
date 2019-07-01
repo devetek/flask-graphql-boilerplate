@@ -119,6 +119,9 @@ Wisp adalah worker yang bertugas melakukan pengumpulan data user dan melakukan e
 
 ## TODO
 
-- Endpoint create data member (Sudah ada, tidak ditampilkan ke dalam dokumentasi)
-- Endpoint update data member
+- Create dashboard account service
+- Create member attribute, for flexible data (Common Group, Social Login)
+- Log member activity service
+- Member search service using elasticsearch
+- Flexible endpoint get data list (filter, limit, offset, etc)
 - Endpoint delete data member
