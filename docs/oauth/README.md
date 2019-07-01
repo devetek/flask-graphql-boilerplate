@@ -44,26 +44,18 @@ curl --request POST \
 
 ```sh
 curl --request DELETE \
---url http://apidev.hompes.id/v2/oauth/logout \
---header 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjE4NjA3MDYsIm5iZiI6MTU2MTg2MDcwNiwianRpIjoiMmMyODM3NWItNzRiNi00NzZjLWJjMDItYTQzZmE3NmU5ZDdlIiwiZXhwIjoxNTYxOTQ3MTA2LCJpZGVudGl0eSI6MTMsImZyZXNoIjpmYWxzZSwidHlwZSI6ImFjY2VzcyIsImNzcmYiOiIyNjI3Yjk2Yy0xNjA1LTQ1YjktOWMyNi04MjVhNmZhMGFiZjkifQ.OrmXhkHzHLfQkHE4aqHh7IurVpbuNIGDwfqLi2ztopQ' \
---header 'content-type: application/json' \
---data '{
-"member_username": "arivin29",
-"member_password": "admin"
-}'
+  --url http://apidev.hompes.id/v2/oauth/logout \
+  --header 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjE5NDI2NTksIm5iZiI6MTU2MTk0MjY1OSwianRpIjoiNGU4MzU1OWYtN2E2Zi00Mzg4LThmMjctMjA1NTJkYjFkOGE2IiwiZXhwIjoxNTYyMDI5MDU5LCJpZGVudGl0eSI6MiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiY3NyZiI6ImY1MDViZTE1LTQ3MzItNDRmMC04MWYzLWQ5YTUxOWIxMTNmMyJ9.Tja-qhlLeoEnmiF3daFd4TJTRR9RWaslq3DMnk6bp_U' \
+  --header 'content-type: application/json'
 ```
 
 - Standard refresh token request:
 
 ```sh
 curl --request POST \
---url http://apidev.hompes.id/v2/oauth/refresh \
---header 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjE4NjI0NjEsIm5iZiI6MTU2MTg2MjQ2MSwianRpIjoiZGVkYTI1NGMtZGM1Mi00MWFhLTg3MDQtYzg1MWZkMjE3OGFlIiwiZXhwIjoxNTYyNDY3MjYxLCJpZGVudGl0eSI6MTMsInR5cGUiOiJyZWZyZXNoIiwiY3NyZiI6ImFhODFkZjE1LWY5MzMtNGZjZi05MWUwLTUyZGI0YThmMjk4ZSJ9.P0l0zlr9ljC9c7H9ErjokExOD_BI1KPcz_9MKH7Gg1g' \
---header 'content-type: application/json' \
---data '{
-"member_username": "arivin29",
-"member_password": "admin"
-}'
+  --url http://apidev.hompes.id/v2/oauth/refresh \
+  --header 'authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NjE5MTcxMDgsIm5iZiI6MTU2MTkxNzEwOCwianRpIjoiYTI5MDI2NDYtZmE3Zi00YTFkLWI3NDEtYTFmYzE2Y2M3OTIwIiwiZXhwIjoxNTYyNTIxOTA4LCJpZGVudGl0eSI6MiwidHlwZSI6InJlZnJlc2giLCJjc3JmIjoiNGNjY2UyZjEtN2ViZi00MTgwLTgyYzgtNDFhY2FjZTBkY2YwIn0.sb4ftc4iburHGAAKvS5tnRLcoHIA95G2_XEzLmMUT3U' \
+  --header 'content-type: application/json'
 ```
 
 Gunakan https://jwt.io/ untuk melakukan validasi token JWT. Standard JWT yang diberikan mengandung data secret yang dapat digunakan aplikasi untuk melakukan akses private resource aplikasi yang terkait.
