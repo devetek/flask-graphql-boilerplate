@@ -17,3 +17,8 @@ def initdb():
         pass
 
     db.create_all()
+
+
+@app.cli.command()
+def migrate():
+    print("Triggered!")

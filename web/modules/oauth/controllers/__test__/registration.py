@@ -4,43 +4,46 @@ import requests
 import schedule
 
 
-host = 'http://localhost:5000/oauth/registration'
-headers = {'Content-type': 'application/json'}
+host = 'http://apidev.hompes.id/v2/oauth/registration'
+headers = {'Content-type': 'application/json', 'x-devetek-app-id': '1'}
+
 
 def one_username():
-  data = { 'username': 'usertest1', 'password': 'password' }
-  r = requests.post(host, data=json.dumps(data), headers=headers)
-  json_data = r.json()
+    data = {'member_username': 'usertest1', 'member_password': 'password'}
+    r = requests.post(host, data=json.dumps(data), headers=headers)
+    json_data = r.json()
 
-  print(r.status_code)
-  print(r.headers)
-  print(json_data)
+    print(r.status_code)
+    print(r.headers)
+    print(json_data)
+
 
 def dynamic_username():
-  import random
-  import string
-  
-  def randomString(stringLength=10):
-    """Generate a random string of fixed length """
-    letters = string.ascii_lowercase
-    
-    return ''.join(random.choice(letters) for i in range(stringLength))
-  
-  data = { 'username': randomString(10), 'password': 'password' }
-  r = requests.post(host, data=json.dumps(data), headers=headers)
-  json_data = r.json()
+    import random
+    import string
 
-  print(r.status_code)
-  print(r.headers)
-  print(json_data)
+    def randomString(stringLength=10):
+        """Generate a random string of fixed length """
+        letters = string.ascii_lowercase
 
-  data = { 'username': randomString(10), 'password': 'password2' }
-  r = requests.post(host, data=json.dumps(data), headers=headers)
-  json_data = r.json()
+        return ''.join(random.choice(letters) for i in range(stringLength))
 
-  print(r.status_code)
-  print(r.headers)
-  print(json_data)
+    data = {'member_username': randomString(10), 'member_password': 'password'}
+    r = requests.post(host, data=json.dumps(data), headers=headers)
+    json_data = r.json()
+
+    print(r.status_code)
+    print(r.headers)
+    print(json_data)
+
+    data = {'member_username': randomString(
+        10), 'member_password': 'password2'}
+    r = requests.post(host, data=json.dumps(data), headers=headers)
+    json_data = r.json()
+
+    print(r.status_code)
+    print(r.headers)
+    print(json_data)
 
 
 schedule.every().second.do(one_username)
