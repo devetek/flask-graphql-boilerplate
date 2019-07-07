@@ -1,3 +1,16 @@
+"""[Member add api]
+
+Returns:
+    [dict] -- [data, status, message]
+
+TODO:
+- Create input validator
+- Create sending email, sending call, sending message, sending telegram on succcess register
+- Standardize error message
+- Optimize db query validation
+- Split save data [app, email, phone] to db, to make easy on debugging
+- Log error to Spirit Vessel (devetek logger service)
+"""
 from flask_restful import Resource, reqparse
 from flask_jwt_extended import jwt_required
 from models.account.member import AccountMember, member_data_input_serializer
@@ -26,6 +39,7 @@ class AddMemberController(Resource):
     def __init__(self):
         self.queries = cleaning_dict(parser.parse_args())
         self.data = member_data_input_serializer(self.queries)
+        self.input_error_message = {}
 
     @jwt_required
     def post(self):
@@ -47,7 +61,12 @@ class AddMemberController(Resource):
 
                         member.member_apps_ids.append(client)
 
-            if "member_email" in self.queries and len(self.queries['member_email']):
+            if "member_email" in self.queries:
+                email_reg_count = len(self.queries['member_email'])
+
+                if email_reg_count > 1:
+                    return success_http_response("Registration allowed only using one email.", False)
+
                 has_primary = False
 
                 for email in self.queries['member_email']:
@@ -63,7 +82,12 @@ class AddMemberController(Resource):
 
                     member.member_email.append(AccountEmail(**email))
 
-            if "member_phone" in self.queries and len(self.queries['member_phone']):
+            if "member_phone" in self.queries:
+                phone_reg_count = len(self.queries['member_phone'])
+
+                if phone_reg_count > 1:
+                    return success_http_response("Registration allowed only using one phone.", False)
+
                 has_primary = False
 
                 for phone in self.queries['member_phone']:
@@ -86,12 +110,12 @@ class AddMemberController(Resource):
                     member_name = self.queries['member_username'] if "member_username" in self.queries else self.queries["member_fullname"]
 
                     return success_http_response(
-                        'Member {} was created with ID {}'.format(
+                        'Success create member {}, with new id {}'.format(
                             member_name, member_id),
                         True,
                         {"member_id": member_id})
 
-            return success_http_response('Failed to insert data member, please try again or contact developers', False)
+            return success_http_response('Create member failed, please try again or contact administrator.', False)
         except Exception as error:
             # TODO: Log error to logger services
-            return error_http_code(500, {"message": "Something went wrong, please try again later."})
+            return error_http_code(500, {"message": "Create member failed, something went wrong, please try again later."})

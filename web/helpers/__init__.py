@@ -5,6 +5,9 @@ def cleaning_dict(dictionary):
     tmp_dictionary = dictionary.copy()
 
     for k, v in dictionary.items():
+        if v == "":
+            del tmp_dictionary[k]
+
         if v is None:
             del tmp_dictionary[k]
 

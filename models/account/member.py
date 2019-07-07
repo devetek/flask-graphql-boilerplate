@@ -1,14 +1,26 @@
-"""[references]
-https://stackoverflow.com/questions/16433338/inserting-new-records-with-one-to-many-relationship-in-sqlalchemy
-https://stackoverflow.com/questions/25668092/flask-sqlalchemy-many-to-many-insert-data
-https://www.youtube.com/watch?v=OvhoYbjtiKc
+"""
+[documentation]
+    - member_status:
+        Status member for account app, no related with registered app in devetek account.
+        1. staff(3): full access for account dashboard app
+        2. member(2): limited access for account dashboard app
+        3. guest(1): no access for account dashboard app
+    - is_approved:
+        Status member for registered apps in devetek account.
+        1. actived(3): member status actived in selected app, for example Hompes, Terpusat, Edutech
+        2. pending(2): member status pending, waiting approval from app admin, for example Hompes admin 
+        3. blocked(1): member status blocked, can be permanent or temporary block, need some reason and resolution
+[references]
+    https://stackoverflow.com/questions/16433338/inserting-new-records-with-one-to-many-relationship-in-sqlalchemy
+    https://stackoverflow.com/questions/25668092/flask-sqlalchemy-many-to-many-insert-data
+    https://www.youtube.com/watch?v=OvhoYbjtiKc
 """
 
 
 from web import db
 from datetime import datetime
-from sqlalchemy import inspect, text
-from sqlalchemy.dialects.mysql import INTEGER, BIGINT, TIMESTAMP
+from sqlalchemy import inspect, text, func
+from sqlalchemy.dialects.mysql import TINYINT, INTEGER, BIGINT, TIMESTAMP
 from models.account.client import AccountClient
 from models.account.email import AccountEmail
 from models.account.phone import AccountPhone
@@ -43,16 +55,7 @@ def member_return_data_serializer(data):
         "member_status": data['member_status'] if "member_status" in data else 0,
         "member_email": data["member_email"] if "member_email" in data else [],
         "member_phone": data["member_phone"] if "member_phone" in data else [],
-        "member_apps_ids": data["member_apps_ids"] if "member_apps_ids" in data else [],
     }
-
-
-apps_ids = db.Table('member_client',
-                    db.Column('client_id', INTEGER(unsigned=True),
-                              db.ForeignKey('account_client.client_id')),
-                    db.Column('member_id', BIGINT(unsigned=True),
-                              db.ForeignKey('account_member.member_id'))
-                    )
 
 
 class AccountMember(db.Model):
@@ -64,23 +67,23 @@ class AccountMember(db.Model):
     member_fullname = db.Column(db.VARCHAR(255))
     member_gender = db.Column(db.VARCHAR(1))
     member_place_of_birth = db.Column(db.VARCHAR(100))
-    member_birth_of_date = db.Column(db.DateTime)
+    member_birth_of_date = db.Column(db.DateTime, default=func.now())
     member_religion = db.Column(db.VARCHAR(10))
     member_password = db.Column(db.VARCHAR(255))
     member_aboutme = db.Column(db.Text)
     member_status = db.Column(
-        db.SmallInteger, comment="Member status active, pending, blocked")
+        db.SmallInteger, comment="staff(3), member(2), guest(1)")
     member_email = db.relationship("AccountEmail")
     member_phone = db.relationship("AccountPhone")
-    member_apps_ids = db.relationship('AccountClient', secondary=apps_ids, lazy='subquery',
-                                      backref=db.backref('account_member', lazy=True))
+    member_apps_ids = db.relationship(
+        AccountClient, secondary='members_client')
     member_create_date = db.Column(
         TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False)
     member_update_date = db.Column(
         TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'), nullable=False)
 
     def __repr__(self):
-        return '<User {}>'.format(self.member_id)
+        return '<Member {}>'.format(self.member_id)
 
     def is_active(self):
         """True, as all users are active."""
@@ -108,6 +111,8 @@ class AccountMember(db.Model):
             if key != "member_email" and key != "member_phone" and key != "member_apps_ids":
                 if hasattr(self, key):
                     setattr(self, key, value)
+
+        self.member_update_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         return self.commit()
 

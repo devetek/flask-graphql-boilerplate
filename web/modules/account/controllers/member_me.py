@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity)
+from models.account.members_client import AccountMembersClient
 from models.account.member import AccountMember, member_return_data_serializer
 from web.helpers import success_http_response
 from web.helpers.error_handler import error_http_code
@@ -18,7 +19,13 @@ class MemberMeController(Resource):
             member_id=user_data).first()
 
         if member_data is None:
-            return error_http_code(404, {"message": "Get data me failed, please contact administrator."})
+            return error_http_code(404, {"message": "Get me failed, no member found."})
+
+        member_data_relation = AccountMembersClient.query.filter_by(
+            mc_member_id=user_data).all()
+
+        if member_data_relation is None:
+            return error_http_code(404, {"message": "Get me failed, member not register in any app."})
 
         if member_data.member_email != None:
             [list_email.append(email.to_dict())
@@ -29,11 +36,14 @@ class MemberMeController(Resource):
              for phone in member_data.member_phone]
 
         if member_data.member_apps_ids != None:
-            [list_apps.append(app.to_dict())
-             for app in member_data.member_apps_ids]
+            for index, app in enumerate(member_data.member_apps_ids):
+                client_approved_to_app = app.to_dict()
+                client_approved_to_app.update(
+                    {"client_member_approve": member_data_relation[index].mc_is_approved})
+                list_apps.append(client_approved_to_app)
 
         response = member_data.to_dict()
         response.update({"member_apps_ids": list_apps,
                          "member_phone": list_phone, "member_email": list_email})
 
-        return success_http_response('Get my data', True, response)
+        return success_http_response('Success get me', True, response)

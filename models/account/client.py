@@ -2,6 +2,7 @@ from web import db
 from datetime import datetime
 from sqlalchemy import inspect, text
 from sqlalchemy.dialects.mysql import INTEGER, TIMESTAMP
+# from models.account.members_client import AccountMembersClient
 
 
 def client_data_input_serializer(data):
@@ -22,6 +23,8 @@ class AccountClient(db.Model):
     client_name = db.Column(db.Text)
     client_description = db.Column(db.Text)
     client_code = db.Column(db.VARCHAR(10), unique=True)
+    client_members = db.relationship(
+        'AccountMember', secondary='members_client')
     client_create_date = db.Column(
         TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False)
     client_update_date = db.Column(

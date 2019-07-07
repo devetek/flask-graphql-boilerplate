@@ -15,13 +15,12 @@ class MemberDetailController(Resource):
     def get(self, member_id):
         list_email = []
         list_phone = []
-        list_apps = []
 
         member_data = AccountMember.query.filter_by(
             member_id=member_id).first()
 
         if member_data is None:
-            return error_http_code(404, {"message": "Member doesn't exist"})
+            return error_http_code(404, {"message": "Get member failed, no member data found"})
 
         if member_data.member_email != None:
             [list_email.append(email.to_dict())
@@ -31,13 +30,9 @@ class MemberDetailController(Resource):
             [list_phone.append(phone.to_dict())
              for phone in member_data.member_phone]
 
-        if member_data.member_apps_ids != None:
-            [list_apps.append(app.to_dict())
-             for app in member_data.member_apps_ids]
-
         response = member_data.to_dict()
-        response.update({"member_apps_ids": list_apps,
-                         "member_phone": list_phone, "member_email": list_email})
+        response.update({"member_phone": list_phone,
+                         "member_email": list_email})
         response = member_return_data_serializer(response)
 
-        return success_http_response('Get members data', True, response)
+        return success_http_response('Success get member by id', True, response)

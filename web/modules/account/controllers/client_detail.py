@@ -13,6 +13,6 @@ class ClientDetailController(Resource):
             client_id=client_id).first()
 
         if client_data is None:
-            return error_http_code(404, {"message": "Client doesn't exist"})
+            return error_http_code(404, {"message": "Get client failed, no client data found"})
 
-        return success_http_response('Get client detail', True, client_data.to_dict())
+        return success_http_response('Success get client by id', True, client_data.to_dict())

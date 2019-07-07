@@ -1,10 +1,20 @@
-# reference: https://codeburst.io/jwt-authorization-in-flask-c63c1acf4eeb
+"""[Member login api]
+
+References:
+    - https://codeburst.io/jwt-authorization-in-flask-c63c1acf4eeb
+
+Returns:
+    [dict] -- [data, status, message]
+
+TODO:
+- Optimize db query validation
+- Standardize error message and improve input validator
+- Split login username and email, to make easy on debugging
+- Log error to Spirit Vessel (devetek logger service)
+"""
 import validators
 from datetime import datetime
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import (
-    create_access_token, create_refresh_token, get_jti)
-from libraries.devetek.session import store_revoke_token, store_revoke_refresh_token
 from models.account.client import AccountClient
 from models.account.member import AccountMember, member_data_input_serializer
 from models.account.email import AccountEmail
@@ -39,7 +49,7 @@ class RegistrationController(Resource):
             if client is None:
                 return success_http_response("App not registered in Devetek.", False)
 
-            validate_input = self.registration_validation(client)
+            validate_input = self.input_validator()
 
             if validate_input["invalid_key"] != "":
                 return success_http_response(validate_input["message"], False)
@@ -49,13 +59,13 @@ class RegistrationController(Resource):
                     email_text=self.data["member_email"]).first()
 
                 if member_email is not None:
-                    return success_http_response("{} already register in {}.".format(member_email.email_text, client.client_name), False)
+                    return success_http_response("{} already registered in {}.".format(member_email.email_text, client.client_name), False)
             else:
                 member = AccountMember.query.filter_by(
                     member_username=self.data["member_username"]).first()
 
                 if member is not None:
-                    return success_http_response("{} already register in {}.".format(member.member_username, client.client_name), False)
+                    return success_http_response("{} already registered in {}.".format(member.member_username, client.client_name), False)
 
             # Do register when user not exist and input is valid
             new_member = AccountMember(**self.valid_member)
@@ -71,17 +81,23 @@ class RegistrationController(Resource):
 
                 return success_http_response('User {} was created.'.format(self.return_member), True, token)
 
-            return success_http_response('Failed to login/register, contact administrator.', False)
+            return success_http_response('Registration failed, please try again or contact administrator.', False)
         except Exception as error:
             # TODO: Log error to logger services
-            return error_http_code(500, {"message": "Something went wrong, please try again later."})
+            return error_http_code(500, {"message": "Registration failed, something went wrong, please try again later."})
 
-    def registration_validation(self, client):
+    def input_validator(self):
         valid_response = {
             "valid_key": "",
             "invalid_key": "",
             "message": "",
         }
+
+        if self.app_id is None:
+            valid_response["invalid_key"] = "X-Devetek-App-Id"
+            valid_response["message"] = "Login failed, invalid app id, please send valid header app id."
+
+            return valid_response
 
         if "member_email" in self.data:
             if not validators.email(self.data["member_email"]):
