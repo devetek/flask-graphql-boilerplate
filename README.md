@@ -6,26 +6,23 @@ The Butterfly is an item purchasable at the Main Shop, under Weapons. However, i
 
 ## In Our World
 
-Butterfly is python framework for [Devetek Team](http://devetek.com). This is boilerplate including REST API, Graphql, gRPC. Generate modules, models, helpers and test using command line.
-
-Target: Easy, Lite, Secure and Reliable
+Butterfly is python framework for [Devetek](http://devetek.com). Boilerplate including REST API, Graphql, gRPC.
 
 ## Available Services
 
 ### REST API:
 
-    - account
-    - oauth
-    - payment
+    - [account](https://github.com/devetek/Butterfly/tree/master/docs/account)
+    - [oauth](https://github.com/devetek/Butterfly/tree/master/docs/oauth)
 
 ## requirements
 
 - Docker
 - python >= 3.7.2
 
-## Init DB
+## Generate Database
 
-Init database using CLI, after mysql engine up follow command below:
+Generate database using command line, after mysql engine up execute command below:
 
 ```sh
 make createdb
@@ -47,5 +44,5 @@ docker only available for `http` protocol. For gRPC will join ASAP.
 
 ## References
 
-[Flask-sqlAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/)
-[Docker Centos 7](<https://github.com/NaturalHistoryMuseum/scratchpads2/wiki/Install-Docker-and-Docker-Compose-(Centos-7)>)
+- [Flask-sqlAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/)
+- [Docker Centos 7](<https://github.com/NaturalHistoryMuseum/scratchpads2/wiki/Install-Docker-and-Docker-Compose-(Centos-7)>)
