@@ -12,8 +12,8 @@ Butterfly is python framework for [Devetek](http://devetek.com). Boilerplate inc
 
 ### REST API:
 
-    - [account](https://github.com/devetek/Butterfly/tree/master/docs/account)
-    - [oauth](https://github.com/devetek/Butterfly/tree/master/docs/oauth)
+- [account](https://github.com/devetek/Butterfly/tree/master/docs/account)
+- [oauth](https://github.com/devetek/Butterfly/tree/master/docs/oauth)
 
 ## requirements
 
