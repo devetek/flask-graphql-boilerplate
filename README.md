@@ -1,5 +1,5 @@
 # Butterfly
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 ## Phylosophy
 
@@ -46,6 +46,7 @@ docker only available for `http` protocol. For gRPC will join ASAP.
 <table>
   <tr>
     <td align="center"><a href="http://www.terpusat.com"><img src="https://avatars1.githubusercontent.com/u/6983524?v=4" width="100px;" alt="Prakasa"/><br /><sub><b>Prakasa</b></sub></a><br /><a href="#infra-prakasa1904" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/devetek/Butterfly/commits?author=prakasa1904" title="Documentation">📖</a> <a href="https://github.com/devetek/Butterfly/commits?author=prakasa1904" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/arivin29"><img src="https://avatars0.githubusercontent.com/u/11455704?v=4" width="100px;" alt="Muh Arifin"/><br /><sub><b>Muh Arifin</b></sub></a><br /><a href="#question-arivin29" title="Answering Questions">💬</a> <a href="#business-arivin29" title="Business development">💼</a> <a href="#design-arivin29" title="Design">🎨</a></td>
   </tr>
 </table>
 
