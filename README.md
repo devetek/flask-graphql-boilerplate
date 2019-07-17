@@ -49,4 +49,5 @@ docker only available for `http` protocol. For gRPC will join ASAP.
 
 ## Todo
 
-- Create dashboard for user management
+- Create dashboard for user management: `yarn create react-app my-app`
+- API to update status
