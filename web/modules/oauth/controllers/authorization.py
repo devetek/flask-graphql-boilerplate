@@ -17,7 +17,6 @@ from flask_jwt_extended import (
 from models import and_
 from libraries.devetek.session import store_revoke_token, store_revoke_refresh_token
 from models.account.members_client import AccountMembersClient
-from models.account.client import AccountClient
 from models.account.member import AccountMember
 from models.account.email import AccountEmail
 from web.helpers import success_http_response, cleaning_dict
