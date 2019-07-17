@@ -61,3 +61,4 @@ docker only available for `http` protocol. For gRPC will join ASAP.
 
 - Create dashboard for user management: `yarn create react-app my-app`
 - API to update status
+- API to delete member
