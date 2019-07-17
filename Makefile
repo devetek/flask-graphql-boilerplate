@@ -77,6 +77,7 @@ run-dev:
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ test -f docker/phpMyAdmin/config || mkdir -p docker/phpMyAdmin/config
 	@ test -f docker/phpMyAdmin/sessions || mkdir -p docker/phpMyAdmin/sessions
+	@ cp docker/.env.example docker/.env
 	@ docker-compose -f docker/dev.docker-compose.yml up  
 
 dev-web-docker:
