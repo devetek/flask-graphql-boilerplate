@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "prakasa1904",
+      "name": "Prakasa",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/6983524?v=4",
+      "profile": "http://www.terpusat.com",
+      "contributions": [
+        "infra",
+        "doc",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Butterfly",
+  "projectOwner": "devetek",
+  "repoType": "github",
+  "repoHost": "https://github.com"
+}
