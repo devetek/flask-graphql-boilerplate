@@ -1,5 +1,5 @@
 const config = {
-  BUTTERFLY_HOST: "http://apidev.hompes.id/"
+  BUTTERFLY_HOST: "http://localhost/api"
 };
 
 export default config;

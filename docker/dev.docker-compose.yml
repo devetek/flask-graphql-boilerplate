@@ -56,18 +56,28 @@ services:
     ports:
       - 5000:5000
 
+  butterfly_frontend:
+    image: node:lts-alpine
+    container_name: butterfly_frontend
+    working_dir: /code/
+    volumes:
+      - ../web/modules/frontend:/code
+    restart: always
+    command: yarn start
+
   butterfly_nginx:
-    depends_on:
-      - butterfly_app
     image: nginx
     container_name: butterfly_nginx
+    depends_on:
+      - butterfly_app
+      - butterfly_frontend
     volumes:
       - ./../public/:/code
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     restart: always
     ports:
-      - 9200:80
+      - 80:80
     logging:
       driver: "json-file"
       options:

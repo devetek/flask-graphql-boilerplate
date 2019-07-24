@@ -7,7 +7,7 @@ const devFetch = (method = "GET", headersParams = {}, bodyParams = {}) => {
     bodyParams = { body: JSON.stringify(bodyParams) };
   }
 
-  return fetch(`${config.BUTTERFLY_HOST}v2/oauth/authorization`, {
+  return fetch(`${config.BUTTERFLY_HOST}/oauth/authorization`, {
     method,
     credentials: "include",
     headers: {

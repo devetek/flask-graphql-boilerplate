@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import getLodash from "lodash/get";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,13 +12,28 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
+import Modal from "../../components/Modal";
 import useStyles from "./style";
 import devFetch from "../../libraries/devfetch";
+import { devStoreSave } from "../../libraries/devstorage";
+
+const modalErrorDefaultProps = ({}) => ({
+  isOpen: false,
+  title: "",
+  description: "",
+  closeTxt: "Close",
+  openTxt: "Ok",
+  onCancelHandler: () => {},
+  onOkHandler: () => {}
+});
 
 const LoginPage = () => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [modalProps, setModalProps] = useState(
+    modalErrorDefaultProps({ handleModalOkAndClose })
+  );
 
   const handleChangeUsername = name => event => {
     setUsername(event.target.value);
@@ -25,6 +41,12 @@ const LoginPage = () => {
 
   const handleChangePassword = name => event => {
     setPassword(event.target.value);
+  };
+
+  const handleModalOkAndClose = () => {
+    modalProps["isOpen"] = !modalProps["isOpen"];
+
+    setModalProps({ ...modalProps, ...{ isOpen: true } });
   };
 
   const handleOnSubmit = async e => {
@@ -38,11 +60,23 @@ const LoginPage = () => {
         member_password: password
       }
     );
-    console.log(response);
+
+    const isSuccess = getLodash(response, "data.success") || false;
+
+    if (isSuccess) {
+      const accessToken = getLodash(response, "data.access_token");
+      const refreshToken = getLodash(response, "data.refresh_token");
+
+      devStoreSave("accessToken", accessToken);
+      devStoreSave("refreshToken", refreshToken);
+    } else {
+      setModalProps({ ...modalProps, ...{ isOpen: true } });
+    }
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <Modal {...modalProps} />
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>

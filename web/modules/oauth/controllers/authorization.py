@@ -69,7 +69,7 @@ class AuthorizationController(Resource):
             return success_http_response("Login failed, {} not approved/registered.".format(self.data["member_email"]), False)
 
         if self.password_validator(client.account_member) == False:
-            success_http_response("Login failed, invalid password.", False)
+            return success_http_response("Login failed, invalid password.", False)
 
         return self.generate_token(client.account_member)
 
@@ -87,7 +87,7 @@ class AuthorizationController(Resource):
             return success_http_response("Login failed, {} not approved/registered.".format(self.data["member_username"]), False)
 
         if self.password_validator(client.account_member) == False:
-            success_http_response("Login failed, invalid password.", False)
+            return success_http_response("Login failed, invalid password.", False)
 
         return self.generate_token(client.account_member)
 
