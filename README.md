@@ -1,6 +1,6 @@
 # Butterfly
 
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 ## Phylosophy
 
@@ -22,12 +22,33 @@ Butterfly is python framework for [Devetek](http://devetek.com). Boilerplate inc
 - Docker
 - python >= 3.7.2
 
-## Generate Database
-
-Generate database using command line, after mysql engine up execute command below:
+## Project Structure
 
 ```sh
-make createdb
+root/
+├── agent                           # Worker modules
+├── cli                             # CLI Interface
+      ├── helpers                   # Local CLI helper
+      ├── libraries                 # Local CLI libraries
+      ├── modules                   # Local CLI modules
+├── config                          # Global config for all interface
+├── docker                          # Docker configuration
+├── docs                            # Documentation
+      ├── oauth                     # Auth Documentation
+      ├── account                   # Account documentation
+├── helpers                         # Global helpers for all interface
+├── libraries                       # Global libraries for all interface
+├── models                          # Global models for all interface
+├── process                         # Supervisord process manager
+├── rpc                             # RPC Interface
+      ├── helpers                   # Local RPC helper
+      ├── libraries                 # Local RPC libraries
+      ├── modules                   # Local RPC modules
+├── web                             # HTTP Interface
+      ├── helpers                   # Local HTTP helper
+      ├── libraries                 # Local HTTP libraries
+      ├── modules                   # Local HTTP modules
+      ├── template                  # HTML template for related module
 ```
 
 ## Running Development
@@ -37,6 +58,8 @@ Bootstrap development using docker is easier than others. How to do that ? follo
 ```sh
 make run-dev
 ```
+
+With command above, will running init database, init redis, init backend app, frontend app and nginx.
 
 docker only available for `http` protocol. For gRPC will join ASAP.
 
