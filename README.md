@@ -27,10 +27,6 @@ Butterfly is python framework for [Devetek](http://devetek.com). Boilerplate inc
 ```sh
 root/
 ├── agent                           # Worker modules
-├── cli                             # CLI Interface
-      ├── helpers                   # Local CLI helper
-      ├── libraries                 # Local CLI libraries
-      ├── modules                   # Local CLI modules
 ├── config                          # Global config for all interface
 ├── docker                          # Docker configuration
 ├── docs                            # Documentation
@@ -40,6 +36,10 @@ root/
 ├── libraries                       # Global libraries for all interface
 ├── models                          # Global models for all interface
 ├── process                         # Supervisord process manager
+├── cli                             # CLI Interface
+      ├── helpers                   # Local CLI helper
+      ├── libraries                 # Local CLI libraries
+      ├── modules                   # Local CLI modules
 ├── rpc                             # RPC Interface
       ├── helpers                   # Local RPC helper
       ├── libraries                 # Local RPC libraries
