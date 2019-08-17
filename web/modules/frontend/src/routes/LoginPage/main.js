@@ -17,7 +17,7 @@ import useStyles from "./style";
 import devFetch from "../../libraries/devfetch";
 import { devStoreSave } from "../../libraries/devstorage";
 
-const modalErrorDefaultProps = ({}) => ({
+const modalErrorDefaultProps = () => ({
   isOpen: false,
   title: "",
   description: "",
@@ -31,9 +31,7 @@ const LoginPage = () => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [modalProps, setModalProps] = useState(
-    modalErrorDefaultProps({ handleModalOkAndClose })
-  );
+  const [modalProps, setModalProps] = useState(modalErrorDefaultProps());
 
   const handleChangeUsername = name => event => {
     setUsername(event.target.value);
