@@ -8,4 +8,4 @@ set -e
 #     GRANT ALL PRIVILEGES ON DATABASE docker TO docker;
 # EOSQL
 
-echo "Create your custom script when init database for development mode here!"
+echo "[PGQL] Create your custom script when init database for development mode here!"

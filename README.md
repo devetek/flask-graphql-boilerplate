@@ -19,8 +19,9 @@ Butterfly is python framework for [Devetek](http://devetek.com). Boilerplate inc
 
 ## requirements
 
-- Docker
-- python >= 3.7.2
+- Docker >= 19.03.5
+- Docker Compose >= 1.24.1
+- python >= 3.7.3
 
 ## Project Structure
 

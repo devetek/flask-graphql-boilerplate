@@ -78,16 +78,16 @@ run-dev-pgql:
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ cp docker/.env.example docker/.env
 	@ cd web/modules/frontend && yarn
-	@ docker-compose -f docker/dev.docker-compose.yml down  
-	@ docker-compose -f docker/dev.docker-compose.yml up
+	@ docker-compose -f docker/dev-postgres.docker-compose.yml down  --remove-orphans
+	@ docker-compose -f docker/dev-postgres.docker-compose.yml up
 
 run-dev-mysql:
 	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ cp docker/.env.example docker/.env
 	@ cd web/modules/frontend && yarn
-	@ docker-compose -f docker/dev.docker-compose.yml down  
-	@ docker-compose -f docker/dev.docker-compose.yml up
+	@ docker-compose -f docker/dev-mysql.docker-compose.yml down --remove-orphans
+	@ docker-compose -f docker/dev-mysql.docker-compose.yml up
 
 dev-web-docker:
 	@ flask initdb;

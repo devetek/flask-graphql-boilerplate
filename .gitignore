@@ -1,7 +1,7 @@
 # local env folder
+/docker/postgres/volume
 /docker/mysql/volume
 /docker/redis
-/docker/phpMyAdmin
 /python_modules
 
 # local tmp file

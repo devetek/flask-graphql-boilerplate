@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   butterfly_mysql:
-    image: mysql
+    image: mysql:latest
     container_name: butterfly_mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
@@ -59,7 +59,7 @@ services:
     image: nginx
     container_name: butterfly_nginx
     depends_on:
-      - butterfly_app
+      - butterfly_backend
       - butterfly_frontend
     volumes:
       - ./../public/:/code

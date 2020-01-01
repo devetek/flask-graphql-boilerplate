@@ -39,4 +39,4 @@ def initdb():
 
 @app.cli.command()
 def migrate():
-    print("Triggered!")
+    print("Underconstructor")

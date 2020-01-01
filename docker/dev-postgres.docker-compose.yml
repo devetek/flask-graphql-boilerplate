@@ -57,7 +57,7 @@ services:
     image: nginx
     container_name: butterfly_nginx
     depends_on:
-      - butterfly_app
+      - butterfly_backend
       - butterfly_frontend
     volumes:
       - ./../public/:/code
