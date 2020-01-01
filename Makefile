@@ -1,4 +1,5 @@
 export FLASK_APP=cli/flask
+export BUILD_ENV=production
 
 # ========================================
 # Setup non docker environment
@@ -109,3 +110,12 @@ test-pain:
 		source python_modules/bin/activate; \
 		python web/modules/oauth/controllers/__test__/registration.py; \
 	)
+
+build:
+ifeq ($(BUILD_ENV),development)
+		$(eval TAG := $(shell echo "development"))
+else
+	$(eval TAG := $(shell echo "latest"))
+endif
+	@ docker build -f docker/$(TAG).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
+	@ docker push prakasa1904/tps-py-api:$(TAG)
