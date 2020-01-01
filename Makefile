@@ -15,7 +15,7 @@ setup:
 		pip install -r requirements.txt; \
 	)
 
-createdb:
+createdb: setup
 	( \
 		source python_modules/bin/activate; \
 		flask initdb; \
@@ -70,23 +70,34 @@ prod-agent:
 	)
 
 # ========================================
-# Running using docker environment
+# Running using docker environment DEVELOPMENT
 # Author: Prakasa <prakasa@devetek.com>
 # ========================================
-run-dev:
-	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
+run-dev-pgql:
+	@ test -f docker/mysql/volume || mkdir -p docker/postgres/volume
 	@ test -f docker/redis || mkdir -p docker/redis
-	@ test -f docker/phpMyAdmin/config || mkdir -p docker/phpMyAdmin/config
-	@ test -f docker/phpMyAdmin/sessions || mkdir -p docker/phpMyAdmin/sessions
 	@ cp docker/.env.example docker/.env
 	@ cd web/modules/frontend && yarn
-	@ docker-compose -f docker/dev.docker-compose.yml up  
+	@ docker-compose -f docker/dev.docker-compose.yml down  
+	@ docker-compose -f docker/dev.docker-compose.yml up
+
+run-dev-mysql:
+	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
+	@ test -f docker/redis || mkdir -p docker/redis
+	@ cp docker/.env.example docker/.env
+	@ cd web/modules/frontend && yarn
+	@ docker-compose -f docker/dev.docker-compose.yml down  
+	@ docker-compose -f docker/dev.docker-compose.yml up
 
 dev-web-docker:
 	@ flask initdb;
 	@ python main.py http
 
 
+# ========================================
+# Running using docker environment PRODUCTION
+# Author: Prakasa <prakasa@devetek.com>
+# ========================================
 run-prod:
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
@@ -111,7 +122,7 @@ test-pain:
 		python web/modules/oauth/controllers/__test__/registration.py; \
 	)
 
-build:
+build-image:
 ifeq ($(BUILD_ENV),development)
 		$(eval TAG := $(shell echo "development"))
 else

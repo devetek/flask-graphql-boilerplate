@@ -4,8 +4,7 @@ workdir /devetek
 
 COPY requirements.txt .
 
-ENV ALPINE_VERSION=3.8 \
-
+ENV ALPINE_VERSION=3.10 \
     # These are always installed.
     #   * dumb-init: a proper init system for containers, to reap zombie children
     #   * musl: standard C library
@@ -26,10 +25,8 @@ ENV ALPINE_VERSION=3.8 \
       curl \
       libpq \
       ca-certificates \
-      libssl1.0 \
       libffi-dev \
     " \
-    
     # PACKAGES needed to built python
     PYTHON_BUILD_PACKAGES="\
       mariadb-dev \
@@ -64,12 +61,12 @@ ENV ALPINE_VERSION=3.8 \
       git \
     "
 
-RUN set -ex ;\
-    echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/community" >> /etc/apk/repositories; \
-    echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/main" >> /etc/apk/repositories; \
+RUN set -ex ; \
+    # echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/community" >> /etc/apk/repositories; \
+    # echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/main" >> /etc/apk/repositories; \
     apk add --no-cache $PACKAGES; \
     apk add --no-cache --virtual .build-deps $PYTHON_BUILD_PACKAGES; \
     pip install --upgrade pip; \
     pip install -r requirements.txt; \
     apk del --no-cache --purge .build-deps; \
-    rm -rf /var/cache/apk/*
+    rm -rf /var/cache/apk/*; \

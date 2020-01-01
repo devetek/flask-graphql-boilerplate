@@ -1,29 +1,17 @@
 version: "3.3"
 
 services:
-  butterfly_mysql:
-    image: mysql
-    container_name: butterfly_mysql
-    command: --default-authentication-plugin=mysql_native_password
+  butterfly_postgres:
+    image: postgres:alpine
     restart: always
     ports:
-      - 3306:3306
+      - 5432:5432
     volumes:
-      - butterfly_mysql_backup:/docker-entrypoint-initdb.d
-      - butterfly_mysql_data:/var/lib/mysql
+      - butterfly_postgres_backup:/docker-entrypoint-initdb.d
+      - butterfly_postgres_data:/var/lib/postgresql/data
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=init
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-
-  butterfly_adminer:
-    image: adminer
-    container_name: butterfly_adminer
-    restart: always
-    ports:
-      - 9100:8080
-    environment:
-      - ADMINER_DEFAULT_SERVER=butterfly_mysql
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
 
   butterfly_redis:
     image: redis:alpine
@@ -39,11 +27,11 @@ services:
       - REDIS_MASTER_PORT_NUMBER=6379
       - REDIS_PASSWORD=redis_password
 
-  butterfly_app:
+  butterfly_backend:
     depends_on:
-      - butterfly_mysql
+      - butterfly_postgres
       - butterfly_redis
-    image: prakasa1904/tps-py-api:latest
+    image: prakasa1904/tps-py-api:development
     container_name: butterfly_app
     working_dir: /code/
     volumes:
@@ -84,15 +72,15 @@ services:
         max-size: "1m"
 
 volumes:
-  butterfly_mysql_backup:
+  butterfly_postgres_backup:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/docker/mysql/restore
+      device: $PWD/docker/postgres/restore
       o: bind
-  butterfly_mysql_data:
+  butterfly_postgres_data:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/docker/mysql/volume
+      device: $PWD/docker/postgres/volume
       o: bind

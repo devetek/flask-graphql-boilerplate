@@ -19,6 +19,7 @@ passlib
 supervisor
 uwsgi
 redis
+psycopg2
 # pyyaml
 # fabric
 # fire

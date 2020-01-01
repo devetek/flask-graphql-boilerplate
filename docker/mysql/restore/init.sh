@@ -1,8 +1,5 @@
 #!/usr/bin/env bash -e
 
-MYSQL_ROOT_PASSWORD=root
-
-
 # Generate new database
 mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE terpusat_content"
 mysql -u root -p"$MYSQL_ROOT_PASSWORD" -e "CREATE DATABASE terpusat_log"

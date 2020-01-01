@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "python_modules/bin/python",
+  "python.pythonPath": "/Users/prakasa/Projects/devetek/Butterfly/python_modules/bin/python3",
   "eslint.autoFixOnSave": true,
   "editor.formatOnSave": true
 }
