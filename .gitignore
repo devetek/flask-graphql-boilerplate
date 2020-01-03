@@ -9,3 +9,8 @@
 dump.rdb
 .env
 sess_*
+mysql
+pgql
+
+# tmp docker-compose
+docker-compose.yml

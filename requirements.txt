@@ -10,10 +10,10 @@ Flask-Babel
 flask-restful-swagger
 flask-jwt-extended
 SQLAlchemy
-# google
+google
 protobuf
-# grpcio
-# grpcio-tools  
+grpcio
+grpcio-tools  
 validators
 passlib
 supervisor

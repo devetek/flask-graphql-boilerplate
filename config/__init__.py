@@ -1,5 +1,6 @@
-import os
 import json
+import os
+
 import redis
 from dotenv import load_dotenv
 
@@ -17,7 +18,6 @@ class Config(object):
     APPLICATION_ROOT = os.getenv('APPLICATION_ROOT') or '/'
 
     # SQL-Alchemy Environment
-    SQLALCHEMY_CONNECTION = os.getenv('SQLALCHEMY_CONNECTION')
     SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
     SQLALCHEMY_BINDS = json.loads(binds)
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv(

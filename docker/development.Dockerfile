@@ -21,9 +21,12 @@ ENV ALPINE_VERSION=3.10 \
       linux-headers \
       build-base \
       bash \
+      vim \
       git \
       curl \
       libpq \
+      postgresql-client \
+      mysql-client \
       ca-certificates \
       libffi-dev \
     " \

@@ -1,7 +1,9 @@
 import sys
-from config import Config
-from web import db, bootstrap_web
+
 from cli.db import init_account, init_member
+from config import Config
+from web import bootstrap_web, db
+
 app = bootstrap_web(Config)
 
 
@@ -11,13 +13,7 @@ def initdb():
     from models.account.client import AccountClient
     from models.account.members_client import AccountMembersClient
 
-    try:
-        engine = db.create_engine(Config.SQLALCHEMY_CONNECTION, {})
-        engine.execute("CREATE DATABASE IF NOT EXISTS devetek_account")
-        engine.execute("CREATE DATABASE IF NOT EXISTS devetek_session")
-    except:
-        pass
-
+    # Init Model
     db.create_all()
 
     client = AccountClient.query.filter_by(

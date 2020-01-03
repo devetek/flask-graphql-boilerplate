@@ -1,10 +1,13 @@
+export DB=mysql
 export FLASK_APP=cli/flask
 export BUILD_ENV=production
 
 # ========================================
-# Setup non docker environment
+# Setup non docker environment, to support IDE environment, especially for Visual Studio Code
 # Author: Prakasa <prakasa@devetek.com>
 # ========================================
+
+# Setup python virtualenv to support IDE
 setup:
 	@ which pip3 || exit 1
 	@ pip3 install virtualenv
@@ -15,95 +18,49 @@ setup:
 		pip install -r requirements.txt; \
 	)
 
-createdb: setup
+# To generate proto, create your first proto file under `./rpc/(module-name)/(module-name.proto)` then execute make proto OUTPUT=module-name
+proto:
 	( \
 		source python_modules/bin/activate; \
-		flask initdb; \
-	)
-
-# How To Generate Proto e.g:
-# make generate-proto OUTPUT=module-name
-generate-proto:
-	( \
-		source python_modules/bin/activate; \
-		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./grpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
-	)
-
-# ========================================
-# Running development mode without docker, one by one
-# ========================================
-dev-web:
-	( \
-		source python_modules/bin/activate; \
-		python main.py http; \
-	)
-
-dev-rpc:
-	( \
-		source python_modules/bin/activate; \
-		python main.py rpc; \
-	)
-
-dev-agent:
-	( \
-		source python_modules/bin/activate; \
-		python wisp.py; \
-	)
-
-# ========================================
-# Running production mode without docker, one by one
-# ========================================
-prod-web:
-	( \
-		uwsgi --http 127.0.0.1:5000 --module earthshaker:app; \
-	)
-
-# TODO: In progress
-prod-rpc:
-	( \
-		python main.py rpc; \
-	)
-
-prod-agent:
-	( \
-		python wisp.py; \
+		mkdir -p ./rpc/modules/$(OUTPUT); \
+		echo "syntax = \"proto3\";" > ./rpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
+		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./rpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
 	)
 
 # ========================================
 # Running using docker environment DEVELOPMENT
 # Author: Prakasa <prakasa@devetek.com>
 # ========================================
-run-dev-pgql:
-	@ test -f docker/mysql/volume || mkdir -p docker/postgres/volume
+run-dev:
+ifeq ($(DB),)
+	@ sh -c "Please use `make run-dev DB=mysql` OR `make run-dev DB=pgql` && exit 1"
+endif
+
+	@ cp -rf docker/dev-$(DB).docker-compose.yml docker-compose.yml
+	@ test -f docker/$(DB)/volume || mkdir -p docker/$(DB)/volume
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ cp docker/.env.example docker/.env
 	@ cd web/modules/frontend && yarn
-	@ docker-compose -f docker/dev-postgres.docker-compose.yml down  --remove-orphans
-	@ docker-compose -f docker/dev-postgres.docker-compose.yml up
+	@ docker-compose down --remove-orphans
+	@ docker-compose up -d
 
-run-dev-mysql:
-	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
-	@ test -f docker/redis || mkdir -p docker/redis
-	@ cp docker/.env.example docker/.env
-	@ cd web/modules/frontend && yarn
-	@ docker-compose -f docker/dev-mysql.docker-compose.yml down --remove-orphans
-	@ docker-compose -f docker/dev-mysql.docker-compose.yml up
-
-dev-web-docker:
-	@ flask initdb;
-	@ python main.py http
-
+dev-up:
+	( \
+		flask initdb; \
+		python main.py http; \
+	)
 
 # ========================================
 # Running using docker environment PRODUCTION
 # Author: Prakasa <prakasa@devetek.com>
+# TODO: ON PROGRESS!
 # ========================================
 run-prod:
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
 	@ docker-compose -f docker/prod.docker-compose.yml up -d
 
-prod-web-docker:
+prod-up:
 	( \
 		flask initdb; \
 		uwsgi --http :5000 --module earthshaker:app; \
@@ -124,9 +81,11 @@ test-pain:
 
 build-image:
 ifeq ($(BUILD_ENV),development)
+		$(eval IMG_ENV := $(shell echo "development"))
 		$(eval TAG := $(shell echo "development"))
 else
+	$(eval IMG_ENV := $(shell echo "production"))
 	$(eval TAG := $(shell echo "latest"))
 endif
-	@ docker build -f docker/$(TAG).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
+	@ docker build -f docker/$(IMG_ENV).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
 	@ docker push prakasa1904/tps-py-api:$(TAG)

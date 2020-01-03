@@ -1,4 +1,5 @@
 import sys
+
 from config import Config
 from web import bootstrap_web
 

@@ -38,7 +38,7 @@ services:
       - /code/python_modules/ # Generate volume `python_modules` empty
     restart: always
     command: |
-      make prod-web-docker
+      make prod-up
     env_file:
       - ./.env
     ports:

@@ -12,7 +12,7 @@ Butterfly is python framework for [Devetek](http://devetek.com). Boilerplate inc
 
 ## Available Services
 
-### REST API:
+### REST API
 
 - [account](https://github.com/devetek/Butterfly/tree/master/docs/account)
 - [oauth](https://github.com/devetek/Butterfly/tree/master/docs/oauth)
@@ -84,6 +84,5 @@ docker only available for `http` protocol. For gRPC will join ASAP.
 
 ## Todo
 
+- Completing API endpoint for better features
 - Create dashboard for user management: `yarn create react-app my-app`
-- API to update status
-- API to delete member
