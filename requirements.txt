@@ -1,32 +1,36 @@
 Flask
-PyMySQL
-mysqlclient
+# flask-socketio
+Flask-ini
 flask-restful
-Flask-Session
+# Flask-Session
 Flask-SQLAlchemy
 Flask-Migrate
-flask-login
+# flask-login
 Flask-Babel
 flask-restful-swagger
 flask-jwt-extended
 SQLAlchemy
-google
-protobuf
-grpcio
-grpcio-tools  
+# google
+# protobuf
+# grpcio
+# grpcio-tools
 validators
 passlib
 supervisor
 uwsgi
 redis
+# Postgresql database adapter, https://pypi.org/project/psycopg2/
 psycopg2
+# Compatible package between PyMySQL and mysqlclient base on https://pypi.org/project/PyMySQL/
+PyMySQL
+mysqlclient
 # pyyaml
 # fabric
 # fire
 schedule
 requests
-# flask-socketio
-python-dotenv
+# refer to this benchmark https://github.com/ijl/orjson#dataclass
+orjson
 
 # linting tools
 # pylint

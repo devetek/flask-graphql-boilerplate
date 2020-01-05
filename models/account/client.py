@@ -1,7 +1,10 @@
-from web import db
 from datetime import datetime
+
 from sqlalchemy import inspect, text
 from sqlalchemy.dialects.mysql import INTEGER, TIMESTAMP
+
+from models import db
+
 # from models.account.members_client import AccountMembersClient
 
 

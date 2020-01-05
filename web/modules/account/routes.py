@@ -1,10 +1,7 @@
 from flask_restful import Resource
-from web.modules.account import api
-from web.modules.account.controllers import RegisterClientController, \
-    ClientDetailController, AddMemberController, \
-    UpdateMemberController, MemberDetailController, \
-    MemberMeController
 
+from . import api
+from .controllers import *
 
 """[define routing under module account]
 """

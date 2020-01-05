@@ -1,33 +1,34 @@
-from config import Config
+import os
+
 from flask import Flask
+
 from models import db, migrate
-from flask_login import LoginManager
-from flask_jwt_extended import JWTManager
-from .helpers.jwt_handler import jwt_unauthorized_response, jwt_revoked_token_response, jwt_check_if_token_is_revoked
 
-
+from .helpers.config_handler import FlaskIni
+from .helpers.jwt_handler import JwtHandler
 # ===== Modular Routes =====
-from web.modules.account import bp as account_bp, routes
-from web.modules.oauth import bp as oauth_bp, routes
-from web.modules.payment import bp as payment_bp, routes
-from web.modules.errors import bp as errors_bp, handlers
+from .modules.account import bp as account_bp
+from .modules.account import routes
+from .modules.errors import bp as errors_bp
+from .modules.errors import handlers
+from .modules.oauth import bp as oauth_bp
+from .modules.oauth import routes
+from .modules.payment import bp as payment_bp
+from .modules.payment import routes
 
 
-def bootstrap_web(config_class):
+def bootstrap_http():
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    app.iniconfig = FlaskIni()
+    with app.app_context():
+        app.iniconfig.read('./config/' + os.environ['FLASK_ENV'] + '.ini')
 
     # Plugin Initialization
     db.init_app(app)
     migrate.init_app(app, db)
 
     # JWT: Session Centralized
-    jwt = JWTManager(app)
-    jwt.expired_token_loader(jwt_unauthorized_response)
-    jwt.unauthorized_loader(jwt_unauthorized_response)
-    jwt.invalid_token_loader(jwt_unauthorized_response)
-    jwt.revoked_token_loader(jwt_revoked_token_response)
-    jwt.token_in_blacklist_loader(jwt_check_if_token_is_revoked)
+    jwt_middleware = JwtHandler(app)
 
     """[routes handler for http, ws or polling]
     Descriptions: define your routes method, using Flask Blueprint or traditional routes

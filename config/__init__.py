@@ -1,60 +1,10 @@
-import json
-import os
-
-import redis
-from dotenv import load_dotenv
-
-load_dotenv(verbose=True)
-
-binds = os.getenv('SQLALCHEMY_BINDS')
+"""[Object to generate global static config]
+"""
 
 
-class Config(object):
-    # App Common Configuration
-    APP_NAME = os.getenv('APP_NAME')
-    TESTING = os.getenv('TESTING')
-    FLASK_ENV = os.getenv('FLASK_ENV')
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    APPLICATION_ROOT = os.getenv('APPLICATION_ROOT') or '/'
-
-    # SQL-Alchemy Environment
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
-    SQLALCHEMY_BINDS = json.loads(binds)
-    SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv(
-        'SQLALCHEMY_TRACK_MODIFICATIONS')
-
-    # Flask-Session Environment
-    SESSION_TYPE = os.getenv('SESSION_TYPE')
-    SESSION_REDIS = redis.from_url(os.getenv('SESSION_REDIS'))
-    SESSION_COOKIE_NAME = os.getenv('SESSION_COOKIE_NAME')
-    SESSION_KEY_PREFIX = os.getenv('SESSION_KEY_PREFIX')
-    PERMANENT_SESSION_LIFETIME = int(os.getenv('PERMANENT_SESSION_LIFETIME'))
-    SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE')
-
-    # Flask-Login Environment
-    AUTH_HEADER_NAME = os.getenv('AUTH_HEADER_NAME')
-    SESSION_PROTECTION = os.getenv('SESSION_PROTECTION')
-
-    # Flask-JWT Single Authentication
-    REDIS_HOST_JWT = os.getenv('REDIS_HOST_JWT')
-    REDIS_PORT_JWT = int(os.getenv('REDIS_PORT_JWT'))
-    REDIS_DB_JWT = int(os.getenv('REDIS_DB_JWT'))
-    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
-    JWT_TOKEN_LOCATION = ['headers', 'cookies', 'query_string', 'json']
-    JWT_ACCESS_TOKEN_EXPIRES = int(
-        os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))  # 1 day
-    JWT_REFRESH_TOKEN_EXPIRES = int(os.getenv(
-        'JWT_REFRESH_TOKEN_EXPIRES'))  # 1 week
-    JWT_BLACKLIST_ENABLED = True
-    JWT_BLACKLIST_TOKEN_CHECKS = ['access', 'refresh']
-
-    # Unicode Environment
-    REDIS_HOST_UNIQ_CODE = os.getenv('REDIS_HOST_UNIQ_CODE')
-    REDIS_PORT_UNIQ_CODE = int(os.getenv('REDIS_PORT_UNIQ_CODE'))
-    REDIS_DB_UNIQ_CODE = int(os.getenv('REDIS_DB_UNIQ_CODE'))
-    KEY_UNIQ_CODE = os.getenv('KEY_UNIQ_CODE')
-    MIN_UNIQ_CODE = int(os.getenv('MIN_UNIQ_CODE'))
-    MAX_UNIQ_CODE = int(os.getenv('MAX_UNIQ_CODE'))
+class config(object):
+    # Session Prefix
+    TOKEN_PREFIX = "jwt:token:revoked:devetek:"
 
     # GLOBAL ERROR CODE
     ERROR_CODE_MESSAGE = {

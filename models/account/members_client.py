@@ -1,7 +1,8 @@
-from web import db
-from sqlalchemy.dialects.mysql import TINYINT, INTEGER, BIGINT
+from sqlalchemy.dialects.mysql import BIGINT, INTEGER, TINYINT
+
 from models.account.client import AccountClient
 from models.account.member import AccountMember
+from web import db
 
 
 class AccountMembersClient(db.Model):

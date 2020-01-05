@@ -17,14 +17,16 @@
 """
 
 
-from web import db
 from datetime import datetime
-from sqlalchemy import inspect, text, func
-from sqlalchemy.dialects.mysql import TINYINT, INTEGER, BIGINT, TIMESTAMP
+
+from sqlalchemy import func, inspect, text
+from sqlalchemy.dialects.mysql import BIGINT, INTEGER, TIMESTAMP, TINYINT
+
+from libraries.hash import generate_hash256, verify_hash256
 from models.account.client import AccountClient
 from models.account.email import AccountEmail
 from models.account.phone import AccountPhone
-from libraries.hash import generate_hash256, verify_hash256
+from web import db
 
 
 def member_data_input_serializer(data):

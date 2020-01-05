@@ -1,5 +1,4 @@
 import redis
-from config import Config
 
 
 class Create():

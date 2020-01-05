@@ -1,10 +1,10 @@
 import sys
 
 from cli.db import init_account, init_member
-from config import Config
-from web import bootstrap_web, db
+from models import db
+from web import bootstrap_http
 
-app = bootstrap_web(Config)
+app = bootstrap_http()
 
 
 @app.cli.command()

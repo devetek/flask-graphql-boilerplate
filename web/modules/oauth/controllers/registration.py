@@ -12,15 +12,17 @@ TODO:
 - Split login username and email, to make easy on debugging
 - Log error to Spirit Vessel (devetek logger service)
 """
-import validators
 from datetime import datetime
+
+import validators
+from flask import current_app as app
 from flask_restful import Resource, reqparse
+
 from models.account.client import AccountClient
-from models.account.member import AccountMember, member_data_input_serializer
 from models.account.email import AccountEmail
-from web.helpers import success_http_response, cleaning_dict
+from models.account.member import AccountMember, member_data_input_serializer
+from web.helpers import cleaning_dict, success_http_response
 from web.helpers.error_handler import error_http_code
-from web.helpers.jwt_handler import generate_token
 
 parser = reqparse.RequestParser()
 parser.add_argument('X-Devetek-App-Id', required=True,
@@ -33,6 +35,7 @@ parser.add_argument('member_password',
 
 class RegistrationController(Resource):
     def __init__(self):
+        self.tps_jwt = app.extensions['tps-jwt']
         self.data = cleaning_dict(parser.parse_args())
         self.app_id = self.data['X-Devetek-App-Id']
         self.valid_member = member_data_input_serializer(self.data)
@@ -77,7 +80,7 @@ class RegistrationController(Resource):
                     email_text=self.data["member_email"], email_member_id=new_member_id, email_primary=True).save()
 
             if (new_member_id):
-                token = generate_token(new_member_id)
+                token = self.tps_jwt.generate_token(new_member_id)
 
                 return success_http_response('User {} was created.'.format(self.return_member), True, token)
 

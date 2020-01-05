@@ -1,6 +1,7 @@
-from config import Config
 from flask import jsonify
 from flask_restful import abort
+
+from config import config
 
 
 """[Function helper for generate JSON response on error HTTP STATUS CODE or non 200]
@@ -13,7 +14,7 @@ Returns:
 
 def error_http_code(code=404, opts=None, for_common=False):
     default_opt = {
-        "message": Config.ERROR_CODE_MESSAGE['http_status'][code],
+        "message": config.ERROR_CODE_MESSAGE['http_status'][code],
         "status": code,
         "success": False
     }

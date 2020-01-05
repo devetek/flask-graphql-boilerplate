@@ -9,20 +9,19 @@ TODO:
 - Split login username and email, to make easy on debugging
 - Log error to Spirit Vessel (devetek logger service)
 """
-import validators
 from datetime import datetime
+
+import validators
+from flask import current_app as app
 from flask_restful import Resource, reqparse
-from flask_jwt_extended import (
-    create_access_token, create_refresh_token, get_jti)
-from models import and_
-from libraries.devetek.session import store_revoke_token, store_revoke_refresh_token
-from models.account.members_client import AccountMembersClient
-from models.account.member import AccountMember
-from models.account.email import AccountEmail
-from web.helpers import success_http_response, cleaning_dict
-from web.helpers.error_handler import error_http_code
+
 from libraries.hash import verify_hash256
-from web.helpers.jwt_handler import generate_token
+from models import and_
+from models.account.email import AccountEmail
+from models.account.member import AccountMember
+from models.account.members_client import AccountMembersClient
+from web.helpers import cleaning_dict, success_http_response
+from web.helpers.error_handler import error_http_code
 
 parser = reqparse.RequestParser()
 parser.add_argument('X-Devetek-App-Id', required=True,
@@ -35,6 +34,7 @@ parser.add_argument('member_password',
 
 class AuthorizationController(Resource):
     def __init__(self):
+        self.tps_jwt = app.extensions['tps-jwt']
         self.data = cleaning_dict(parser.parse_args())
         self.app_id = self.data['X-Devetek-App-Id']
         self.return_member = self.data["member_email"] if "member_email" in self.data else self.data["member_username"]
@@ -74,6 +74,10 @@ class AuthorizationController(Resource):
         return self.generate_token(client.account_member)
 
     def login_username(self):
+        print("=========== login_username ===========")
+        print("=========== login_username ===========")
+        print("=========== login_username ===========")
+
         member = AccountMember.query.filter_by(
             member_username=self.data["member_username"]).first()
 
@@ -92,7 +96,11 @@ class AuthorizationController(Resource):
         return self.generate_token(client.account_member)
 
     def generate_token(self, member):
-        token = generate_token(member.member_id)
+        token = self.tps_jwt.generate_token(member.member_id)
+
+        print("token")
+        print(token)
+        print("token")
 
         if token["access_token"]:
             return success_http_response('Success generate session/token for {}.'. format(self.return_member), True, token)

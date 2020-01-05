@@ -3,7 +3,7 @@ export FLASK_APP=cli/flask
 export BUILD_ENV=production
 
 # ========================================
-# Setup non docker environment, to support IDE environment, especially for Visual Studio Code
+# Setup environment, to support all you need including IDE, especially for Visual Studio Code
 # Author: Prakasa <prakasa@devetek.com>
 # ========================================
 
@@ -17,6 +17,18 @@ setup:
 		pip install --upgrade pip; \
 		pip install -r requirements.txt; \
 	)
+
+# Build base image base on environment, development or production
+build:
+ifeq ($(BUILD_ENV),development)
+		$(eval IMG_ENV := $(shell echo "development"))
+		$(eval TAG := $(shell echo "development"))
+else
+	$(eval IMG_ENV := $(shell echo "production"))
+	$(eval TAG := $(shell echo "latest"))
+endif
+	@ docker build -f docker/$(IMG_ENV).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
+	@ docker push prakasa1904/tps-py-api:$(TAG)
 
 # To generate proto, create your first proto file under `./rpc/(module-name)/(module-name.proto)` then execute make proto OUTPUT=module-name
 proto:
@@ -32,6 +44,8 @@ proto:
 # Author: Prakasa <prakasa@devetek.com>
 # ========================================
 run-dev:
+	$(eval FLASK_ENV := $(shell echo "development"))
+
 ifeq ($(DB),)
 	@ sh -c "Please use `make run-dev DB=mysql` OR `make run-dev DB=pgql` && exit 1"
 endif
@@ -42,10 +56,11 @@ endif
 	@ cp docker/.env.example docker/.env
 	@ cd web/modules/frontend && yarn
 	@ docker-compose down --remove-orphans
-	@ docker-compose up -d
+	@ docker-compose up
 
 dev-up:
 	( \
+		export FLASK_ENV=development; \
 		flask initdb; \
 		python main.py http; \
 	)
@@ -62,6 +77,7 @@ run-prod:
 
 prod-up:
 	( \
+		export FLASK_ENV=production; \
 		flask initdb; \
 		uwsgi --http :5000 --module earthshaker:app; \
 		supervisord -c process/background.conf; \
@@ -73,19 +89,14 @@ prod-up:
 # Author: Prakasa <prakasa@devetek.com>
 # TODO: Adding modular test and all test
 # ==================================================
-test-pain:
+db:
+	( \
+		export FLASK_ENV=development; \
+		flask initdb; \
+	)
+
+test:
 	( \
 		source python_modules/bin/activate; \
 		python web/modules/oauth/controllers/__test__/registration.py; \
 	)
-
-build-image:
-ifeq ($(BUILD_ENV),development)
-		$(eval IMG_ENV := $(shell echo "development"))
-		$(eval TAG := $(shell echo "development"))
-else
-	$(eval IMG_ENV := $(shell echo "production"))
-	$(eval TAG := $(shell echo "latest"))
-endif
-	@ docker build -f docker/$(IMG_ENV).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
-	@ docker push prakasa1904/tps-py-api:$(TAG)

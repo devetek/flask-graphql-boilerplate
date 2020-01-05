@@ -1,7 +1,9 @@
-from web import db
 from datetime import datetime
+
 from sqlalchemy import inspect, text
 from sqlalchemy.dialects.mysql import BIGINT, TIMESTAMP
+
+from web import db
 
 
 class AccountPhone(db.Model):

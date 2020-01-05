@@ -1,7 +1,9 @@
 from flask import jsonify, make_response, render_template, request
-from config import Config
 from flask_restful import Resource, reqparse
-from libraries.devetek.payment.unicode_identifier import R_KEY, storage, MIN_UNIQ_CODE, MAX_UNIQ_CODE
+
+from libraries.devetek.payment.unicode_identifier import (MAX_UNIQ_CODE,
+                                                          MIN_UNIQ_CODE, R_KEY,
+                                                          storage)
 
 """[define your parameters here, strict for security issue]
 """

@@ -1,9 +1,10 @@
 from flask_restful import Resource
-from web.modules.oauth import api
-from web.modules.oauth.controllers import RegistrationController, AuthorizationController, \
-    RefreshController, PrivateController, \
-    LogoutController
 
+from web.modules.oauth import api
+from web.modules.oauth.controllers import (AuthorizationController,
+                                           LogoutController, PrivateController,
+                                           RefreshController,
+                                           RegistrationController)
 
 """[define routing under module payment]
 """

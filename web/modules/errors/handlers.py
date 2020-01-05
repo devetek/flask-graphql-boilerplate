@@ -1,6 +1,5 @@
-from config import Config
-from web.modules.errors import bp
 from web.helpers.error_handler import error_http_code
+from web.modules.errors import bp
 
 
 @bp.app_errorhandler(404)

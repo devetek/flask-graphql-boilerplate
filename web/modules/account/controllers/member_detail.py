@@ -1,10 +1,10 @@
 from flask import redirect
-from flask_restful import Resource
 from flask_jwt_extended import jwt_required
-from flask_login import current_user, login_required
+from flask_restful import Resource
+
 from models.account.client import AccountClient
-from models.account.member import AccountMember, member_return_data_serializer
 from models.account.email import AccountEmail
+from models.account.member import AccountMember, member_return_data_serializer
 from models.account.phone import AccountPhone
 from web.helpers import success_http_response
 from web.helpers.error_handler import error_http_code

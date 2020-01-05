@@ -1,8 +1,8 @@
-import time
 import json
+import time
+
 import requests
 import schedule
-
 
 host = 'http://apidev.hompes.id/v2/oauth/registration'
 headers = {'Content-type': 'application/json', 'x-devetek-app-id': '1'}

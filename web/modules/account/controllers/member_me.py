@@ -1,8 +1,8 @@
+from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource
-from flask_jwt_extended import (
-    jwt_required, get_jwt_identity)
-from models.account.members_client import AccountMembersClient
+
 from models.account.member import AccountMember, member_return_data_serializer
+from models.account.members_client import AccountMembersClient
 from web.helpers import success_http_response
 from web.helpers.error_handler import error_http_code
 
