@@ -16,9 +16,6 @@ class RedisProvider():
         try:
             return self._storage.set(self.key_token(name), value, expired)
         except Exception as error:
-            print("======= error =======")
-            print(error)
-            print("======= error =======")
 
             # TODO: Log error to logger services
             # logger(error)

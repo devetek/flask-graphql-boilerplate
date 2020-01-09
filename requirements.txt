@@ -30,7 +30,7 @@ mysqlclient
 schedule
 requests
 # refer to this benchmark https://github.com/ijl/orjson#dataclass
-orjson
+# orjson
 
 # linting tools
 # pylint

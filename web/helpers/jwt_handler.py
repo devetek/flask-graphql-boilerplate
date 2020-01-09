@@ -9,7 +9,7 @@ from .error_handler import error_http_code
 class JwtHandler():
     def __init__(self, app):
         self.jwt = JWTManager(app)
-        self.session = Session(app.config.get('REDIS_HOST_JWT'), app.config.get('REDIS_PORT_JWT'), app.config.get(
+        self.session = Session('redis', app.config.get('REDIS_HOST_JWT'), app.config.get('REDIS_PORT_JWT'), app.config.get(
             'REDIS_DB_JWT'), app.config.get('JWT_ACCESS_TOKEN_EXPIRES'), app.config.get('JWT_REFRESH_TOKEN_EXPIRES'))
 
         self.jwt.expired_token_loader(self._jwt_unauthorized_response)

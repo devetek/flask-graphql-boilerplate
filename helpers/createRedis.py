@@ -2,7 +2,7 @@ import redis
 
 
 class Create():
-    def __init__(self, host='localhost', port='6379', db=0):
+    def __init__(self, host='localhost', port=6379, db=0):
         self.host = host
         self.port = port
         self.db = db
