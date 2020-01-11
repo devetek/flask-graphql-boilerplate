@@ -57,12 +57,14 @@ class RegistrationController(Resource):
             if validate_input["invalid_key"] != "":
                 return success_http_response(validate_input["message"], False)
 
+            # Register with email
             if validate_input["valid_key"] != "member_username":
                 member_email = AccountEmail.query.filter_by(
                     email_text=self.data["member_email"]).first()
 
                 if member_email is not None:
                     return success_http_response("{} already registered in {}.".format(member_email.email_text, client.client_name), False)
+            # Register with username
             else:
                 member = AccountMember.query.filter_by(
                     member_username=self.data["member_username"]).first()

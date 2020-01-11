@@ -1,7 +1,9 @@
-from web import db
 from datetime import datetime
+
 from sqlalchemy import inspect, text
-from sqlalchemy.dialects.mysql import INTEGER, BIGINT, TIMESTAMP
+from sqlalchemy.dialects.mysql import BIGINT, INTEGER, TIMESTAMP
+
+from web import db
 
 
 class AccountEmail(db.Model):

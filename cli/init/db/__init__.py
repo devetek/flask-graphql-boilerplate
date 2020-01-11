@@ -12,13 +12,15 @@ init_member = {
     "member_email": [
         {
             "email_text": "prakasa@devetek.com",
-            "email_primary": True
+            "email_primary": True,
+            "email_verified": True
         }
     ],
     "member_phone": [
         {
             "phone_text": "082113468822",
-            "phone_primary": True
+            "phone_primary": True,
+            "phone_verified": True
         }
     ],
     "member_apps_ids": [

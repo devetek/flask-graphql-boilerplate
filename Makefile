@@ -1,13 +1,9 @@
-export DB=mysql
-export FLASK_APP=cli/flask
-export BUILD_ENV=production
-
-# ========================================
-# Setup environment, to support all you need including IDE, especially for Visual Studio Code
-# Author: Prakasa <prakasa@devetek.com>
-# ========================================
+DB := mysql
+FLASK_APP := cli/flask
+BUILD_ENV := production
 
 # Setup python virtualenv to support IDE
+.PHONY: setup
 setup:
 	@ which pip3 || exit 1
 	@ pip3 install virtualenv
@@ -19,6 +15,7 @@ setup:
 	)
 
 # Build base image base on environment, development or production
+.PHONY: build
 build:
 ifeq ($(BUILD_ENV),development)
 		$(eval IMG_ENV := $(shell echo "development"))
@@ -30,7 +27,16 @@ endif
 	@ docker build -f docker/$(IMG_ENV).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
 	@ docker push prakasa1904/tps-py-api:$(TAG)
 
+# Test db initiator
+db:
+	( \
+		export FLASK_APP=cli/flask; \
+		export FLASK_ENV=development; \
+		flask initdb; \
+	)
+
 # To generate proto, create your first proto file under `./rpc/(module-name)/(module-name.proto)` then execute make proto OUTPUT=module-name
+.PHONY: proto
 proto:
 	( \
 		source python_modules/bin/activate; \
@@ -43,9 +49,8 @@ proto:
 # Running using docker environment DEVELOPMENT
 # Author: Prakasa <prakasa@devetek.com>
 # ========================================
+.PHONY: run-dev
 run-dev:
-	$(eval FLASK_ENV := $(shell echo "development"))
-
 ifeq ($(DB),)
 	@ sh -c "Please use `make run-dev DB=mysql` OR `make run-dev DB=pgql` && exit 1"
 endif
@@ -58,8 +63,10 @@ endif
 	@ docker-compose down --remove-orphans
 	@ docker-compose up
 
+.PHONY: dev-up
 dev-up:
 	( \
+		export FLASK_APP=cli/flask; \
 		export FLASK_ENV=development; \
 		flask initdb; \
 		python main.py http; \
@@ -69,34 +76,26 @@ dev-up:
 # Running using docker environment PRODUCTION
 # Author: Prakasa <prakasa@devetek.com>
 # TODO: ON PROGRESS!
+	# @ test -f docker/redis || mkdir -p docker/redis
+	# @ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
+	# @ docker-compose -f docker/prod.docker-compose.yml up -d
 # ========================================
+.PHONY: run-prod
 run-prod:
-	@ test -f docker/redis || mkdir -p docker/redis
-	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
-	@ docker-compose -f docker/prod.docker-compose.yml up -d
-
-prod-up:
-	( \
-		export FLASK_ENV=production; \
-		flask initdb; \
-		uwsgi --http :5000 --module earthshaker:app; \
-		supervisord -c process/background.conf; \
-	)
+	@ echo "Under Maintenance"
 
 
-# ==================================================
-# Test runner - [pain, code coverage, automation]
+# ========================================
+# Running using docker environment PRODUCTION
 # Author: Prakasa <prakasa@devetek.com>
-# TODO: Adding modular test and all test
-# ==================================================
-db:
-	( \
-		export FLASK_ENV=development; \
-		flask initdb; \
-	)
-
-test:
-	( \
-		source python_modules/bin/activate; \
-		python web/modules/oauth/controllers/__test__/registration.py; \
-	)
+# TODO: ON PROGRESS!
+	# ( \
+	# 	export FLASK_ENV=production; \
+	# 	flask initdb; \
+	# 	uwsgi --http :5000 --module earthshaker:app; \
+	# 	supervisord -c process/background.conf; \
+	# )
+# ========================================
+.PHONY: prod-up
+prod-up:
+	@ echo "Under Maintenance"
