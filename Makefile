@@ -1,4 +1,4 @@
-DB := mysql
+DB := pgql
 FLASK_APP := cli/flask
 BUILD_ENV := production
 
@@ -66,6 +66,7 @@ endif
 .PHONY: dev-up
 dev-up:
 	( \
+		export DB=$(DB); \
 		export FLASK_APP=cli/flask; \
 		export FLASK_ENV=development; \
 		flask initdb; \

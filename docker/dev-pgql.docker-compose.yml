@@ -3,6 +3,7 @@ version: "3.3"
 services:
   butterfly_pgql:
     image: postgres:alpine
+    container_name: butterfly_pgql
     restart: always
     ports:
       - 5432:5432
@@ -77,7 +78,7 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/docker/pgql/restore
+      device: $PWD/docker/postgres/restore
       o: bind
   butterfly_pgql_data:
     driver: local

@@ -1,5 +1,5 @@
 # local env folder
-/docker/postgres/volume
+/docker/pgql/volume
 /docker/mysql/volume
 /docker/redis
 /python_modules

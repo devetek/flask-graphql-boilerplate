@@ -19,9 +19,6 @@
 
 from datetime import datetime
 
-from sqlalchemy import func, inspect, text
-from sqlalchemy.dialects.mysql import BIGINT, INTEGER, TIMESTAMP, TINYINT
-
 from libraries.hash import generate_hash256, verify_hash256
 from models.account.client import AccountClient
 from models.account.email import AccountEmail
@@ -63,13 +60,13 @@ def member_return_data_serializer(data):
 class AccountMember(db.Model):
     __tablename__ = 'account_member'
 
-    member_id = db.Column(BIGINT(unsigned=True),
-                          nullable=False, primary_key=True, index=True)
+    member_id = db.Column(db.BigInteger, nullable=False,
+                          primary_key=True, index=True)
     member_username = db.Column(db.VARCHAR(255), index=True)
     member_fullname = db.Column(db.VARCHAR(255))
     member_gender = db.Column(db.VARCHAR(1))
     member_place_of_birth = db.Column(db.VARCHAR(100))
-    member_birth_of_date = db.Column(db.DateTime, default=func.now())
+    member_birth_of_date = db.Column(db.DateTime, default=db.func.now())
     member_religion = db.Column(db.VARCHAR(10))
     member_password = db.Column(db.VARCHAR(255))
     member_aboutme = db.Column(db.Text)
@@ -80,9 +77,9 @@ class AccountMember(db.Model):
     member_apps_ids = db.relationship(
         AccountClient, secondary='members_client')
     member_create_date = db.Column(
-        TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False)
+        db.TIMESTAMP, default=db.func.now(), nullable=False)
     member_update_date = db.Column(
-        TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'), nullable=False)
+        db.TIMESTAMP, default=db.func.now(), onupdate=db.func.now(), nullable=False)
 
     def __repr__(self):
         return '<Member {}>'.format(self.member_id)
@@ -141,4 +138,4 @@ class AccountMember(db.Model):
 
     def to_dict(self):
         return {c.key: getattr(self, c.key)
-                for c in inspect(self).mapper.column_attrs}
+                for c in db.inspect(self).mapper.column_attrs}

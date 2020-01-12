@@ -1,11 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import inspect, text
-from sqlalchemy.dialects.mysql import INTEGER, TIMESTAMP
-
 from models import db
-
-# from models.account.members_client import AccountMembersClient
 
 
 def client_data_input_serializer(data):
@@ -21,7 +16,7 @@ def client_data_input_serializer(data):
 class AccountClient(db.Model):
     __tablename__ = 'account_client'
 
-    client_id = db.Column(INTEGER(unsigned=True), unique=True,
+    client_id = db.Column(db.Integer, unique=True,
                           nullable=False, primary_key=True, index=True)
     client_name = db.Column(db.Text)
     client_description = db.Column(db.Text)
@@ -29,9 +24,9 @@ class AccountClient(db.Model):
     client_members = db.relationship(
         'AccountMember', secondary='members_client')
     client_create_date = db.Column(
-        TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP'), nullable=False)
+        db.TIMESTAMP, default=db.func.now(), nullable=False)
     client_update_date = db.Column(
-        TIMESTAMP(), server_default=text('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'), nullable=False)
+        db.TIMESTAMP, default=db.func.now(), onupdate=db.func.now(), nullable=False)
 
     def __repr__(self):
         return '<Client {}>'.format(self.client_id)
@@ -51,4 +46,4 @@ class AccountClient(db.Model):
 
     def to_dict(self):
         return {c.key: getattr(self, c.key)
-                for c in inspect(self).mapper.column_attrs}
+                for c in db.inspect(self).mapper.column_attrs}

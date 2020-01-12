@@ -44,7 +44,8 @@ def initdb():
             phone_primary=init_member["member_phone"][0]['phone_primary'],
             phone_verified=init_member["member_phone"][0]['phone_verified'],
             phone_member_id=member_id
-        )
+        ).save()
+
         # Save Member with client
         AccountMembersClient(mc_client_id=client_id,
                              mc_member_id=member_id, mc_is_approved=3).save()

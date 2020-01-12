@@ -74,10 +74,6 @@ class AuthorizationController(Resource):
         return self.generate_token(client.account_member)
 
     def login_username(self):
-        print("=========== login_username ===========")
-        print("=========== login_username ===========")
-        print("=========== login_username ===========")
-
         member = AccountMember.query.filter_by(
             member_username=self.data["member_username"]).first()
 
@@ -97,10 +93,6 @@ class AuthorizationController(Resource):
 
     def generate_token(self, member):
         token = self.tps_jwt.generate_token(member.member_id)
-
-        print("token")
-        print(token)
-        print("token")
 
         if token["access_token"]:
             return success_http_response('Success generate session/token for {}.'. format(self.return_member), True, token)
