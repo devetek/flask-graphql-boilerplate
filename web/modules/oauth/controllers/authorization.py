@@ -24,19 +24,19 @@ from web.helpers import cleaning_dict, success_http_response
 from web.helpers.error_handler import error_http_code
 
 parser = reqparse.RequestParser()
-parser.add_argument('X-Devetek-App-Id', required=True,
+parser.add_argument('X-App-Id', 
+                    help='X-App-Id adalah header yang wajib ada', required=True,
                     location='headers', type=int)
 parser.add_argument('member_email', required=False)
 parser.add_argument('member_username', required=False)
-parser.add_argument('member_password',
-                    help='Password cannot be blank', required=True)
+parser.add_argument('member_password', required=True)
 
 
 class AuthorizationController(Resource):
     def __init__(self):
         self.tps_jwt = app.extensions['tps-jwt']
         self.data = cleaning_dict(parser.parse_args())
-        self.app_id = self.data['X-Devetek-App-Id']
+        self.app_id = self.data['X-App-Id']
         self.return_member = self.data["member_email"] if "member_email" in self.data else self.data["member_username"]
 
     def post(self):
@@ -113,22 +113,29 @@ class AuthorizationController(Resource):
         }
 
         if self.app_id is None:
-            valid_response["invalid_key"] = "X-Devetek-App-Id"
-            valid_response["message"] = "Login failed, invalid app id, please send valid header app id."
+            valid_response["invalid_key"] = "X-App-Id"
+            valid_response["message"] = "Gagal login, App ID invalid. Wajib kirim header X-App-Id."
+
+            return valid_response
+
+        if ("member_password" not in self.data) or ("member_password" in self.data and self.data["member_password"] == ""):
+            valid_response["invalid_key"] = "member_password"
+            valid_response["message"] = "Password tidak boleh kosong."
 
             return valid_response
 
         if "member_email" in self.data:
             if not validators.email(self.data["member_email"]):
                 valid_response["invalid_key"] = "member_email"
-                valid_response["message"] = "Your email address is invalid. Please enter a valid address."
+                valid_response["message"] = "Email yang anda masukkan tidak valid."
             else:
                 valid_response["valid_key"] = "member_email"
 
         if "member_username" in self.data:
+            # No special char for username
             if self.data['member_username'].isalnum() == False:
                 valid_response["invalid_key"] = "member_username"
-                valid_response["message"] = "Username only allow alphanumeric characters."
+                valid_response["message"] = "Username tidak boleh mengandung spesial karakter."
             else:
                 valid_response["valid_key"] = "member_username"
 

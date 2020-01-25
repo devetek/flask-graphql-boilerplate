@@ -5,7 +5,7 @@ import requests
 import schedule
 
 host = 'http://apidev.hompes.id/v2/oauth/registration'
-headers = {'Content-type': 'application/json', 'x-devetek-app-id': '1'}
+headers = {'Content-type': 'application/json', 'X-App-Id': '1'}
 
 
 def one_username():

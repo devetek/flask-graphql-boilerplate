@@ -1,26 +1,30 @@
-const prefix = key => `devetek:${key}:local`;
+const prefix = (key: string): string => `devetek:${key}:local`;
 
-const devStoreSave = (key = "", val = "") => {
+const save = (key: string, val: string): boolean => {
   try {
-    return localStorage.setItem(prefix(key), val);
+    localStorage.setItem(prefix(key), val);
+
+    return true;
   } catch (e) {
     // TODO: Replace with logger
     console.log(e);
-    return null;
   }
+
+  return false;
 };
 
-const devStoreGet = (key = "") => {
+const get = (key: string): string | null => {
   try {
     return localStorage.getItem(prefix(key));
   } catch (e) {
     // TODO: Replace with logger
     console.log(e);
-    return null;
   }
+
+  return null;
 };
 
-const devStoreDel = (key = "") => {
+const del = (key: string): boolean => {
   try {
     localStorage.removeItem(prefix(key));
 
@@ -28,8 +32,9 @@ const devStoreDel = (key = "") => {
   } catch (e) {
     // TODO: Replace with logger
     console.log(e);
-    return false;
   }
+
+  return false;
 };
 
-export { devStoreSave, devStoreGet, devStoreDel };
+export { save, get, del };

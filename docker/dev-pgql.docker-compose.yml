@@ -19,8 +19,6 @@ services:
     container_name: butterfly_redis
     command: ["redis-server", "--appendonly", "yes"]
     restart: always
-    ports:
-      - 6379:6379
     volumes:
       - ./docker/redis:/data
     environment:
@@ -34,7 +32,7 @@ services:
       - butterfly_redis
     image: prakasa1904/tps-py-api:development
     container_name: butterfly_backend
-    working_dir: /devetek/
+    working_dir: /devetek
     volumes:
       - .:/devetek
       - ./process/dev/pgql:/devetek/pgql
@@ -49,7 +47,7 @@ services:
   butterfly_frontend:
     image: node:lts-alpine
     container_name: butterfly_frontend
-    working_dir: /devetek/
+    working_dir: /devetek
     volumes:
       - ./web/modules/frontend:/devetek
     restart: always

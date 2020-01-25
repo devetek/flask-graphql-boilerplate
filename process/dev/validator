@@ -1,0 +1,30 @@
+#!/bin/sh
+# checking local requirement, please follow instruction below running Butterfly
+# exit code description
+# 1 - Catchall for general errors
+# 2 - Misuse of shell builtins (according to Bash documentation)
+# 126 - Command invoked cannot execute
+# 127 - “command not found”
+# 128 - Invalid argument to exit
+# 128+n - Fatal error signal “n”
+# 130 - Script terminated by Control-C
+# 255\* - Exit status out of range
+TYPE=$1
+
+pre_information() {
+  echo "Why we still need install this deps ?"
+  echo "- Decrease base image for frontend development environment."
+  echo "- Improvement development hot reload feature."
+  echo '\n'
+}
+
+if [[ "$TYPE" == "node" ]]; then
+  pre_information
+  sh -c 'echo "There is no node binary installed, follow this url to install yarn https://nodejs.org/en/download/" && exit 126'
+elif [[ "$TYPE" == "yarn" ]]; then
+  pre_information
+  sh -c 'echo "There is no yarn binary installed, follow this url to install yarn https://legacy.yarnpkg.com/lang/en/docs/install/" && exit 126'
+else
+  pre_information
+  sh -c 'echo "Something wrong, please contact prakasa@devetek.com" && exit 128'
+fi

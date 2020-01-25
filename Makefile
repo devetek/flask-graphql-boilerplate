@@ -20,10 +20,15 @@ build:
 ifeq ($(BUILD_ENV),development)
 		$(eval IMG_ENV := $(shell echo "development"))
 		$(eval TAG := $(shell echo "development"))
+endif
+ifeq ($(BUILD_ENV),frontend)
+		$(eval IMG_ENV := $(shell echo "frontend"))
+		$(eval TAG := $(shell echo "frontend"))
 else
 	$(eval IMG_ENV := $(shell echo "production"))
 	$(eval TAG := $(shell echo "latest"))
 endif
+
 	@ docker build -f docker/$(IMG_ENV).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
 	@ docker push prakasa1904/tps-py-api:$(TAG)
 
@@ -51,6 +56,14 @@ proto:
 # ========================================
 .PHONY: run-dev
 run-dev:
+	# Validate frontend runner
+	$(eval WHICH_NODE := $(shell which node))
+	$(eval WHICH_YARN := $(shell which yarn))
+
+	@ test -n "$(WHICH_NODE)" || ./process/dev/validator node
+	@ test -n "$(WHICH_YARN)" || ./process/dev/validator yarn
+
+	# Validate selecting database engine, only support for mysql and pgql
 ifeq ($(DB),)
 	@ sh -c "Please use `make run-dev DB=mysql` OR `make run-dev DB=pgql` && exit 1"
 endif

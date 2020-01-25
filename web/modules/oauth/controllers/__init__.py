@@ -1,8 +1,8 @@
 from .authorization import AuthorizationController
+from .isauthenticated import IsAuthenticatedController
 from .logout import LogoutController
-from .private import PrivateController
 from .refresh import RefreshController
 from .registration import RegistrationController
 
 __all__ = ["RegistrationController", "AuthorizationController",
-           "RefreshController", "PrivateController", "LogoutController"]
+           "RefreshController", "IsAuthenticatedController", "LogoutController"]

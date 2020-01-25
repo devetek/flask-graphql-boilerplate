@@ -25,7 +25,7 @@ from web.helpers import cleaning_dict, success_http_response
 from web.helpers.error_handler import error_http_code
 
 parser = reqparse.RequestParser()
-parser.add_argument('X-Devetek-App-Id', required=True,
+parser.add_argument('X-App-Id', required=True,
                     location='headers', type=int)
 parser.add_argument('member_email', required=False)
 parser.add_argument('member_username', required=False)
@@ -37,7 +37,7 @@ class RegistrationController(Resource):
     def __init__(self):
         self.tps_jwt = app.extensions['tps-jwt']
         self.data = cleaning_dict(parser.parse_args())
-        self.app_id = self.data['X-Devetek-App-Id']
+        self.app_id = self.data['X-App-Id']
         self.valid_member = member_data_input_serializer(self.data)
         self.return_member = self.data["member_email"] if "member_email" in self.data else self.data["member_username"]
 
@@ -99,7 +99,7 @@ class RegistrationController(Resource):
         }
 
         if self.app_id is None:
-            valid_response["invalid_key"] = "X-Devetek-App-Id"
+            valid_response["invalid_key"] = "X-App-Id"
             valid_response["message"] = "Login failed, invalid app id, please send valid header app id."
 
             return valid_response

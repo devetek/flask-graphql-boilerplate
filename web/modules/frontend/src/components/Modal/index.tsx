@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { IModal } from "components/Modal/interface";
 
 /**
  * Create a modal.
  * @param {boolean} isOpen - Modal open status.
  * @param {string} title - Title from the modal.
- * @param {string} description - Title from the modal.
+ * @param {string} description - Description from the modal.
  * @param {function} onCancelHandler - on click cancel handler.
  * @param {function} onOkHandler - on click ok handler.
  * @param {string} closeTxt - text show in close button.
@@ -18,14 +19,14 @@ import DialogTitle from "@material-ui/core/DialogTitle";
  */
 export default ({
   isOpen = false,
-  title = "Devetek",
-  description = "Let Techno Help You",
+  title = "",
+  description = "",
   onCancelHandler = () => {},
   onOkHandler = () => {},
-  closeTxt = "Tutup",
-  openTxt = "Setuju"
-}) => {
-  const [open = isOpen, setOpen] = React.useState();
+  closeTxt = "close",
+  openTxt = "Ok"
+}: IModal) => {
+  const [open, setOpen] = useState<boolean>(isOpen);
 
   const handleCancel = () => {
     onCancelHandler();
@@ -44,7 +45,7 @@ export default ({
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Dialog
         open={open}
         onClose={toggleOpenStatus}
@@ -66,6 +67,6 @@ export default ({
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 };

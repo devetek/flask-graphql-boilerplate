@@ -6,7 +6,7 @@ from flask_restful import Resource
 from web.helpers import success_http_response
 
 
-class PrivateController(Resource):
+class IsAuthenticatedController(Resource):
     @jwt_required
     def get(self):
         raw_data = get_raw_jwt()
