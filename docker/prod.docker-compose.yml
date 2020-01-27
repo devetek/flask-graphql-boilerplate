@@ -2,6 +2,9 @@ version: "3.3"
 
 services:
   butterfly_backend:
+    build: 
+      context: .
+      image: ./docker/production.Dockerfile
     image: prakasa1904/tps-py-api:production
     container_name: butterfly_backend
     working_dir: /devetek

@@ -92,8 +92,8 @@ dev-up:
 # ========================================
 .PHONY: run-prod
 run-prod:
-	@ test -f docker/redis || mkdir -p docker/redis
-	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
+	@ cp -rf docker/prod-$(DB).docker-compose.yml docker-compose.yml
+	@ docker-compose build
 	@ docker-compose -f docker/prod.docker-compose.yml up -d
 
 .PHONY: prod-up
