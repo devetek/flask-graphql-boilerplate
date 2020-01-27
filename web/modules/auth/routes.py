@@ -1,7 +1,7 @@
 from flask_restful import Resource
 
-from web.modules.oauth import api
-from web.modules.oauth.controllers import (AuthorizationController,
+from web.modules.auth import api
+from web.modules.auth.controllers import (AuthorizationController,
                                            IsAuthenticatedController,
                                            LogoutController, RefreshController,
                                            RegistrationController)

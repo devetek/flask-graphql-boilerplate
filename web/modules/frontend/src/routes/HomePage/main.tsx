@@ -1,7 +1,9 @@
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import config from 'config';
 import { get } from 'libraries/localStorage';
 import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import useStyles from './style';
 
 const HomePage = () => {
@@ -15,11 +17,16 @@ const HomePage = () => {
       setSession(hasSession);
     }
 
-    getLocalSession();
+    if (!session) {
+      getLocalSession();
+    }
   }, [session]);
 
   return (
     <div className={classes.root}>
+      <Helmet>
+        <title>{config.APP_NAME}</title>
+      </Helmet>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>

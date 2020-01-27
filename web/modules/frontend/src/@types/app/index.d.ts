@@ -1,0 +1,3 @@
+interface App {
+  history: any;
+}

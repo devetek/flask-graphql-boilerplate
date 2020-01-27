@@ -1,11 +1,17 @@
 import React from 'react';
-import Routes from "./routes";
-import "./App.css";
+import { HelmetProvider } from 'react-helmet-async';
+import { Router } from 'react-router-dom';
+import './App.css';
+import Routes from './routes';
 
-const App: React.FC = () => {
+function App({ history }: App): any {
   return (
     <div className="App">
-      <Routes />
+      <HelmetProvider>
+        <Router history={history}>
+          <Routes />
+        </Router>
+      </HelmetProvider>
     </div>
   );
 }

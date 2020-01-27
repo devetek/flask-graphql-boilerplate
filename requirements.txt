@@ -2,7 +2,7 @@ Flask
 # flask-socketio
 Flask-ini
 flask-restful
-# Flask-Session
+Flask-Session
 Flask-SQLAlchemy
 Flask-Migrate
 # flask-login

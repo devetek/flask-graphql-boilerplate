@@ -1,10 +1,9 @@
 import api from 'libraries/api';
-import { IdoLoginRequest, IdoLoginResponse } from './interface';
 
-const doLogin = async ({ member_username, member_password }: IdoLoginRequest): Promise<IdoLoginResponse> => {
+const FetchdoLogin = async ({ member_username, member_password }: IdoLoginRequest): Promise<IdoLoginResponse> => {
   return await api({
     method: 'POST',
-    url: '/oauth/authorization',
+    url: '/auth/authorization',
     body: {
       member_username,
       member_password,
@@ -12,4 +11,5 @@ const doLogin = async ({ member_username, member_password }: IdoLoginRequest): P
   });
 };
 
-export { doLogin };
+export { FetchdoLogin };
+

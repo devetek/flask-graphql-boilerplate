@@ -36,7 +36,7 @@ services:
     working_dir: /devetek/
     volumes:
       - .:/devetek
-      - ./process/dev/mysql:/devetek/mysql
+      - ./process/dev/dev-mysql:/devetek/mysql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
     command: ["./mysql", "butterfly_mysql", "make", "dev-up"]

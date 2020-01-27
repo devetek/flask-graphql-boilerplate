@@ -1,0 +1,23 @@
+# CI/CD Step Plan
+
+# Staging
+# - Just deploy, running with development mode, to make it easy on debuging
+
+# Production
+# - Build image
+# - Push image
+# - Execute deploy version kubernetes
+stages:
+  - deploy-staging
+
+# Staging Environment
+deploy staging:
+  stage: deploy-staging
+  type: deploy
+  environment:
+    name: development
+  when: manual
+  script:
+    - ./process/gitlab/staging
+  only:
+    - staging
