@@ -103,6 +103,6 @@ prod-up:
 		export FLASK_APP=cli/flask; \
 		export FLASK_ENV=production; \
 		flask initdb; \
-		uwsgi --http :5000 --module main:app; \
+		uwsgi --http :5500 --module main:app; \
 	)
 	# supervisord -c process/background.conf; \
