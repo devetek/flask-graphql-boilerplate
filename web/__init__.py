@@ -13,8 +13,6 @@ from .modules.auth import bp as auth_bp
 from .modules.auth import routes
 from .modules.errors import bp as errors_bp
 from .modules.errors import handlers
-from .modules.payment import bp as payment_bp
-from .modules.payment import routes
 
 
 def bootstrap_http():
@@ -36,7 +34,6 @@ def bootstrap_http():
     """
     app.register_blueprint(account_bp, url_prefix='/account')
     app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(payment_bp, url_prefix='/payment')
     app.register_blueprint(errors_bp)
 
     return app
