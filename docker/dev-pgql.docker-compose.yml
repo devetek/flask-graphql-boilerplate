@@ -5,6 +5,8 @@ services:
     image: postgres:alpine
     container_name: butterfly_pgql
     restart: always
+    ports:
+      - 5432:5432
     volumes:
       - butterfly_pgql_backup:/docker-entrypoint-initdb.d
       - butterfly_pgql_data:/var/lib/postgresql/data
@@ -38,7 +40,7 @@ services:
     restart: always
     command: ["./pgql", "butterfly_pgql", "make", "dev-up"]
     env_file:
-      - ./docker/.env
+      - ./docker/.devenv
     ports:
       - 5000:5000
 

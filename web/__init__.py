@@ -21,12 +21,7 @@ def bootstrap_http():
     app = Flask(__name__)
     app.iniconfig = FlaskIni()
     with app.app_context():
-        if os.environ['FLASK_ENV'] == 'development':
-            app.iniconfig.read(
-                './config/' + os.environ['FLASK_ENV'] + "-" + os.environ['DB'] + '.ini')
-        else:
-            app.iniconfig.read(
-                './config/' + os.environ['FLASK_ENV'] + '.ini')
+        app.iniconfig.read('./config/' + os.environ['FLASK_ENV'] + "-" + os.environ['DB'] + '.ini')
 
     # Plugin Initialization
     db.init_app(app)

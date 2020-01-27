@@ -72,7 +72,6 @@ endif
 	@ cp -rf docker/dev-$(DB).docker-compose.yml docker-compose.yml
 	@ test -f docker/$(DB)/volume || mkdir -p docker/$(DB)/volume
 	@ test -f docker/redis || mkdir -p docker/redis
-	@ cp docker/.env.example docker/.env
 	@ cd web/modules/frontend && yarn
 	@ docker-compose down --remove-orphans
 	@ docker-compose up
@@ -90,27 +89,20 @@ dev-up:
 # ========================================
 # Running using docker environment PRODUCTION
 # Author: Prakasa <prakasa@devetek.com>
-# TODO: ON PROGRESS!
-	# @ test -f docker/redis || mkdir -p docker/redis
-	# @ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
-	# @ docker-compose -f docker/prod.docker-compose.yml up -d
 # ========================================
 .PHONY: run-prod
 run-prod:
-	@ echo "Under Maintenance"
+	@ test -f docker/redis || mkdir -p docker/redis
+	@ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
+	@ docker-compose -f docker/prod.docker-compose.yml up -d
 
-
-# ========================================
-# Running using docker environment PRODUCTION
-# Author: Prakasa <prakasa@devetek.com>
-# TODO: ON PROGRESS!
-	# ( \
-	# 	export FLASK_ENV=production; \
-	# 	flask initdb; \
-	# 	uwsgi --http :5000 --module earthshaker:app; \
-	# 	supervisord -c process/background.conf; \
-	# )
-# ========================================
 .PHONY: prod-up
 prod-up:
-	@ echo "Under Maintenance"
+	( \
+		export DB=$(DB); \
+		export FLASK_APP=cli/flask; \
+		export FLASK_ENV=production; \
+		flask initdb; \
+		uwsgi --http :5500 --module main:app; \
+	)
+	# supervisord -c process/background.conf; \

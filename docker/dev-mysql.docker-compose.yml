@@ -41,7 +41,7 @@ services:
     restart: always
     command: ["./mysql", "butterfly_mysql", "make", "dev-up"]
     env_file:
-      - ./docker/.env
+      - ./docker/.devenv
     ports:
       - 5000:5000
 
@@ -77,11 +77,11 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/docker/mysql/restore
+      device: $PWD/docker/mysqldb/restore
       o: bind
   butterfly_mysql_data:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/docker/mysql/volume
+      device: $PWD/docker/mysqldb/volume
       o: bind

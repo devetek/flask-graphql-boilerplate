@@ -1,59 +1,27 @@
 version: "3.3"
 
 services:
-  butterfly_mysql:
-    image: mysql
-    container_name: butterfly_mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+  butterfly_backend:
+    image: prakasa1904/tps-py-api:production
+    container_name: butterfly_backend
+    working_dir: /devetek
     volumes:
-      - butterfly_mysql_backup:/docker-entrypoint-initdb.d
-      - butterfly_mysql_data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=init
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-
-  butterfly_redis:
-    image: redis:alpine
-    container_name: butterfly_redis
-    command: ["redis-server", "--appendonly", "yes"]
+      - ./process/dev/dev-pgql:/devetek/pgql
+      - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    volumes:
-      - ./redis:/data
-    environment:
-      - ALLOW_EMPTY_PASSWORD=no
-      - REDIS_MASTER_PORT_NUMBER=6379
-      - REDIS_PASSWORD=redis_password
+    command: "make prod-up"
+    networks:
+      - kepasar
 
-  butterfly_app:
-    depends_on:
-      - butterfly_mysql
-      - butterfly_redis
-    image: prakasa1904/tps-py-api:latest
-    container_name: butterfly_app
-    working_dir: /code/
-    volumes:
-      - ../:/code
-      - /code/python_modules/ # Generate volume `python_modules` empty
+  butterfly_frontend:
+    image: node:lts-alpine
+    container_name: butterfly_frontend
+    working_dir: /devetek
     restart: always
-    command: |
-      make prod-up
-    env_file:
-      - ./.env
-    ports:
-      - 5000:5000
+    command: yarn start
+    networks:
+      - kepasar
 
-volumes:
-  butterfly_mysql_backup:
-    driver: local
-    driver_opts:
-      type: none
-      device: $PWD/docker/mysql/restore
-      o: bind
-  butterfly_mysql_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: $PWD/docker/mysql/volume
-      o: bind
+networks:
+  kepasar:
+    external: true

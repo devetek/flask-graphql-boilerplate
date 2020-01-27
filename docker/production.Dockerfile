@@ -2,10 +2,21 @@ FROM python:3.7.3-alpine
 
 workdir /devetek
 
+COPY ./agent .
+COPY ./cli .
+COPY ./config .
+COPY ./helpers .
+COPY ./libraries .
+COPY ./models .
+COPY ./process .
+COPY ./rpc .
+COPY ./web .
+COPY ./main.py .
+COPY ./Makefile .
 COPY requirements.txt .
+COPY ./rpc-client.py .
 
-ENV ALPINE_VERSION=3.8 \
-
+ENV ALPINE_VERSION=3.10 \
     # These are always installed.
     #   * dumb-init: a proper init system for containers, to reap zombie children
     #   * musl: standard C library
@@ -22,13 +33,15 @@ ENV ALPINE_VERSION=3.8 \
       linux-headers \
       build-base \
       bash \
+      vim \
       git \
       curl \
+      libpq \
+      postgresql-client \
+      mysql-client \
       ca-certificates \
-      libssl1.0 \
       libffi-dev \
     " \
-    
     # PACKAGES needed to built python
     PYTHON_BUILD_PACKAGES="\
       mariadb-dev \
@@ -39,6 +52,9 @@ ENV ALPINE_VERSION=3.8 \
       expat-dev \
       findutils \
       gcc \
+      python3-dev \
+      postgresql-dev \
+      musl-dev \
       gdbm-dev \
       libc-dev \
       libffi-dev \
