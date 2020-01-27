@@ -1,4 +1,4 @@
-export interface IModal {
+interface ComponentModal {
   isOpen?: boolean;
   title?: string;
   description: string;

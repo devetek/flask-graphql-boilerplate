@@ -24,7 +24,8 @@ endif
 ifeq ($(BUILD_ENV),frontend)
 		$(eval IMG_ENV := $(shell echo "frontend"))
 		$(eval TAG := $(shell echo "frontend"))
-else
+endif
+ifeq ($(BUILD_ENV),production)
 	$(eval IMG_ENV := $(shell echo "production"))
 	$(eval TAG := $(shell echo "latest"))
 endif

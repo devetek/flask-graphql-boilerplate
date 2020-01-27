@@ -1,8 +1,8 @@
+import logo from "assets/images/logo.svg";
 import React from "react";
 
-import logo from "assets/images/logo.svg";
 
-const FullLoader = () => {
+const FullLoader: React.SFC = () => {
   return (
     <div className="App-header">
       <img src={logo} className="App-logo" alt="logo" />

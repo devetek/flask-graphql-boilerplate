@@ -5,8 +5,6 @@ services:
     image: postgres:alpine
     container_name: butterfly_pgql
     restart: always
-    ports:
-      - 5432:5432
     volumes:
       - butterfly_pgql_backup:/docker-entrypoint-initdb.d
       - butterfly_pgql_data:/var/lib/postgresql/data
@@ -35,7 +33,7 @@ services:
     working_dir: /devetek
     volumes:
       - .:/devetek
-      - ./process/dev/pgql:/devetek/pgql
+      - ./process/dev/dev-pgql:/devetek/pgql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
     command: ["./pgql", "butterfly_pgql", "make", "dev-up"]

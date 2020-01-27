@@ -1,4 +1,4 @@
-export interface IisAuthenticatedResponse {
+interface IisAuthenticatedResponse {
   success: string;
   message: string;
   data?: IisAuthenticatedResponseData | null;

@@ -10,13 +10,13 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Modal from 'components/Modal';
-import { IModal } from 'components/Modal/interface';
+import config from 'config';
 import errorHandler from 'libraries/error';
 import { save } from 'libraries/localStorage';
 import getLodash from 'lodash/get';
-import { doLogin } from 'models/login';
-import { IdoLoginRequest, IdoLoginResponse } from 'models/login/interface';
+import { FetchdoLogin } from 'models/login';
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useHistory } from 'react-router-dom';
 import useStyles from './style';
 
@@ -28,13 +28,12 @@ const LoginPage: React.SFC = () => {
     member_username: '',
     member_password: '',
   });
-  const [data, setData] = useState<IdoLoginResponse>();
-  const [modalProps, setModalProps] = useState<IModal>({
+  const [modalProps, setModalProps] = useState<ComponentModal>({
     isOpen: false,
     title: 'Gagal',
     description: '',
-    onCancelHandler: () => {},
-    onOkHandler: () => {},
+    onCancelHandler: () => { },
+    onOkHandler: () => { },
   });
 
   const handleOnChangeForm = (name: string, value: string) => {
@@ -74,9 +73,7 @@ const LoginPage: React.SFC = () => {
       return;
     }
 
-    const response = await doLogin(formData);
-
-    console.log(response);
+    const response = await FetchdoLogin(formData);
 
     const isSuccess = response?.success ?? false;
 
@@ -105,6 +102,9 @@ const LoginPage: React.SFC = () => {
 
   return (
     <Container component="main" maxWidth="xs">
+      <Helmet>
+        <title>Login | {config.APP_NAME}</title>
+      </Helmet>
       {modalProps.isOpen ? <Modal {...modalProps} /> : null}
       <CssBaseline />
       <div className={classes.paper}>

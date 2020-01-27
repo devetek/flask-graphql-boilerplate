@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "[DUMMIES] Welcome to my first pipeline, please waiting until this script finished."
+echo "\n"
+
+WHICH_CURL=$(which curl)
+
+if [ -z "$WHICH_CURL" ]; then
+  echo "Do Nothing!"
+else
+  echo "curl PROJECT_URL"
+fi
