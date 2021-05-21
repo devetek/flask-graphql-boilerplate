@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "/Users/prakasa/Projects/kepasar/authentication/python_modules/bin/python3",
+  "python.pythonPath": "python_modules/bin/python",
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
     "source.fixAll": false,

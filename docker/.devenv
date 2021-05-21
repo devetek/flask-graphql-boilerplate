@@ -1,3 +1,16 @@
-# DB Configuration
+# Environment variable will consume from process/dev/dev-mysql and process/dev/dev-pgql
 DB_USER=root
 DB_PASSWORD=root
+
+# Environment variable for mySQL container
+MYSQL_ROOT_PASSWORD=root
+MYSQL_ALLOW_EMPTY_PASSWORD=yes
+
+# Environment variable for PGQL container
+POSTGRES_USER=root
+POSTGRES_PASSWORD=root
+
+# Environment variable for REDIS container
+ALLOW_EMPTY_PASSWORD=yes
+REDIS_MASTER_PORT_NUMBER=6379
+REDIS_PASSWORD=redis_password

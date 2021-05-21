@@ -1,4 +1,7 @@
-#!/usr/bin/env bash -e
+#!/bin/bash
+
+# https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
+set -e
 
 echo "* * * * * * * *"
 echo "[Butterfly][MYSQL] Welcome to MySQL database initiator"

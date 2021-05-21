@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.8"
 
 services:
   butterfly_pgql:
@@ -8,11 +8,10 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - butterfly_pgql_backup:/docker-entrypoint-initdb.d
+      - butterfly_pgql_init:/docker-entrypoint-initdb.d
       - butterfly_pgql_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+    env_file:
+      - ./docker/.devenv
 
   butterfly_redis:
     image: redis:alpine
@@ -21,10 +20,8 @@ services:
     restart: always
     volumes:
       - ./docker/redis:/data
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_MASTER_PORT_NUMBER=6379
-      - REDIS_PASSWORD=redis_password
+    env_file:
+      - ./docker/.devenv
 
   butterfly_backend:
     depends_on:
@@ -38,7 +35,7 @@ services:
       - ./process/dev/dev-pgql:/devetek/pgql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    command: ["./pgql", "butterfly_pgql", "make", "dev-up"]
+    command: ["./pgql", "butterfly_pgql", "make", "dev-up", "DB=pgql"]
     env_file:
       - ./docker/.devenv
     ports:
@@ -72,11 +69,11 @@ services:
         max-size: "1m"
 
 volumes:
-  butterfly_pgql_backup:
+  butterfly_pgql_init:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/docker/postgres/restore
+      device: $PWD/docker/postgres/scripts
       o: bind
   butterfly_pgql_data:
     driver: local

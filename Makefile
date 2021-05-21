@@ -5,14 +5,18 @@ BUILD_ENV := production
 # Setup python virtualenv to support IDE
 .PHONY: setup
 setup:
-	@ which pip3 || exit 1
-	@ pip3 install virtualenv
-	@ python3 -m venv python_modules
+	@ which pip || exit 1
+	@ pip install virtualenv
+	@ python -m venv python_modules
 	( \
 		source python_modules/bin/activate; \
 		pip install --upgrade pip; \
 		pip install -r requirements.txt; \
 	)
+
+.PHONY: freeze
+freeze:
+	@pip freeze > requirements.txt
 
 # Build base image base on environment, development or production
 .PHONY: build
@@ -71,6 +75,7 @@ endif
 
 	@ cp -rf docker/dev-$(DB).docker-compose.yml docker-compose.yml
 	@ test -f docker/$(DB)/volume || mkdir -p docker/$(DB)/volume
+	@ test -f docker/$(DB)/restore || mkdir -p docker/$(DB)/restore
 	@ test -f docker/redis || mkdir -p docker/redis
 	@ cd web/modules/frontend && yarn
 	@ docker-compose down --remove-orphans
