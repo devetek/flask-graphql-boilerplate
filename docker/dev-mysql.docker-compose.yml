@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.8"
 
 services:
   butterfly_mysql:
@@ -9,11 +9,12 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - butterfly_mysql_backup:/docker-entrypoint-initdb.d
+      - butterfly_mysql_init:/docker-entrypoint-initdb.d
       - butterfly_mysql_data:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    env_file:
+      - ./docker/.devenv
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
 
   butterfly_redis:
     image: redis:alpine
@@ -22,10 +23,8 @@ services:
     restart: always
     volumes:
       - ./docker/redis:/data
-    environment:
-      - ALLOW_EMPTY_PASSWORD=yes
-      - REDIS_MASTER_PORT_NUMBER=6379
-      - REDIS_PASSWORD=redis_password
+    env_file:
+      - ./docker/.devenv
 
   butterfly_backend:
     depends_on:
@@ -36,12 +35,12 @@ services:
     working_dir: /devetek/
     volumes:
       - .:/devetek
-      - ./process/dev/mysql:/devetek/mysql
+      - ./process/dev/dev-mysql:/devetek/mysql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    command: ["./mysql", "butterfly_mysql", "make", "dev-up"]
+    command: ["./mysql", "butterfly_mysql", "./process/dev/run-dev"]
     env_file:
-      - ./docker/.env
+      - ./docker/.devenv
     ports:
       - 5000:5000
 
@@ -73,11 +72,11 @@ services:
         max-size: "1m"
 
 volumes:
-  butterfly_mysql_backup:
+  butterfly_mysql_init:
     driver: local
     driver_opts:
       type: none
-      device: $PWD/docker/mysql/restore
+      device: $PWD/docker/mysqldb/scripts
       o: bind
   butterfly_mysql_data:
     driver: local

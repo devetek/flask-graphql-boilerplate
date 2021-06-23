@@ -1,37 +1,19 @@
-Flask
-# flask-socketio
-Flask-ini
-flask-restful
-# Flask-Session
-Flask-SQLAlchemy
-Flask-Migrate
-# flask-login
-Flask-Babel
-flask-restful-swagger
-flask-jwt-extended
-SQLAlchemy
-# google
-# protobuf
-# grpcio
-# grpcio-tools
 validators
 passlib
-supervisor
-uwsgi
 redis
+Flask
+Flask-Babel
+Flask-ini
+Flask-JWT-Extended
+Flask-Migrate
+Flask-RESTful
+flask-restful-swagger
+Flask-Session
+Flask-SQLAlchemy
 # Postgresql database adapter, https://pypi.org/project/psycopg2/
-psycopg2
+psycopg2-binary
 # Compatible package between PyMySQL and mysqlclient base on https://pypi.org/project/PyMySQL/
 PyMySQL
-mysqlclient
-# pyyaml
-# fabric
-# fire
-schedule
-requests
-# refer to this benchmark https://github.com/ijl/orjson#dataclass
-# orjson
-
-# linting tools
-# pylint
-# autopep8
+supervisor
+uWSGI
+virtualenv

@@ -11,6 +11,7 @@ dump.rdb
 sess_*
 mysql
 pgql
+*-local*
 
 # tmp docker-compose
 docker-compose.yml

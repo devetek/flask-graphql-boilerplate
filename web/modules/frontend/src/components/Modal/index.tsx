@@ -1,11 +1,10 @@
-import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { IModal } from "components/Modal/interface";
+import React, { useState } from "react";
 
 /**
  * Create a modal.
@@ -17,56 +16,51 @@ import { IModal } from "components/Modal/interface";
  * @param {string} closeTxt - text show in close button.
  * @param {string} openTxt - text show in open button.
  */
-export default ({
-  isOpen = false,
-  title = "",
-  description = "",
-  onCancelHandler = () => {},
-  onOkHandler = () => {},
-  closeTxt = "close",
-  openTxt = "Ok"
-}: IModal) => {
-  const [open, setOpen] = useState<boolean>(isOpen);
+export default (props: ComponentModal) => {
+  const [open, setOpen] = useState<boolean>(false);
 
-  const handleCancel = () => {
-    onCancelHandler();
+  const handleCancel = (): void => {
+    if (props.onCancelHandler) {
+      props.onCancelHandler();
+    }
+
     toggleOpenStatus();
   };
 
-  const handleOk = () => {
-    onOkHandler();
+  const handleOk = (): void => {
+    if (props.onOkHandler) {
+      props.onOkHandler();
+    }
     toggleOpenStatus();
   };
 
-  const toggleOpenStatus = () => {
+  const toggleOpenStatus = (): void => {
     const revStatus = !open;
 
     setOpen(revStatus);
   };
 
   return (
-    <React.Fragment>
-      <Dialog
-        open={open}
-        onClose={toggleOpenStatus}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {description}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCancel} color="primary">
-            {closeTxt}
-          </Button>
-          <Button onClick={handleOk} color="primary" autoFocus>
-            {openTxt}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
+    <Dialog
+      open
+      onClose={toggleOpenStatus}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{props.title || 'Title'}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {props.description || ''}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCancel} color="primary">
+          {props.closeTxt || 'Close'}
+        </Button>
+        <Button onClick={handleOk} color="primary" autoFocus>
+          {props.openTxt || 'Ok'}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 };

@@ -9,24 +9,17 @@ from .helpers.jwt_handler import JwtHandler
 # ===== Modular Routes =====
 from .modules.account import bp as account_bp
 from .modules.account import routes
+from .modules.auth import bp as auth_bp
+from .modules.auth import routes
 from .modules.errors import bp as errors_bp
 from .modules.errors import handlers
-from .modules.oauth import bp as oauth_bp
-from .modules.oauth import routes
-from .modules.payment import bp as payment_bp
-from .modules.payment import routes
 
 
 def bootstrap_http():
     app = Flask(__name__)
     app.iniconfig = FlaskIni()
     with app.app_context():
-        if os.environ['FLASK_ENV'] == 'development':
-            app.iniconfig.read(
-                './config/' + os.environ['FLASK_ENV'] + "-" + os.environ['DB'] + '.ini')
-        else:
-            app.iniconfig.read(
-                './config/' + os.environ['FLASK_ENV'] + '.ini')
+        app.iniconfig.read('./config/' + os.environ['FLASK_ENV'] + "-" + os.environ['DB'] + '.ini')
 
     # Plugin Initialization
     db.init_app(app)
@@ -40,8 +33,7 @@ def bootstrap_http():
     Author: Prakasa <prakasa@devetek.com>
     """
     app.register_blueprint(account_bp, url_prefix='/account')
-    app.register_blueprint(oauth_bp, url_prefix='/oauth')
-    app.register_blueprint(payment_bp, url_prefix='/payment')
+    app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(errors_bp)
 
     return app

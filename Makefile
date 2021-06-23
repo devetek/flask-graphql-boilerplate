@@ -2,35 +2,26 @@ DB := pgql
 FLASK_APP := cli/flask
 BUILD_ENV := production
 
+include docker/Makefile
+
 # Setup python virtualenv to support IDE
 .PHONY: setup
 setup:
-	@ which pip3 || exit 1
-	@ pip3 install virtualenv
-	@ python3 -m venv python_modules
-	( \
+	@ which pip || exit 1
+	@ pip install virtualenv
+	@ python -m venv python_modules
+	@( \
 		source python_modules/bin/activate; \
 		pip install --upgrade pip; \
-		pip install -r requirements.txt; \
+		pip install -r requirements.txt --verbose; \
 	)
 
-# Build base image base on environment, development or production
-.PHONY: build
-build:
-ifeq ($(BUILD_ENV),development)
-		$(eval IMG_ENV := $(shell echo "development"))
-		$(eval TAG := $(shell echo "development"))
-endif
-ifeq ($(BUILD_ENV),frontend)
-		$(eval IMG_ENV := $(shell echo "frontend"))
-		$(eval TAG := $(shell echo "frontend"))
-else
-	$(eval IMG_ENV := $(shell echo "production"))
-	$(eval TAG := $(shell echo "latest"))
-endif
-
-	@ docker build -f docker/$(IMG_ENV).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
-	@ docker push prakasa1904/tps-py-api:$(TAG)
+.PHONY: freeze
+freeze:
+	@( \
+		source python_modules/bin/activate; \
+		pip freeze > requirements.txt; \
+	)
 
 # Test db initiator
 db:
@@ -70,8 +61,8 @@ endif
 
 	@ cp -rf docker/dev-$(DB).docker-compose.yml docker-compose.yml
 	@ test -f docker/$(DB)/volume || mkdir -p docker/$(DB)/volume
+	@ test -f docker/$(DB)/restore || mkdir -p docker/$(DB)/restore
 	@ test -f docker/redis || mkdir -p docker/redis
-	@ cp docker/.env.example docker/.env
 	@ cd web/modules/frontend && yarn
 	@ docker-compose down --remove-orphans
 	@ docker-compose up
@@ -89,27 +80,20 @@ dev-up:
 # ========================================
 # Running using docker environment PRODUCTION
 # Author: Prakasa <prakasa@devetek.com>
-# TODO: ON PROGRESS!
-	# @ test -f docker/redis || mkdir -p docker/redis
-	# @ test -f docker/mysql/volume || mkdir -p docker/mysql/volume
-	# @ docker-compose -f docker/prod.docker-compose.yml up -d
 # ========================================
 .PHONY: run-prod
 run-prod:
-	@ echo "Under Maintenance"
+	@ cp -rf docker/prod-$(DB).docker-compose.yml docker-compose.yml
+	@ docker-compose build
+	@ docker-compose -f docker/prod.docker-compose.yml up -d
 
-
-# ========================================
-# Running using docker environment PRODUCTION
-# Author: Prakasa <prakasa@devetek.com>
-# TODO: ON PROGRESS!
-	# ( \
-	# 	export FLASK_ENV=production; \
-	# 	flask initdb; \
-	# 	uwsgi --http :5000 --module earthshaker:app; \
-	# 	supervisord -c process/background.conf; \
-	# )
-# ========================================
 .PHONY: prod-up
 prod-up:
-	@ echo "Under Maintenance"
+	@( \
+		export DB=$(DB); \
+		export FLASK_APP=cli/flask; \
+		export FLASK_ENV=production; \
+		flask initdb; \
+		uwsgi --http :5500 --module main:app; \
+	)
+	# supervisord -c process/background.conf; \
