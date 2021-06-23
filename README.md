@@ -10,41 +10,25 @@ The Butterfly is an item purchasable at the Main Shop, under Weapons. However, i
 
 Butterfly is python framework for [Devetek](http://devetek.com). Boilerplate including REST API, Graphql, gRPC.
 
-## Available Services
-
-### REST API
-
-- [account](https://gitlab.com/kepasar/authentication/tree/master/docs/account)
-- [oauth](https://gitlab.com/kepasar/authentication/tree/master/docs/oauth)
-
 ## requirements
 
 - Docker >= 19.03.5
 - Docker Compose >= 1.24.1
-- python >= 3.7.3
 
 ## Project Structure
 
 ```sh
 root/
-├── agent                           # Worker modules
+├── docker                          # Global docker configuration
 ├── config                          # Global config for all interface
-├── docker                          # Docker configuration
-├── docs                            # Documentation
-      ├── oauth                     # Auth Documentation
-      ├── account                   # Account documentation
 ├── helpers                         # Global helpers for all interface
 ├── libraries                       # Global libraries for all interface
 ├── models                          # Global models for all interface
-├── process                         # Supervisord process manager
+├── process                         # Scripts to manage process
 ├── cli                             # CLI Interface
       ├── helpers                   # Local CLI helper
       ├── libraries                 # Local CLI libraries
       ├── modules                   # Local CLI modules
-├── rpc                             # RPC Interface
-      ├── helpers                   # Local RPC helper
-      ├── libraries                 # Local RPC libraries
-      ├── modules                   # Local RPC modules
 ├── web                             # HTTP Interface
       ├── helpers                   # Local HTTP helper
       ├── libraries                 # Local HTTP libraries
