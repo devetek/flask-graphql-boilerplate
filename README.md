@@ -6,10 +6,6 @@
 
 The Butterfly is an item purchasable at the Main Shop, under Weapons. However, it can only be completed with items from the Secret Shop.
 
-## In Our World
-
-Butterfly is python framework for [Devetek](http://devetek.com). Boilerplate including REST API, Graphql, gRPC.
-
 ## requirements
 
 - Docker >= 19.03.5
@@ -38,15 +34,11 @@ root/
 
 ## Running Development
 
-Bootstrap development using docker is easier than others. How to do that ? follow command below:
+Bootstrap development using docker is easier. Follow command below  to run development:
 
 ```sh
 make run-dev
 ```
-
-With command above, will running init database, init redis, init backend app, frontend app and nginx.
-
-docker only available for `http` protocol. For gRPC will join ASAP.
 
 ## Contributors
 
@@ -60,14 +52,3 @@ docker only available for `http` protocol. For gRPC will join ASAP.
 </table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-## References
-
-- [Docker Manual Manager](https://www.digitalocean.com/community/questions/how-to-ping-docker-container-from-another-container-by-name)
-- [Flask-sqlAlchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/queries/)
-- [Docker Centos 7](<https://github.com/NaturalHistoryMuseum/scratchpads2/wiki/Install-Docker-and-Docker-Compose-(Centos-7)>)
-
-## Todo
-
-- Completing API endpoint for better features
-- Create dashboard for user management: `yarn create react-app my-app`
