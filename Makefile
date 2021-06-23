@@ -2,40 +2,26 @@ DB := pgql
 FLASK_APP := cli/flask
 BUILD_ENV := production
 
+include docker/Makefile
+
 # Setup python virtualenv to support IDE
 .PHONY: setup
 setup:
 	@ which pip || exit 1
 	@ pip install virtualenv
 	@ python -m venv python_modules
-	( \
+	@( \
 		source python_modules/bin/activate; \
 		pip install --upgrade pip; \
-		pip install -r requirements.txt; \
+		pip install -r requirements.txt --verbose; \
 	)
 
 .PHONY: freeze
 freeze:
-	@pip freeze > requirements.txt
-
-# Build base image base on environment, development or production
-.PHONY: build
-build:
-ifeq ($(BUILD_ENV),development)
-		$(eval IMG_ENV := $(shell echo "development"))
-		$(eval TAG := $(shell echo "development"))
-endif
-ifeq ($(BUILD_ENV),frontend)
-		$(eval IMG_ENV := $(shell echo "frontend"))
-		$(eval TAG := $(shell echo "frontend"))
-endif
-ifeq ($(BUILD_ENV),production)
-	$(eval IMG_ENV := $(shell echo "production"))
-	$(eval TAG := $(shell echo "latest"))
-endif
-
-	@ docker build -f docker/$(IMG_ENV).Dockerfile  -t prakasa1904/tps-py-api:$(TAG) .
-	@ docker push prakasa1904/tps-py-api:$(TAG)
+	@( \
+		source python_modules/bin/activate; \
+		pip freeze > requirements.txt; \
+	)
 
 # Test db initiator
 db:
@@ -103,7 +89,7 @@ run-prod:
 
 .PHONY: prod-up
 prod-up:
-	( \
+	@( \
 		export DB=$(DB); \
 		export FLASK_APP=cli/flask; \
 		export FLASK_ENV=production; \

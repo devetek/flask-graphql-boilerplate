@@ -1,11 +1,9 @@
 # reference: https://codeburst.io/jwt-authorization-in-flask-c63c1acf4eeb
 from flask import current_app as app
 from flask_jwt_extended import (create_access_token, get_jti, get_jwt_identity,
-                                get_raw_jwt, jwt_refresh_token_required)
+                                jwt_required)
 from flask_restful import Resource
-
 from web.helpers import success_http_response
-
 
 """[Refresh token for user]
 
@@ -18,7 +16,7 @@ class RefreshController(Resource):
     def __init__(self):
         self.tps_jwt = app.extensions['tps-jwt']
 
-    @jwt_refresh_token_required
+    @jwt_required
     def post(self):
         current_user = get_jwt_identity()
         access_token = create_access_token(identity=current_user)

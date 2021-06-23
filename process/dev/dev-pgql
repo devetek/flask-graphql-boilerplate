@@ -3,6 +3,8 @@
 
 set -e
 
+export DB=pgql
+
 HOST="$1"
 shift
 CMD="$@"

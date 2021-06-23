@@ -1,0 +1,27 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+        name: Check trailing-whitespace pre-commit
+      - id: end-of-file-fixer
+        name: Check end-of-file-fixer pre-commit
+      - id: check-yaml
+        name: Check check-yaml pre-commit
+      - id: check-added-large-files
+        name: Check check-added-large-files pre-commit
+  # - repo: local
+  #   hooks:
+  #     - id: commit-message
+  #       name: Check X
+  #       entry: ./script/git/prepare-commit-msg
+  #       language: script
+  #       stages: [prepare-commit-msg]
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v2.17.10
+    hooks:
+      - id: commitizen
+        name: Check commit message format
+        stages: [commit-msg]

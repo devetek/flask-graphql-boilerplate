@@ -1,6 +1,5 @@
 from flask_jwt_extended import (JWTManager, create_access_token,
                                 create_refresh_token, get_jti)
-
 from libraries.session import Session
 
 from .error_handler import error_http_code
@@ -16,7 +15,7 @@ class JwtHandler():
         self.jwt.unauthorized_loader(self._jwt_unauthorized_response)
         self.jwt.invalid_token_loader(self._jwt_unauthorized_response)
         self.jwt.revoked_token_loader(self._jwt_revoked_token_response)
-        self.jwt.token_in_blacklist_loader(self._jwt_check_if_token_is_revoked)
+        self.jwt.token_in_blocklist_loader(self._jwt_check_if_token_is_revoked)
 
         if not hasattr(app, 'extensions'):   # pragma: no cover
             app.extensions = {}

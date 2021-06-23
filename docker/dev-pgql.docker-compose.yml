@@ -35,7 +35,7 @@ services:
       - ./process/dev/dev-pgql:/devetek/pgql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    command: ["./pgql", "butterfly_pgql", "make", "dev-up", "DB=pgql"]
+    command: ["./pgql", "butterfly_pgql", "./process/dev/run-dev"]
     env_file:
       - ./docker/.devenv
     ports:

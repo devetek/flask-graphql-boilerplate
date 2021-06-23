@@ -3,6 +3,8 @@
 
 set -e
 
+export DB=mysql
+
 HOST="$1"
 shift
 CMD="$@"

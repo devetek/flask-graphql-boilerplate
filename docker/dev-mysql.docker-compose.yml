@@ -38,7 +38,7 @@ services:
       - ./process/dev/dev-mysql:/devetek/mysql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    command: ["./mysql", "butterfly_mysql", "make", "dev-up", "DB=mysql"]
+    command: ["./mysql", "butterfly_mysql", "./process/dev/run-dev"]
     env_file:
       - ./docker/.devenv
     ports:

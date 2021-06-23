@@ -1,8 +1,7 @@
 # reference: https://codeburst.io/jwt-authorization-in-flask-c63c1acf4eeb
 from flask import current_app as app
-from flask_jwt_extended import get_raw_jwt, jwt_required
+from flask_jwt_extended import get_jwt, jwt_required
 from flask_restful import Resource
-
 from web.helpers import success_http_response
 
 
@@ -12,7 +11,7 @@ class LogoutController(Resource):
 
     @jwt_required
     def delete(self):
-        jti = get_raw_jwt()['jti']
+        jti = get_jwt()['jti']
 
         token = self.tps_jwt.session.get_token(jti)
 
