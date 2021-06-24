@@ -1,6 +1,5 @@
 from flask_jwt_extended import get_jwt_identity, jwt_required
 from flask_restful import Resource
-
 from models.account.member import AccountMember, member_return_data_serializer
 from models.account.members_client import AccountMembersClient
 from web.helpers import success_http_response

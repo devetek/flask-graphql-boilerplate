@@ -18,4 +18,17 @@ endif
 
 .PHONY: push
 push:
+ifeq ($(BUILD_ENV),development)
+		$(eval IMG_ENV := $(shell echo "development"))
+		$(eval TAG := $(shell echo "development"))
+endif
+ifeq ($(BUILD_ENV),frontend)
+		$(eval IMG_ENV := $(shell echo "frontend"))
+		$(eval TAG := $(shell echo "frontend"))
+endif
+ifeq ($(BUILD_ENV),production)
+	$(eval IMG_ENV := $(shell echo "production"))
+	$(eval TAG := $(shell echo "latest"))
+endif
+
 	@ docker push prakasa1904/tps-py-api:$(TAG)

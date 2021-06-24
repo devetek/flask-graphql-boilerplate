@@ -10,6 +10,7 @@ Flask-RESTful
 flask-restful-swagger
 Flask-Session
 Flask-SQLAlchemy
+ariadne
 # Postgresql database adapter, https://pypi.org/project/psycopg2/
 psycopg2-binary
 # Compatible package between PyMySQL and mysqlclient base on https://pypi.org/project/PyMySQL/
