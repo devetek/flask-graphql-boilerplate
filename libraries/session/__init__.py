@@ -1,5 +1,11 @@
 class Session:
-    def __init__(self, set_provider="redis", set_host="localhost", set_port=6379, set_db=0, set_expired_token=86400, set_expired_token_r=172800):
+    def __init__(self,
+                 set_provider="redis",
+                 set_host="localhost",
+                 set_port=6379,
+                 set_db=0,
+                 set_expired_token=86400,
+                 set_expired_token_r=172800):
         if set_provider not in self._available_provider:
             print("Set with available provider!")
 
@@ -22,7 +28,7 @@ class Session:
         return self._provider.get_token(key)
 
     def save_token_r(self, key, value=None):
-        expired = self._expired_token_r*2
+        expired = self._expired_token_r * 2
 
         return self._provider.save_token_r(key, value, expired)
 

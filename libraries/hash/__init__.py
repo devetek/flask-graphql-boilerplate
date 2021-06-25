@@ -1,4 +1,5 @@
 import hashlib
+
 from passlib.hash import pbkdf2_sha256 as sha256
 
 """[Function used for hashing string with md5]

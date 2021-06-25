@@ -12,9 +12,8 @@ TODO:
 from datetime import datetime
 
 import validators
-from flask import current_app as app
+from flask import current_app as apps
 from flask_restful import Resource, reqparse
-
 from libraries.hash import verify_hash256
 from models import and_
 from models.account.email import AccountEmail
@@ -24,7 +23,7 @@ from web.helpers import cleaning_dict, success_http_response
 from web.helpers.error_handler import error_http_code
 
 parser = reqparse.RequestParser()
-parser.add_argument('X-App-Id', 
+parser.add_argument('X-App-Id',
                     help='X-App-Id adalah header yang wajib ada', required=True,
                     location='headers', type=int)
 parser.add_argument('member_email', required=False)

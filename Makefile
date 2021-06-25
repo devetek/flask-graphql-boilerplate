@@ -16,31 +16,6 @@ setup:
 		pip install -r requirements.txt --verbose; \
 	)
 
-.PHONY: freeze
-freeze:
-	@( \
-		source python_modules/bin/activate; \
-		pip freeze > requirements.txt; \
-	)
-
-# Test db initiator
-db:
-	( \
-		export FLASK_APP=cli/flask; \
-		export FLASK_ENV=development; \
-		flask initdb; \
-	)
-
-# To generate proto, create your first proto file under `./rpc/(module-name)/(module-name.proto)` then execute make proto OUTPUT=module-name
-.PHONY: proto
-proto:
-	( \
-		source python_modules/bin/activate; \
-		mkdir -p ./rpc/modules/$(OUTPUT); \
-		echo "syntax = \"proto3\";" > ./rpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
-		python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. ./rpc/modules/$(OUTPUT)/$(OUTPUT).proto; \
-	)
-
 # ========================================
 # Running using docker environment DEVELOPMENT
 # Author: Prakasa <prakasa@devetek.com>
@@ -66,16 +41,6 @@ endif
 	@ cd web/modules/frontend && yarn
 	@ docker-compose down --remove-orphans
 	@ docker-compose up
-
-.PHONY: dev-up
-dev-up:
-	( \
-		export DB=$(DB); \
-		export FLASK_APP=cli/flask; \
-		export FLASK_ENV=development; \
-		flask initdb; \
-		python main.py http; \
-	)
 
 # ========================================
 # Running using docker environment PRODUCTION
