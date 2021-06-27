@@ -35,7 +35,7 @@ parser.add_argument('member_password',
 
 class RegistrationController(Resource):
     def __init__(self):
-        self.tps_jwt = app.extensions['tps-jwt']
+        self.tps_jwt = app.extensions['tpJWT']
         self.data = cleaning_dict(parser.parse_args())
         self.app_id = self.data['X-App-Id']
         self.valid_member = member_data_input_serializer(self.data)
