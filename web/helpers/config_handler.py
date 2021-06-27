@@ -41,7 +41,6 @@ class FlaskIni(ConfigParser):
     '''Subclass of ConfigParser that must be run inside a
     flask app context. It looks for a special [flask] section of the config
     file and uses that to configure flask's own built-in variables.'''
-
     def read(self, *args, **kwargs):
         '''Overridden read() method to call parse_flask_section() at the end'''
         ret = ConfigParser.read(self, *args, **kwargs)
@@ -96,8 +95,7 @@ class FlaskIni(ConfigParser):
             elif self.get('flask', key).lower() in ['true', 'false']:
                 current_app.config[key_u] = self.getboolean('flask', key)
             elif extra_e.isjson():
-                current_app.config[key_u] = json.loads(
-                    self.get('flask', key))
+                current_app.config[key_u] = json.loads(self.get('flask', key))
             elif extra_e.isfloat():
                 current_app.config[key_u] = self.getfloat('flask', key)
             else:

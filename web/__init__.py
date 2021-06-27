@@ -27,6 +27,8 @@ def bootstrap_http():
 
     # JWT: Session Centralized
     jwt_middleware = JwtHandler(app)
+
+
     """[routes handler]
     Define your routes method, using Flask Blueprint or traditional routes
     Ref: https://flask.palletsprojects.com/en/2.0.x/blueprints/

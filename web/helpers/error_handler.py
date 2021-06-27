@@ -1,8 +1,6 @@
+from config import config
 from flask import jsonify
 from flask_restful import abort
-
-from config import config
-
 
 """[Function helper for generate JSON response on error HTTP STATUS CODE or non 200]
 

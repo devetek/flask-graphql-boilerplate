@@ -12,7 +12,7 @@ TODO:
 from datetime import datetime
 
 import validators
-from flask import current_app as apps
+from flask import current_app as app
 from flask_restful import Resource, reqparse
 from libraries.hash import verify_hash256
 from models import and_
