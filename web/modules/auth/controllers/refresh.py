@@ -14,7 +14,7 @@ Returns:
 
 class RefreshController(Resource):
     def __init__(self):
-        self.tps_jwt = app.extensions['tps-jwt']
+        self.tps_jwt = app.extensions['tpJWT']
 
     @jwt_required
     def post(self):

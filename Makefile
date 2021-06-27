@@ -42,6 +42,9 @@ endif
 	@ docker-compose down --remove-orphans
 	@ docker-compose up
 
+restart:
+	@ docker-compose restart butterfly_backend
+
 # ========================================
 # Running using docker environment PRODUCTION
 # Author: Prakasa <prakasa@devetek.com>

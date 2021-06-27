@@ -33,7 +33,7 @@ parser.add_argument('member_password', required=True)
 
 class AuthorizationController(Resource):
     def __init__(self):
-        self.tps_jwt = app.extensions['tps-jwt']
+        self.tps_jwt = app.extensions['tpJWT']
         self.data = cleaning_dict(parser.parse_args())
         self.app_id = self.data['X-App-Id']
         self.return_member = self.data["member_email"] if "member_email" in self.data else self.data["member_username"]

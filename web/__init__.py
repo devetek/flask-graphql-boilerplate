@@ -26,7 +26,7 @@ def bootstrap_http():
     migrate.init_app(app, db)
 
     # JWT: Session Centralized
-    jwt_middleware = JwtHandler(app)
+    JwtHandler(app)
 
 
     """[routes handler]
