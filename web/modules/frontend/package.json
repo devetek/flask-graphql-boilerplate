@@ -23,7 +23,7 @@
     "react-helmet-async": "^1.0.4",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
-    "typescript": "~3.7.2",
+    "typescript": "~3.9.10",
     "unfetch": "^4.1.0"
   },
   "scripts": {
