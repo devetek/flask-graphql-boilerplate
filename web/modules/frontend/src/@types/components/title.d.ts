@@ -1,3 +1,0 @@
-interface ComponentTitle {
-  title: string,
-};

@@ -14,7 +14,7 @@ ifeq ($(BUILD_ENV),production)
 	$(eval TAG := $(shell echo "latest"))
 endif
 
-	@ docker build -f docker/Dockerfile  -t prakasa1904/tps-py-api:$(TAG) --no-cache .
+	@ docker build -f docker/Dockerfile  -t prakasa1904/pywith-pg-mysql:$(TAG) --no-cache .
 
 .PHONY: push
 push:
@@ -31,4 +31,4 @@ ifeq ($(BUILD_ENV),production)
 	$(eval TAG := $(shell echo "latest"))
 endif
 
-	@ docker push prakasa1904/tps-py-api:$(TAG)
+	@ docker push prakasa1904/pywith-pg-mysql:$(TAG)

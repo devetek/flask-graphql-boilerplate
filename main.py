@@ -9,7 +9,7 @@ if os.environ['FLASK_ENV'] == "development":
             """
             # Bootstrap RPC interface from bootstrap_rpc()
         else:
-            from web import bootstrap_http
+            from gqlserver import bootstrap_http
 
             """[WIM - WS Interface Modules]
             """

@@ -16,49 +16,29 @@ services:
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE
 
-  butterfly_redis:
-    image: redis:alpine
-    container_name: butterfly_redis
-    command: ["redis-server", "--appendonly", "yes"]
-    restart: always
-    volumes:
-      - ./docker/redis:/data
-    env_file:
-      - ./docker/.devenv
-
   butterfly_backend:
     depends_on:
       - butterfly_mysql
-      - butterfly_redis
-    image: prakasa1904/tps-py-api:development
+      # - butterfly_redis
+    image: prakasa1904/pywith-pg-mysql:development
     container_name: butterfly_backend
     working_dir: /devetek/
     volumes:
       - .:/devetek
-      - ./process/dev/dev-mysql:/devetek/mysql
+      - ./scripts/dev/dev-mysql:/devetek/mysql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    command: ["./mysql", "butterfly_mysql", "./process/dev/run-dev"]
+    command: ["./mysql", "butterfly_mysql", "./scripts/dev/run-dev"]
     env_file:
       - ./docker/.devenv
     ports:
       - 5000:5000
-
-  butterfly_frontend:
-    image: node:lts-alpine
-    container_name: butterfly_frontend
-    working_dir: /devetek
-    volumes:
-      - ./web/modules/frontend:/devetek
-    restart: always
-    command: yarn start
 
   butterfly_nginx:
     image: nginx
     container_name: butterfly_nginx
     depends_on:
       - butterfly_backend
-      - butterfly_frontend
     volumes:
       - ./public/:/devetek
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf

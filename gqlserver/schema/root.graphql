@@ -1,0 +1,14 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  hello: String!
+  user: String!
+  people: Account!
+}
+
+type Mutation {
+  addAccount(id: Int!): Account!
+}

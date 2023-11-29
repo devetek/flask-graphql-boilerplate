@@ -7,57 +7,35 @@ services:
     restart: always
     ports:
       - 5432:5432
-    volumes:
-      - butterfly_pgql_init:/docker-entrypoint-initdb.d
-      - butterfly_pgql_data:/var/lib/postgresql/data
-    env_file:
-      - ./docker/.devenv
-
-  butterfly_redis:
-    image: redis:alpine
-    container_name: butterfly_redis
-    command: ["redis-server", "--appendonly", "yes"]
-    restart: always
-    volumes:
-      - ./docker/redis:/data
+    # volumes:
+    #   - butterfly_pgql_init:/docker-entrypoint-initdb.d
+    #   - butterfly_pgql_data:/var/lib/postgresql/data
     env_file:
       - ./docker/.devenv
 
   butterfly_backend:
     depends_on:
       - butterfly_pgql
-      - butterfly_redis
-    image: prakasa1904/tps-py-api:development
+    image: prakasa1904/pywith-pg-mysql:development
     container_name: butterfly_backend
     working_dir: /devetek
     volumes:
       - .:/devetek
-      - ./process/dev/dev-pgql:/devetek/pgql
+      - ./scripts/dev/dev-pgql:/devetek/pgql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    command: ["./pgql", "butterfly_pgql", "./process/dev/run-dev"]
+    command: ["./pgql", "butterfly_pgql", "./scripts/dev/run-dev"]
     env_file:
       - ./docker/.devenv
     ports:
       - 5000:5000
-
-  butterfly_frontend:
-    image: node:lts-alpine
-    container_name: butterfly_frontend
-    working_dir: /devetek
-    volumes:
-      - ./web/modules/frontend:/devetek
-    restart: always
-    command: yarn start
 
   butterfly_nginx:
     image: nginx
     container_name: butterfly_nginx
     depends_on:
       - butterfly_backend
-      - butterfly_frontend
     volumes:
-      - ./public/:/devetek
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
     restart: always

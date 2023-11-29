@@ -1,8 +1,8 @@
 import sys
 
 from cli.init.db import init_account, init_member
-from models import db
-from web import bootstrap_http
+from shared.models import db
+from graphql import bootstrap_http
 
 app = bootstrap_http()
 
