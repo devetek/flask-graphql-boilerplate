@@ -39,6 +39,8 @@ Bootstrap development using docker. Follow command below to run development:
 make run
 ```
 
+then open http://localhost:5000/graphql/
+
 ## Contributors
 
 Open to contributor
