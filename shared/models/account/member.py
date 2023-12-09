@@ -19,11 +19,10 @@
 
 from datetime import datetime
 
-from libraries.hash import generate_hash256, verify_hash256
-from models.account.client import AccountClient
-from models.account.email import AccountEmail
-from models.account.phone import AccountPhone
-from web import db
+from shared.libraries.hash import generate_hash256, verify_hash256
+from shared.models import db
+from shared.models.account.email import AccountEmail
+from shared.models.account.phone import AccountPhone
 
 
 def member_data_input_serializer(data):
@@ -74,8 +73,6 @@ class AccountMember(db.Model):
         db.SmallInteger, comment="staff(3), member(2), guest(1)")
     member_email = db.relationship("AccountEmail")
     member_phone = db.relationship("AccountPhone")
-    member_apps_ids = db.relationship(
-        AccountClient, secondary='members_client')
     member_create_date = db.Column(
         db.TIMESTAMP, default=db.func.now(), nullable=False)
     member_update_date = db.Column(

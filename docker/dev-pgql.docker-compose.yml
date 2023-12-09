@@ -1,40 +1,43 @@
 version: "3.8"
 
 services:
-  butterfly_pgql:
+  pgadmin4:
+      image: dpage/pgadmin4:7.4
+      restart: always
+      volumes:
+        - ./docker/pgadmin/servers.json:/pgadmin4/servers.json
+      ports:
+        - 8080:80
+      env_file:
+      - ./docker/.devenv
+
+  pgql:
     image: postgres:alpine
-    container_name: butterfly_pgql
     restart: always
-    ports:
-      - 5432:5432
-    # volumes:
-    #   - butterfly_pgql_init:/docker-entrypoint-initdb.d
-    #   - butterfly_pgql_data:/var/lib/postgresql/data
+    volumes:
+      - pgql_init:/docker-entrypoint-initdb.d
+      - pgql_data:/var/lib/postgresql/data
     env_file:
       - ./docker/.devenv
 
-  butterfly_backend:
+  backend:
     depends_on:
-      - butterfly_pgql
+      - pgql
     image: prakasa1904/pywith-pg-mysql:development
-    container_name: butterfly_backend
     working_dir: /devetek
     volumes:
       - .:/devetek
       - ./scripts/dev/dev-pgql:/devetek/pgql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    command: ["./pgql", "butterfly_pgql", "./scripts/dev/run-dev"]
+    command: ["./pgql", "pgql", "./scripts/dev/run-dev"]
     env_file:
       - ./docker/.devenv
-    ports:
-      - 5000:5000
 
-  butterfly_nginx:
+  nginx:
     image: nginx
-    container_name: butterfly_nginx
     depends_on:
-      - butterfly_backend
+      - backend
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
@@ -47,13 +50,13 @@ services:
         max-size: "1m"
 
 volumes:
-  butterfly_pgql_init:
+  pgql_init:
     driver: local
     driver_opts:
       type: none
       device: $PWD/docker/postgres/scripts
       o: bind
-  butterfly_pgql_data:
+  pgql_data:
     driver: local
     driver_opts:
       type: none

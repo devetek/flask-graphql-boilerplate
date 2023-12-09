@@ -1,10 +1,5 @@
-init_account = {
-    "client_name": "Account",
-    "client_description": "Devetek Account - Member Data Management System",
-    "client_code": "ACC"
-}
-
-init_member = {
+member_seed = {
+    "member_id": 1,
     "member_username": "prakasa1904",
     "member_fullname": "Nedya Amrih Prakasa",
     "member_password": "admin",
@@ -23,10 +18,4 @@ init_member = {
             "phone_verified": True
         }
     ],
-    "member_apps_ids": [
-        {
-            "client_id": 1,
-            "is_approved": 1,
-        }
-    ]
 }

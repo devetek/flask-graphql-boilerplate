@@ -6,7 +6,7 @@ schema {
 type Query {
   hello: String!
   user: String!
-  people: Account!
+  account(id: Int!): Account
 }
 
 type Mutation {

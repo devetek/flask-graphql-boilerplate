@@ -1,18 +1,17 @@
 import os
 
 from flask import Flask
-from shared.models import db, migrate
 
 from gqlserver.helpers.config_handler import FlaskIni
-from .core import bp as graphql_bp
-
 # ===== Modular API Routes =====
 # Disabled and move to another boilerplate "flask modular routing system"
 from gqlserver.modules.errors import bp as errors_bp
-# from .modules.errors import handlers
+from shared.models import db, migrate
+
+from .core import bp as graphql_bp
 
 
-def bootstrap_http():
+def bootstrap_app():
     app = Flask(__name__)
     app.iniconfig = FlaskIni()
     with app.app_context():

@@ -1,5 +1,4 @@
 # Build base image base for backend service
-.PHONY: build
 build:
 ifeq ($(BUILD_ENV),development)
 		$(eval IMG_ENV := $(shell echo "development"))
@@ -16,7 +15,6 @@ endif
 
 	@ docker build -f docker/Dockerfile  -t prakasa1904/pywith-pg-mysql:$(TAG) --no-cache .
 
-.PHONY: push
 push:
 ifeq ($(BUILD_ENV),development)
 		$(eval IMG_ENV := $(shell echo "development"))
@@ -32,3 +30,5 @@ ifeq ($(BUILD_ENV),production)
 endif
 
 	@ docker push prakasa1904/pywith-pg-mysql:$(TAG)
+
+.PHONY: build push

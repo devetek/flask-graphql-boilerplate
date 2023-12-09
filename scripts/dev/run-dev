@@ -3,4 +3,4 @@
 export FLASK_APP=cli/flask
 export FLASK_ENV=development
 flask initdb
-python main.py http
+python main.py

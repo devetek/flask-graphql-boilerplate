@@ -1,0 +1,13 @@
+{
+    "Servers": {
+        "1": {
+            "Name": "Flask Graphql",
+            "Group": "Flask",
+            "Port": 5432,
+            "Username": "root",
+            "Host": "pgql",
+            "SSLMode": "prefer",
+            "MaintenanceDB": "postgres"
+        }
+    }
+}

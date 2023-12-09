@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from web import db
+from shared.models import db
 
 
 class AccountEmail(db.Model):

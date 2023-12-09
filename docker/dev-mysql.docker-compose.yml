@@ -1,44 +1,44 @@
 version: "3.8"
 
 services:
-  butterfly_mysql:
-    image: mysql:latest
-    container_name: butterfly_mysql
+  phpmyadmin:
+      image: phpmyadmin
+      restart: always
+      ports:
+        - 8080:80
+      env_file:
+      - ./docker/.devenv
+
+  mysql:
+    image: mysql:8.2.0
     command: --default-authentication-plugin=mysql_native_password
     restart: always
-    ports:
-      - 3306:3306
     volumes:
-      - butterfly_mysql_init:/docker-entrypoint-initdb.d
-      - butterfly_mysql_data:/var/lib/mysql
+      - mysql_init:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
     env_file:
       - ./docker/.devenv
     cap_add:
       - SYS_NICE  # CAP_SYS_NICE
 
-  butterfly_backend:
+  backend:
     depends_on:
-      - butterfly_mysql
-      # - butterfly_redis
+      - mysql
     image: prakasa1904/pywith-pg-mysql:development
-    container_name: butterfly_backend
     working_dir: /devetek/
     volumes:
       - .:/devetek
       - ./scripts/dev/dev-mysql:/devetek/mysql
       - /devetek/python_modules/ # Generate volume `python_modules` empty
     restart: always
-    command: ["./mysql", "butterfly_mysql", "./scripts/dev/run-dev"]
+    command: ["./mysql", "mysql", "./scripts/dev/run-dev"]
     env_file:
       - ./docker/.devenv
-    ports:
-      - 5000:5000
 
-  butterfly_nginx:
+  nginx:
     image: nginx
-    container_name: butterfly_nginx
     depends_on:
-      - butterfly_backend
+      - backend
     volumes:
       - ./public/:/devetek
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
@@ -52,13 +52,13 @@ services:
         max-size: "1m"
 
 volumes:
-  butterfly_mysql_init:
+  mysql_init:
     driver: local
     driver_opts:
       type: none
       device: $PWD/docker/mysqldb/scripts
       o: bind
-  butterfly_mysql_data:
+  mysql_data:
     driver: local
     driver_opts:
       type: none

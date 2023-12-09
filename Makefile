@@ -5,7 +5,6 @@ BUILD_ENV := production
 include docker/Makefile
 
 # Setup python virtualenv to support IDE
-.PHONY: setup
 setup:
 	@ which pip || exit 1
 	@ pip install virtualenv
@@ -20,7 +19,6 @@ setup:
 # Running using docker environment DEVELOPMENT
 # Author: Prakasa <prakasa@devetek.com>
 # ========================================
-.PHONY: run-dev
 run:
 	# Validate selecting database engine, only support for mysql and pgql
 ifeq ($(DB),)
@@ -31,10 +29,17 @@ endif
 	@ test -f docker/$(DB)/volume || mkdir -p docker/$(DB)/volume
 	@ test -f docker/$(DB)/restore || mkdir -p docker/$(DB)/restore
 	@ docker-compose down --remove-orphans
-	@ docker-compose up
+	@ docker-compose up -d
 
 restart:
-	@ docker-compose restart butterfly_backend
+	@ docker-compose restart backend
+
+log:
+	@docker-compose logs -f
+enter:
+	@docker-compose exec -it backend bash
 
 down:
 	@ docker-compose stop
+
+.PHONY: setup run log restart enter down

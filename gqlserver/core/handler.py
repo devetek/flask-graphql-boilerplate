@@ -1,19 +1,15 @@
 from ariadne import graphql_sync
 from ariadne.explorer import ExplorerGraphiQL
-from flask import Blueprint, jsonify, request
+from flask import jsonify, request
 
-from .graphql import schema
+from gqlserver.core import bp, schema
 
-"""[Load initial object requirement to setup graphql server engine]
-Init blueprint flask modular controller
-Init aridne schema loader
-"""
-bp = Blueprint('graphql', __name__)
-
+# gql explorer
+explorer_html = ExplorerGraphiQL().html(None)
 
 @bp.route("/", methods=["GET"])
 def graphql_playground():
-    return ExplorerGraphiQL().html(None), 200
+    return explorer_html, 200
 
 
 @bp.route("/", methods=["POST"])

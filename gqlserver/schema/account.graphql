@@ -1,6 +1,13 @@
 type Account {
-    id: ID!
-    name: String!
-    address: String
-    isAdmin: Boolean!
+    member_username: String
+    member_fullname: String
+    member_status: Int
+    member_email: [EmailAccount]
+}
+
+
+type EmailAccount {
+    email_text: String
+    email_primary: Boolean
+    email_verified: Boolean
 }
