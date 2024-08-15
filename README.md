@@ -10,65 +10,18 @@ Python flask graphql boilerplate, to help Devetek python developer to deliver pr
 
 ```sh
 root/
-├── docker                          # Global docker configuration
-├── config                          # Configuration file can be ini, yaml, json, yoml
-├── scripts                         # External scripts, to interact with CI / CD
-├── shared                          # Shared Interface, shared package for all application
-      ├── helpers                   # Local shared helper
-      ├── libraries                 # Local shared libraries
-      ├── models                    # Local shared models / datasource (database / remote / etc)
-├── cli                             # CLI Interface, helper to generate preset env pre graphql run
-      ├── helpers                   # Local CLI helper
-      ├── libraries                 # Local CLI libraries
-      ├── modules                   # Modular CLI applications
-├── gqlserver                       # graphql Interface, contains core of graphql instance
-      ├── helpers                   # Local graphql helper
-      ├── libraries                 # Local graphql libraries
-      ├── resolvers                 # Modular graphql resolvers
+├── config                          # Configuration .ini, use env variable $ENVIRONMENT to select file
+├── scripts                         # External scripts, to support development, automation or production
+├── shared                          # Library code that's ok to use by a cross applications
+├── gqlserver                       # Graphql code implementation
 ```
 
-## How To
+## Development
 
-### With Docker
-To run with docker, follow steps below:
+To run service locally, follow steps below:
 
-1. Run with default database, postgreSQL
+1. Execute command `make setup` to prepare virtual environment
 
-```sh
-make run
-```
+2. Execute command `make dev` to run service. If you want to use other port use command `make dev PORT=4000`
 
-2. Run with custom database, can be pgql or mysql
-
-```sh
-make run DB=mysql
-```
-
-### Without Docker
-
-To run without docker, you need install mysql or postgresql separately. Then follow steps below:
-
-1. Install dependencies
-```sh
-make setup
-```
-
-2. Activate local package
-```sh
-source python_modules/bin/activate
-```
-
-3. Export variables. For environment variable DB, you have to determine what will be used, mysql OR pgql
-
-```sh
-export DB=mysql
-export FLASK_APP=cli/flask
-export FLASK_ENV=development
-```
-
-4. Run Service
-```sh
-python main.py
-```
-
-Finally, open http://localhost/graphql/ to test graphql endpoint. And open http://localhost:8080 to manage database.
+3/ Open http://localhost:3000/graphql/ to test graphql endpoint, or open other URL if you set custom port.

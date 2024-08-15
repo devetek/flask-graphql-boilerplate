@@ -1,10 +1,9 @@
-DB := pgql
-FLASK_APP := cli/flask
-BUILD_ENV := production
+ENVIRONMENT := development
+PORT := 3000
 
-include docker/Makefile
-
-# Setup python virtualenv to support IDE
+# ========================================
+# Setup development python virtualenv
+# ========================================
 setup:
 	@ which pip || exit 1
 	@ pip install virtualenv
@@ -16,30 +15,13 @@ setup:
 	)
 
 # ========================================
-# Running using docker environment DEVELOPMENT
-# Author: Prakasa <prakasa@devetek.com>
+# Running development
 # ========================================
-run:
-	# Validate selecting database engine, only support for mysql and pgql
-ifeq ($(DB),)
-	@ sh -c "Please use `make run-dev DB=mysql` OR `make run-dev DB=pgql` && exit 1"
-endif
+dev:
+	@ python -m venv python_modules
+	@( \
+		source python_modules/bin/activate; \
+		ENVIRONMENT=$(ENVIRONMENT) PORT=$(PORT) python main.py; \
+	)
 
-	@ cp -rf docker/dev-$(DB).docker-compose.yml docker-compose.yml
-	@ test -f docker/$(DB)/volume || mkdir -p docker/$(DB)/volume
-	@ test -f docker/$(DB)/restore || mkdir -p docker/$(DB)/restore
-	@ docker-compose down --remove-orphans
-	@ docker-compose up -d
-
-restart:
-	@ docker-compose restart backend
-
-log:
-	@docker-compose logs -f
-enter:
-	@docker-compose exec -it backend bash
-
-down:
-	@ docker-compose stop
-
-.PHONY: setup run log restart enter down
+.PHONY: setup run

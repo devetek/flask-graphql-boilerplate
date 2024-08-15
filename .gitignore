@@ -1,22 +1,11 @@
 # local env folder
-/docker/pgql/volume
-/docker/mysql/volume
-/docker/redis
 /python_modules
 
 # local tmp file
 *.pyc
 dump.rdb
-.env
 sess_*
-mysql
-pgql
 *-local*
 
-# tmp docker-compose
-docker-compose.yml
-
-# Research folder
-.research
-
+# cache
 __pycache__
