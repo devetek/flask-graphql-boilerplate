@@ -25,3 +25,8 @@ To run service locally, follow steps below:
 	- To use another port, use command `make run port=4000`.
 	- To run in production mode, use command `make run env=production`.
 3. Open http://localhost:3000/graphql/ to test graphql endpoint, or open other URL if you set custom port.
+
+
+## Todo
+
+- [ ] Deploy to [dPanel](https://cloud.terpusat.com/)
