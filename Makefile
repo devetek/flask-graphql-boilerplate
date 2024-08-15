@@ -1,5 +1,6 @@
-ENVIRONMENT := development
-PORT := 3000
+env := development
+host := 0.0.0.0
+port := 3000
 
 # ========================================
 # Setup development python virtualenv
@@ -15,13 +16,13 @@ setup:
 	)
 
 # ========================================
-# Running development
+# Running development / production
 # ========================================
-dev:
+run:
 	@ python -m venv python_modules
 	@( \
 		source python_modules/bin/activate; \
-		ENVIRONMENT=$(ENVIRONMENT) PORT=$(PORT) python main.py; \
+		env=$(env) host=$(host) port=$(port) python main.py; \
 	)
 
 .PHONY: setup run
