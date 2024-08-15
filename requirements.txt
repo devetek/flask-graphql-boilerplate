@@ -31,7 +31,7 @@ passlib==1.7.4
 platformdirs==4.1.0
 psycopg2-binary==2.9.9
 PyJWT==2.8.0
-PyMySQL==1.1.0
+PyMySQL==1.1.1
 pytz==2023.3.post1
 redis==5.0.1
 six==1.16.0
