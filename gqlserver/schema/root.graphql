@@ -5,7 +5,6 @@ schema {
 
 type Query {
   hello: String!
-  user: String!
   account(id: Int!): Account
 }
 
