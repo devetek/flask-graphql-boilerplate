@@ -7,6 +7,7 @@ port := 3000
 # ========================================
 setup:
 	@ which pip || exit 1
+	@ pip install --upgrade pip
 	@ pip install virtualenv
 	@ python -m venv python_modules
 	@( \
